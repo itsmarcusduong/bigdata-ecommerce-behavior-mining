@@ -63,6 +63,13 @@ def metadata(nb: str, code_file: str) -> dict:
     }
 
 
+def set_params(code: str, fraction: float, mem: str) -> tuple[str, int]:
+    """Replace the defaults of BDM_FRACTION / BDM_SPARK_MEM in ``code``; returns (code, number of matches)."""
+    code, n1 = re.subn(r"""(BDM_FRACTION['"]\s*,\s*['"])[^'"]*(['"])""", rf"\g<1>{fraction}\g<2>", code)
+    code, n2 = re.subn(r"""(BDM_SPARK_MEM['"]\s*,\s*['"])[^'"]*(['"])""", rf"\g<1>{mem}\g<2>", code)
+    return code, n1 + n2
+
+
 def kaggle(*args: str) -> int:
     return subprocess.run(["kaggle", *args], check=False).returncode
 
@@ -76,10 +83,9 @@ def push(nb: str, fraction: float, mem: str) -> int:
         hits = 0
         for cell in nbk["cells"]:
             body = cell["source"] if isinstance(cell["source"], str) else "".join(cell["source"])
-            new = re.sub(r"""(BDM_FRACTION['"]\s*,\s*['"])[^'"]*(['"])""", rf"\g<1>{fraction}\g<2>", body)
-            new = re.sub(r"""(BDM_SPARK_MEM['"]\s*,\s*['"])[^'"]*(['"])""", rf"\g<1>{mem}\g<2>", new)
-            if new != body:
-                cell["source"], hits = new.splitlines(keepends=True), hits + 1
+            new, n = set_params(body, fraction, mem)
+            if n:
+                cell["source"], hits = new.splitlines(keepends=True), hits + n
         if hits < 1:
             seen = [ln for c in nbk["cells"] for ln in "".join(c["source"]).splitlines() if "BDM_" in ln]
             sys.exit(f"BDM_FRACTION line not found in {src} (run git pull). Lines with BDM_: {seen[:5]}")

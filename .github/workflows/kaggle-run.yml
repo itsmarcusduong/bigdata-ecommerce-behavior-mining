@@ -46,7 +46,7 @@ jobs:
           if [ -z "$KAGGLE_API_TOKEN" ]; then
             echo "::error::Thiếu secret KAGGLE_API_TOKEN (Settings -> Secrets and variables -> Actions)"; exit 1
           fi
-      - run: pip install -q kaggle
+      - run: pip install -q kaggle six
       - name: Push notebooks
         if: inputs.mode == 'run'
         run: python tools/kaggle_run.py push $NBS --fraction "${{ inputs.fraction }}" --mem "${{ inputs.mem }}"
