@@ -1,0 +1,19 @@
+name: Task / deliverable
+description: One deliverable of the project (one student, one result)
+labels: [task]
+body:
+  - type: input
+    id: milestone
+    attributes: { label: Milestone, placeholder: "M3 - Streaming & sketches" }
+    validations: { required: true }
+  - type: textarea
+    id: goal
+    attributes: { label: Goal, description: "One measurable result this issue must produce" }
+    validations: { required: true }
+  - type: textarea
+    id: dod
+    attributes: { label: Definition of done, value: "- [ ] Code + unit test\n- [ ] Notebook section with results\n- [ ] Metrics saved to results/*.json\n- [ ] Documented in docs/" }
+    validations: { required: true }
+  - type: input
+    id: technique
+    attributes: { label: Course technique(s), placeholder: "LSH, PCY, PageRank ..." }
