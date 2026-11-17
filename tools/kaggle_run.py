@@ -135,11 +135,13 @@ def output(nb: str) -> int:
     # only results and logs: the events_parquet output of notebook 01 is several GB
     rc = kaggle("kernels", "output", f"{USER}/{slug(nb)}", "-p", str(dest), "-o",
                 "--file-pattern", r".*(\.json|\.png|\.log|\.ipynb)$")
-    for js in dest.rglob("*.json"):
-        if js.parent.name == "results":
-            (ROOT / "results").mkdir(exist_ok=True)
-            shutil.copy(js, ROOT / "results" / js.name)
-    for png in dest.rglob("*.png"):
+    # Only the notebook's own outputs (/kaggle/working/results). The notebook also clones this repo into
+    # /kaggle/working/repo, whose committed results/*.json are stale copies and must never be picked up.
+    out_dir = dest / "results"
+    for js in out_dir.glob("*.json"):
+        (ROOT / "results").mkdir(exist_ok=True)
+        shutil.copy(js, ROOT / "results" / js.name)
+    for png in (out_dir / "figures").glob("*.png"):
         (ROOT / "results" / "figures").mkdir(parents=True, exist_ok=True)
         shutil.copy(png, ROOT / "results" / "figures" / png.name)
     print(f"downloaded to {dest}; copied results/*.json and figures (review before committing)")
