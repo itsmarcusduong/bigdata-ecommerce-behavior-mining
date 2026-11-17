@@ -1,0 +1,24 @@
+name: release-tags
+
+# Bấm tay: tab Actions -> "release-tags" -> Run workflow. Tạo các tag v0.N.0 và pre-release từ docs/release_notes
+# bằng GITHUB_TOKEN của repo (không cần cài gì trên máy). Chạy lại an toàn: tag/release đã có thì bỏ qua.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  tags:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create tags and pre-releases
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          bash tools/create_tags.sh
