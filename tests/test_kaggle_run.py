@@ -47,3 +47,21 @@ def test_kaggle_retries_on_rate_limit(monkeypatch):
     monkeypatch.setattr(kaggle_run.time, "sleep", lambda s: None)
     assert kaggle_run.kaggle("kernels", "push", "-p", "x", retries=5) == 0
     assert len(calls) == 3
+
+
+def test_output_ignores_the_cloned_repo(monkeypatch, tmp_path):
+    root = tmp_path / "proj"
+    monkeypatch.setattr(kaggle_run, "ROOT", root)
+
+    def fake(*args, **kw):
+        dest = Path(args[args.index("-p") + 1])
+        for sub, tag in (("results", "new"), ("repo/results", "stale")):
+            (dest / sub / "figures").mkdir(parents=True, exist_ok=True)
+            (dest / sub / "04_lsh_similarity.json").write_text(tag)
+            (dest / sub / "figures" / "04_s_curve.png").write_text(tag)
+        return 0
+
+    monkeypatch.setattr(kaggle_run, "kaggle", fake)
+    kaggle_run.output("04")
+    assert (root / "results" / "04_lsh_similarity.json").read_text() == "new"
+    assert (root / "results" / "figures" / "04_s_curve.png").read_text() == "new"

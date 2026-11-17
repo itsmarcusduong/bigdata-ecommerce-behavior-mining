@@ -23,6 +23,11 @@ from bdm.sessions import session_baskets, user_item_matrix
 FRACTIONS = [float(x) for x in os.environ.get("BDM_BENCH_FRACTIONS", "0.01,0.05,0.1,0.25,0.5,1.0").split(",")]
 CORES = [int(x) for x in os.environ.get("BDM_BENCH_CORES", "1,2,4").split(",")]
 CORE_FRACTION = float(os.environ.get("BDM_BENCH_CORE_FRACTION", "0.1"))
+# Fractions are of the FULL data. The Parquet from notebook 01 only holds FRACTION of the users, so larger
+# fractions would silently re-read the same sample: keep only those that exist.
+FRACTIONS = [f for f in FRACTIONS if f <= FRACTION + 1e-9] or [FRACTION]
+CORE_FRACTION = min(CORE_FRACTION, FRACTION)
+print("size fractions:", FRACTIONS, "| core-scaling fraction:", CORE_FRACTION)
 
 
 def run_kernels(spark, frac: float) -> dict:
@@ -88,5 +93,5 @@ ax.plot(speed.index, speed.index / speed.index[0], "k:", label="ideal"); ax.set_
 ax.set_title(f"Strong scaling ({int(CORE_FRACTION * 100)}% of users)"); save_fig(fig, "08_core_scaling"); plt.show()
 
 # %%
-print("saved", save_result("08_scalability_benchmark", {"size_scaling": size.to_dict("records"), "exponents": slopes,
+print("saved", save_result("08_scalability_benchmark", {"base_fraction": FRACTION, "size_scaling": size.to_dict("records"), "exponents": slopes,
                            "core_scaling": cores.reset_index().to_dict("records"), "speedup": speed.reset_index().to_dict("records")}))
