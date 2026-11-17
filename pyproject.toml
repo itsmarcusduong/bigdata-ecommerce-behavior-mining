@@ -1,0 +1,29 @@
+[project]
+name = "bdm"
+version = "0.1.0"
+description = "Mining massive e-commerce behaviour data with Spark: streaming sketches, LSH, frequent itemsets, link analysis, ALS"
+requires-python = ">=3.10"
+dependencies = ["pyspark>=3.5,<4.1", "numpy", "pandas", "matplotlib"]
+
+[project.optional-dependencies]
+dev = ["pytest", "networkx", "ruff", "nbformat", "nbclient", "ipykernel", "pyarrow"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+src = ["src", "tests", "tools"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E741", "B905", "E731"]
