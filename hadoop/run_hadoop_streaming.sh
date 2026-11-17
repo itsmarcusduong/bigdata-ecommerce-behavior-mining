@@ -10,7 +10,11 @@ if [ ! -d "$HH" ]; then
   curl -sSL "https://archive.apache.org/dist/hadoop/common/hadoop-$HV/hadoop-$HV.tar.gz" | tar -xz -C /tmp
 fi
 JAR=$(ls "$HH"/share/hadoop/tools/lib/hadoop-streaming-*.jar | head -1)
-rm -rf "$OUT/job1" "$OUT/job2"; mkdir -p "$OUT"
+rm -rf "$OUT/counts" "$OUT/job1" "$OUT/job2"; mkdir -p "$OUT"
+"$HH/bin/hadoop" jar "$JAR" -D mapreduce.job.reduces=4 \
+  -files "$D/count_mapper.py,$D/sum_reducer.py" \
+  -mapper "python3 count_mapper.py" -combiner "python3 sum_reducer.py" -reducer "python3 sum_reducer.py" \
+  -input "$IN" -output "$OUT/counts"
 "$HH/bin/hadoop" jar "$JAR" -D mapreduce.job.reduces=4 \
   -files "$D/basket_mapper.py,$D/pair_reducer.py" \
   -mapper "python3 basket_mapper.py" -reducer "python3 pair_reducer.py" \
@@ -19,4 +23,4 @@ rm -rf "$OUT/job1" "$OUT/job2"; mkdir -p "$OUT"
   -files "$D/identity_mapper.py,$D/sum_reducer.py" \
   -mapper "python3 identity_mapper.py" -combiner "python3 sum_reducer.py" -reducer "python3 sum_reducer.py" \
   -input "$OUT/job1" -output "$OUT/job2"
-echo "pair counts in $OUT/job2/part-*"
+echo "event counts in $OUT/counts/part-*, pair counts in $OUT/job2/part-*"
