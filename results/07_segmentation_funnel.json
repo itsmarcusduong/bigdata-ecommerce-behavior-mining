@@ -1,0 +1,229 @@
+{
+  "experiment": "07_segmentation_funnel",
+  "created_utc": "2026-11-17T21:02:26.037691+00:00",
+  "fraction": 0.05,
+  "funnel_top": [
+    {
+      "category": "electronics",
+      "view": 155672,
+      "cart": 32024,
+      "purchase": 20330,
+      "view_to_cart": 0.20571457937201296,
+      "cart_to_purchase": 0.6348363727204597,
+      "view_to_purchase": 0.1305950973842438
+    },
+    {
+      "category": "unknown",
+      "view": 143594,
+      "cart": 16643,
+      "purchase": 11636,
+      "view_to_cart": 0.11590317144170369,
+      "cart_to_purchase": 0.6991527969716999,
+      "view_to_purchase": 0.08103402649135757
+    },
+    {
+      "category": "appliances",
+      "view": 54795,
+      "cart": 8434,
+      "purchase": 5582,
+      "view_to_cart": 0.15391915320740943,
+      "cart_to_purchase": 0.6618449134455774,
+      "view_to_purchase": 0.10187060863217447
+    },
+    {
+      "category": "apparel",
+      "view": 31275,
+      "cart": 1086,
+      "purchase": 605,
+      "view_to_cart": 0.0347242206235012,
+      "cart_to_purchase": 0.5570902394106814,
+      "view_to_purchase": 0.019344524380495602
+    },
+    {
+      "category": "computers",
+      "view": 27277,
+      "cart": 2876,
+      "purchase": 1789,
+      "view_to_cart": 0.10543681489899916,
+      "cart_to_purchase": 0.6220445062586927,
+      "view_to_purchase": 0.0655863914653371
+    },
+    {
+      "category": "furniture",
+      "view": 21421,
+      "cart": 970,
+      "purchase": 644,
+      "view_to_cart": 0.04528266654217824,
+      "cart_to_purchase": 0.6639175257731958,
+      "view_to_purchase": 0.030063955931095655
+    },
+    {
+      "category": "auto",
+      "view": 14321,
+      "cart": 1061,
+      "purchase": 722,
+      "view_to_cart": 0.0740870050974094,
+      "cart_to_purchase": 0.6804901036757776,
+      "view_to_purchase": 0.050415473779763985
+    },
+    {
+      "category": "kids",
+      "view": 11191,
+      "cart": 541,
+      "purchase": 401,
+      "view_to_cart": 0.04834241801447592,
+      "cart_to_purchase": 0.7412199630314233,
+      "view_to_purchase": 0.035832365293539455
+    },
+    {
+      "category": "construction",
+      "view": 10950,
+      "cart": 941,
+      "purchase": 561,
+      "view_to_cart": 0.08593607305936073,
+      "cart_to_purchase": 0.5961742826780021,
+      "view_to_purchase": 0.05123287671232877
+    },
+    {
+      "category": "accessories",
+      "view": 5959,
+      "cart": 216,
+      "purchase": 145,
+      "view_to_cart": 0.036247692565866754,
+      "cart_to_purchase": 0.6712962962962963,
+      "view_to_purchase": 0.024332941768753145
+    },
+    {
+      "category": "sport",
+      "view": 4172,
+      "cart": 175,
+      "purchase": 106,
+      "view_to_cart": 0.04194630872483222,
+      "cart_to_purchase": 0.6057142857142858,
+      "view_to_purchase": 0.025407478427612654
+    },
+    {
+      "category": "country_yard",
+      "view": 404,
+      "cart": 7,
+      "purchase": 2,
+      "view_to_cart": 0.017326732673267328,
+      "cart_to_purchase": 0.2857142857142857,
+      "view_to_purchase": 0.0049504950495049506
+    },
+    {
+      "category": "medicine",
+      "view": 348,
+      "cart": 46,
+      "purchase": 30,
+      "view_to_cart": 0.13218390804597702,
+      "cart_to_purchase": 0.6521739130434783,
+      "view_to_purchase": 0.08620689655172414
+    },
+    {
+      "category": "stationery",
+      "view": 289,
+      "cart": 16,
+      "purchase": 10,
+      "view_to_cart": 0.05536332179930796,
+      "cart_to_purchase": 0.625,
+      "view_to_purchase": 0.03460207612456748
+    }
+  ],
+  "rfm": {
+    "n_buyers": 34911,
+    "best_k": 4,
+    "silhouette": {
+      "3": 0.3888747770909752,
+      "4": 0.45332975333069925,
+      "5": 0.4225796764619973,
+      "6": 0.4248018976772636
+    },
+    "profile": [
+      {
+        "segment": 0,
+        "users": 13683,
+        "avg_recency": 28.45991376160199,
+        "avg_frequency": 1.6085653730906966,
+        "avg_monetary": 706.9056259592189
+      },
+      {
+        "segment": 1,
+        "users": 12986,
+        "avg_recency": 30.75481287540428,
+        "avg_frequency": 1.0967965501309103,
+        "avg_monetary": 101.88668566148156
+      },
+      {
+        "segment": 2,
+        "users": 3656,
+        "avg_recency": 13.5109409190372,
+        "avg_frequency": 7.553063457330416,
+        "avg_monetary": 3587.455563457331
+      },
+      {
+        "segment": 3,
+        "users": 4586,
+        "avg_recency": 3.2832533798517227,
+        "avg_frequency": 1.5902747492368077,
+        "avg_monetary": 389.5259398168341
+      }
+    ],
+    "seconds": 161.6558288120001
+  },
+  "instacart": {
+    "reorder_rate": 0.5892020009308089,
+    "top_reordered": [
+      {
+        "product_name": "Organic Lowfat 1% Milk",
+        "reorder_rate": 0.8522875816993464,
+        "n": 765
+      },
+      {
+        "product_name": "Milk, Organic, Vitamin D",
+        "reorder_rate": 0.8502066115702479,
+        "n": 968
+      },
+      {
+        "product_name": "Banana",
+        "reorder_rate": 0.8469387755102041,
+        "n": 23618
+      },
+      {
+        "product_name": "Organic Original Almond Milk",
+        "reorder_rate": 0.8410852713178295,
+        "n": 516
+      },
+      {
+        "product_name": "Organic Reduced Fat Milk",
+        "reorder_rate": 0.8389553862894451,
+        "n": 1838
+      },
+      {
+        "product_name": "0% Greek Strained Yogurt",
+        "reorder_rate": 0.8328267477203647,
+        "n": 658
+      },
+      {
+        "product_name": "Organic Fat Free Milk",
+        "reorder_rate": 0.8316618911174785,
+        "n": 1396
+      },
+      {
+        "product_name": "Organic Whole Milk",
+        "reorder_rate": 0.8314820228003508,
+        "n": 6842
+      },
+      {
+        "product_name": "Organic Milk Reduced Fat, 2% Milkfat",
+        "reorder_rate": 0.8292307692307692,
+        "n": 650
+      },
+      {
+        "product_name": "Bag of Organic Bananas",
+        "reorder_rate": 0.8284246934283618,
+        "n": 19082
+      }
+    ]
+  }
+}
