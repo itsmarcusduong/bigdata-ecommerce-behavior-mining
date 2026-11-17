@@ -70,8 +70,22 @@ def set_params(code: str, fraction: float, mem: str) -> tuple[str, int]:
     return code, n1 + n2
 
 
-def kaggle(*args: str) -> int:
-    return subprocess.run(["kaggle", *args], check=False).returncode
+def kaggle(*args: str, retries: int = 6, wait_s: int = 60) -> int:
+    """Run the kaggle CLI, retrying on rate limits (HTTP 429) and on the batch CPU session limit."""
+    for attempt in range(1, retries + 1):
+        res = subprocess.run(["kaggle", *args], capture_output=True, text=True, check=False)
+        out = res.stdout + res.stderr
+        print(out.strip(), flush=True)
+        busy = "429" in out or "Too Many Requests" in out or "session count" in out
+        if not busy and res.returncode == 0 and "error" not in out.lower():
+            return 0
+        if not busy:
+            return res.returncode or 1
+        if attempt < retries:
+            pause = min(wait_s * attempt, 600)
+            print(f"Kaggle busy/rate-limited, retry {attempt}/{retries - 1} in {pause}s", flush=True)
+            time.sleep(pause)
+    return 1
 
 
 def push(nb: str, fraction: float, mem: str) -> int:
@@ -92,7 +106,7 @@ def push(nb: str, fraction: float, mem: str) -> int:
         text = json.dumps(nbk, indent=1)
         (Path(tmp) / src.name).write_text(text, encoding="utf-8")
         (Path(tmp) / "kernel-metadata.json").write_text(json.dumps(metadata(nb, src.name), indent=2))
-        return kaggle("kernels", "push", "-p", tmp)
+        return kaggle("kernels", "push", "-p", tmp, retries=20)
 
 
 def wait(nb: str, timeout_min: float, poll_s: int = 60) -> int:

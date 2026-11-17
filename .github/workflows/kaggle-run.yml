@@ -47,18 +47,19 @@ jobs:
             echo "::error::Thiếu secret KAGGLE_API_TOKEN (Settings -> Secrets and variables -> Actions)"; exit 1
           fi
       - run: pip install -q kaggle six
-      - name: Push notebooks
-        if: inputs.mode == 'run'
-        run: python tools/kaggle_run.py push $NBS --fraction "${{ inputs.fraction }}" --mem "${{ inputs.mem }}"
-      - name: Wait for Kaggle
+      - name: Run on Kaggle (one notebook at a time)
         id: wait
-        if: inputs.mode == 'run'
         run: |
-          sleep 60
-          for nb in $NBS; do python tools/kaggle_run.py wait $nb --timeout-min 320; done
-      - name: Download results
-        if: always() && steps.wait.outcome != 'cancelled'
-        run: for nb in $NBS; do python tools/kaggle_run.py output $nb || true; done
+          rc=0
+          for nb in $NBS; do
+            if [ "${{ inputs.mode }}" = run ]; then
+              python tools/kaggle_run.py push $nb --fraction "${{ inputs.fraction }}" --mem "${{ inputs.mem }}" || { rc=1; continue; }
+              sleep 60
+              python tools/kaggle_run.py wait $nb --timeout-min 320 || rc=1
+            fi
+            python tools/kaggle_run.py output $nb || rc=1
+          done
+          exit $rc
       - name: Commit results to a branch
         if: always()
         run: |

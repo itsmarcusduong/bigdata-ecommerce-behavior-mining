@@ -7,16 +7,18 @@ from pyspark.sql import functions as F
 
 
 def overview(events: DataFrame) -> dict:
+    """Volume, exact distinct counts, time range and missing-value rates (exact: these numbers go into the report)."""
     row = events.agg(
         F.count("*").alias("n_events"),
-        F.approx_count_distinct("user_id").alias("n_users"),
-        F.approx_count_distinct("product_id").alias("n_products"),
-        F.approx_count_distinct("user_session").alias("n_sessions"),
+        F.countDistinct("user_id").alias("n_users"),
+        F.countDistinct("product_id").alias("n_products"),
+        F.countDistinct("user_session").alias("n_sessions"),
         F.min("event_time").alias("t_min"), F.max("event_time").alias("t_max"),
         F.avg(F.col("category_code").isNull().cast("double")).alias("null_category_code"),
         F.avg(F.col("brand").isNull().cast("double")).alias("null_brand"),
         F.avg(F.col("user_session").isNull().cast("double")).alias("null_session"),
     ).first().asDict()
+    row["distinct_method"] = "exact"
     row["event_types"] = {r["event_type"]: r["count"] for r in events.groupBy("event_type").count().collect()}
     row["price_quantiles_0_25_50_75_99"] = events.approxQuantile("price", [0.0, 0.25, 0.5, 0.75, 0.99], 0.01)
     return row

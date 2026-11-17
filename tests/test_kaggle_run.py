@@ -18,7 +18,7 @@ def test_set_params_counts_matches_even_when_value_unchanged():
 def test_every_notebook_has_parameters_and_valid_metadata(monkeypatch):
     seen = {}
 
-    def fake(*args):
+    def fake(*args, **kw):
         d = Path(args[3])
         nb = json.loads(next(d.glob("*.ipynb")).read_text())
         seen[args] = ["".join(c["source"]) for c in nb["cells"]]
@@ -32,3 +32,18 @@ def test_every_notebook_has_parameters_and_valid_metadata(monkeypatch):
     assert len(seen) == len(kaggle_run.NOTEBOOKS)
     for cells in seen.values():
         assert any('"BDM_FRACTION", "0.25"' in c for c in cells)
+
+
+def test_kaggle_retries_on_rate_limit(monkeypatch):
+    calls = []
+
+    class R:
+        def __init__(self, out, rc):
+            self.stdout, self.stderr, self.returncode = out, "", rc
+
+    outs = [R("429 Client Error: Too Many Requests", 1),
+            R("Maximum batch CPU session count of 5 reached.", 0), R("ok", 0)]
+    monkeypatch.setattr(kaggle_run.subprocess, "run", lambda *a, **k: (calls.append(a), outs.pop(0))[1])
+    monkeypatch.setattr(kaggle_run.time, "sleep", lambda s: None)
+    assert kaggle_run.kaggle("kernels", "push", "-p", "x", retries=5) == 0
+    assert len(calls) == 3
