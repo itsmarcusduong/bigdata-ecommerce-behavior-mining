@@ -59,7 +59,7 @@ def evaluate(recs_df: DataFrame, truth_df: DataFrame, seen_df: DataFrame | None 
     else:
         df = df.withColumn("seen", F.array().cast("array<long>"))
     if max_users:
-        df = df.limit(max_users)
+        df = df.orderBy(F.hash("user_id")).limit(max_users)  # reproducible subset, not arbitrary rows
     rows = df.select("recs", "truth", "seen").collect()
     acc = {f"{m}@{k}": [] for m in METRICS for k in ks}
     for recs, truth, seen in rows:

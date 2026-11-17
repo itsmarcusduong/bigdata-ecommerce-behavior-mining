@@ -40,3 +40,12 @@ def test_itemknn_pipeline_runs(spark, events):
     truth, seen = R.truth_and_seen(train, test)
     res = R.evaluate(R.itemknn_recs(hist, nbrs, 100), truth, seen, ks=(10,))
     assert 0 <= res["ndcg@10"] <= 1
+
+
+def test_evaluate_subset_is_deterministic(spark, events):
+    train, test = time_split(events, "2019-11-10")
+    truth, seen = R.truth_and_seen(train, test)
+    pop = R.popularity_recs(train.filter(F.col("event_type") == "purchase"), truth.select("user_id"), 100)
+    a = R.evaluate(pop, truth, seen, ks=(10,), max_users=100)
+    b = R.evaluate(pop.repartition(7), truth, seen, ks=(10,), max_users=100)
+    assert a == b and a["n_users"] == 100
