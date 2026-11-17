@@ -5,6 +5,7 @@ matplotlib
 # dev / CI
 pytest
 networkx
+scipy
 ruff
 nbformat
 nbclient
