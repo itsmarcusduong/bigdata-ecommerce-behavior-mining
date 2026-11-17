@@ -14,3 +14,4 @@ events_parquet/
 .env
 .venv/
 # executed notebooks with outputs go to results/, not to git; keep notebooks/ clean
+results/_kaggle/

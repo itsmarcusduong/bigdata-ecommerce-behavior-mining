@@ -1,0 +1,127 @@
+"""Run the project notebooks on Kaggle through the official Kaggle API (``pip install kaggle``).
+
+Why: avoids clicking through the web UI. Authentication is read by the kaggle client from the
+``KAGGLE_API_TOKEN`` environment variable or ``~/.kaggle/access_token`` - never put a token in the repo.
+
+Usage (from the repo root):
+    python tools/kaggle_run.py push 01 --fraction 0.05   # upload + start notebook 01 on a small user sample
+    python tools/kaggle_run.py status 01                 # QUEUED / RUNNING / COMPLETE / ERROR
+    python tools/kaggle_run.py output 01                 # download results/*.json + figures to results/
+    python tools/kaggle_run.py push 02 03 04 --fraction 1.0
+
+Notebooks 02-08 read the Parquet written by notebook 01, so 01 must be COMPLETE first (the metadata
+attaches it as a ``kernel_sources`` input). The numbers in results/ come only from these real runs.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+USER = "minhquangdng"
+REES46 = "mkechinov/ecommerce-behavior-data-from-multi-category-store"
+INSTACART = "psparks/instacart-market-basket-analysis"
+# notebook id -> (file stem, title, extra dataset sources)
+NOTEBOOKS = {
+    "01": ("01_ingest_eda", "BDM 01 Ingest EDA", [REES46]),
+    "02": ("02_streaming_sketches", "BDM 02 Streaming Sketches", []),
+    "03": ("03_frequent_itemsets", "BDM 03 Frequent Itemsets", [INSTACART]),
+    "04": ("04_lsh_similarity", "BDM 04 LSH Similarity", []),
+    "05": ("05_link_analysis", "BDM 05 Link Analysis", []),
+    "06": ("06_recommender", "BDM 06 Recommender", []),
+    "07": ("07_segmentation_funnel", "BDM 07 Segmentation Funnel", [INSTACART]),
+    "08": ("08_scalability_benchmark", "BDM 08 Scalability Benchmark", []),
+}
+
+
+def slug(nb: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", NOTEBOOKS[nb][1].lower()).strip("-")
+
+
+def metadata(nb: str, code_file: str) -> dict:
+    stem, title, datasets = NOTEBOOKS[nb]
+    return {
+        "id": f"{USER}/{slug(nb)}",
+        "title": title,
+        "code_file": code_file,
+        "language": "python",
+        "kernel_type": "notebook",
+        "is_private": True,
+        "enable_gpu": False,
+        "enable_tpu": False,
+        "enable_internet": True,  # the header cell clones this repo
+        "dataset_sources": datasets,
+        "competition_sources": [],
+        "kernel_sources": [] if nb == "01" else [f"{USER}/{slug('01')}"],
+    }
+
+
+def kaggle(*args: str) -> int:
+    return subprocess.run(["kaggle", *args], check=False).returncode
+
+
+def push(nb: str, fraction: float, mem: str) -> int:
+    stem = NOTEBOOKS[nb][0]
+    src = ROOT / "notebooks" / f"{stem}.ipynb"
+    with tempfile.TemporaryDirectory() as tmp:
+        nbk = json.loads(src.read_text(encoding="utf-8"))
+        # Kaggle's API cannot pass env vars, so bake the run parameters into the copy that is uploaded.
+        hits = 0
+        for cell in nbk["cells"]:
+            body = "".join(cell["source"])
+            new = body.replace('"BDM_FRACTION", "0.05"', f'"BDM_FRACTION", "{fraction}"')
+            new = new.replace('"BDM_SPARK_MEM", "20g"', f'"BDM_SPARK_MEM", "{mem}"')
+            if new != body:
+                cell["source"], hits = new.splitlines(keepends=True), hits + 1
+        if hits != 1:
+            sys.exit(f"expected exactly one header cell with run parameters, found {hits}")
+        text = json.dumps(nbk, indent=1)
+        (Path(tmp) / src.name).write_text(text, encoding="utf-8")
+        (Path(tmp) / "kernel-metadata.json").write_text(json.dumps(metadata(nb, src.name), indent=2))
+        return kaggle("kernels", "push", "-p", tmp)
+
+
+def output(nb: str) -> int:
+    dest = ROOT / "results" / "_kaggle" / slug(nb)
+    shutil.rmtree(dest, ignore_errors=True)
+    dest.mkdir(parents=True)
+    rc = kaggle("kernels", "output", f"{USER}/{slug(nb)}", "-p", str(dest))
+    for js in dest.rglob("*.json"):
+        if js.parent.name == "results":
+            (ROOT / "results").mkdir(exist_ok=True)
+            shutil.copy(js, ROOT / "results" / js.name)
+    for png in dest.rglob("*.png"):
+        (ROOT / "results" / "figures").mkdir(parents=True, exist_ok=True)
+        shutil.copy(png, ROOT / "results" / "figures" / png.name)
+    print(f"downloaded to {dest}; copied results/*.json and figures (review before committing)")
+    return rc
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("action", choices=["push", "status", "output"])
+    ap.add_argument("notebooks", nargs="+", choices=sorted(NOTEBOOKS))
+    ap.add_argument("--fraction", type=float, default=0.05, help="share of USERS to keep (1.0 = full data)")
+    ap.add_argument("--mem", default="20g", help="Spark driver memory")
+    a = ap.parse_args()
+    if shutil.which("kaggle") is None:
+        sys.exit("kaggle CLI not found: pip install kaggle (and set KAGGLE_API_TOKEN)")
+    rc = 0
+    for nb in a.notebooks:
+        if a.action == "push":
+            rc |= push(nb, a.fraction, a.mem)
+        elif a.action == "status":
+            rc |= kaggle("kernels", "status", f"{USER}/{slug(nb)}")
+        else:
+            rc |= output(nb)
+    return rc
+
+
+if __name__ == "__main__":
+    sys.exit(main())
