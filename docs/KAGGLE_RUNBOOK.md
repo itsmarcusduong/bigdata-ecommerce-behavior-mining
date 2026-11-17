@@ -3,6 +3,20 @@
 Làm lần lượt **01 → 08**. Mỗi notebook là một Kaggle Notebook riêng. Thời gian ghi dưới đây chỉ là ước lượng thô,
 hãy ghi lại thời gian thật (cell cuối của mỗi notebook in ra).
 
+## 0. Cách tự động: GitHub Actions chạy Kaggle giúp bạn (khuyên dùng)
+
+Runner của GitHub có Internet tới kaggle.com, nên chỉ cần thêm token một lần:
+1. Kaggle -> Settings -> API -> **Create New Token** (thu hồi các token cũ đã lộ).
+2. GitHub repo -> **Settings -> Secrets and variables -> Actions -> New repository secret**:
+   tên `KAGGLE_API_TOKEN`, giá trị là token (chuỗi `KGAT_...`).
+3. **Actions -> kaggle-run -> Run workflow**: nhập `notebooks` (ví dụ `01`), `fraction` (`0.05` để thử).
+   Workflow tải notebook lên Kaggle, chờ chạy xong, tải `results/*.json` + hình về và đẩy vào nhánh
+   `results/kaggle-...`; từ đó mở PR để review. Nếu Kaggle chạy quá ~5.5 giờ, chạy lại với `mode = output`.
+4. Thứ tự: `01` trước (tạo Parquet), sau đó `02 03`, `04 05`, `06 07`, cuối cùng `08`
+   (tài khoản Kaggle thường chỉ chạy song song vài phiên CPU).
+
+Phần dưới đây là cách làm tay nếu không dùng Actions.
+
 ## A. Thiết lập chung (một lần)
 
 1. Kaggle → Settings: **xác minh số điện thoại** (bắt buộc để bật Internet trong notebook).

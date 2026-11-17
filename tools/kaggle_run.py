@@ -21,6 +21,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -88,6 +89,25 @@ def push(nb: str, fraction: float, mem: str) -> int:
         return kaggle("kernels", "push", "-p", tmp)
 
 
+def wait(nb: str, timeout_min: float, poll_s: int = 60) -> int:
+    """Poll ``kaggle kernels status`` until the run finishes; 0 = complete, 1 = error/cancelled, 2 = timeout."""
+    deadline = time.time() + timeout_min * 60
+    while True:
+        res = subprocess.run(["kaggle", "kernels", "status", f"{USER}/{slug(nb)}"],
+                             capture_output=True, text=True, check=False)
+        msg = (res.stdout + res.stderr).strip()
+        low = msg.lower()
+        print(time.strftime("%H:%M:%S"), msg, flush=True)
+        if "complete" in low:
+            return 0
+        if "error" in low or "cancel" in low:
+            return 1
+        if time.time() > deadline:
+            print(f"still running after {timeout_min} min - fetch later with: output {nb}")
+            return 2
+        time.sleep(poll_s)
+
+
 def output(nb: str) -> int:
     dest = ROOT / "results" / "_kaggle" / slug(nb)
     shutil.rmtree(dest, ignore_errors=True)
@@ -106,10 +126,11 @@ def output(nb: str) -> int:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("action", choices=["push", "status", "output"])
+    ap.add_argument("action", choices=["push", "status", "wait", "output"])
     ap.add_argument("notebooks", nargs="+", choices=sorted(NOTEBOOKS))
     ap.add_argument("--fraction", type=float, default=0.05, help="share of USERS to keep (1.0 = full data)")
     ap.add_argument("--mem", default="20g", help="Spark driver memory")
+    ap.add_argument("--timeout-min", type=float, default=330, help="wait: give up after this many minutes")
     a = ap.parse_args()
     if shutil.which("kaggle") is None:
         sys.exit("kaggle CLI not found: pip install kaggle (and set KAGGLE_API_TOKEN)")
@@ -117,6 +138,8 @@ def main() -> int:
     for nb in a.notebooks:
         if a.action == "push":
             rc |= push(nb, a.fraction, a.mem)
+        elif a.action == "wait":
+            rc |= wait(nb, a.timeout_min)
         elif a.action == "status":
             rc |= kaggle("kernels", "status", f"{USER}/{slug(nb)}")
         else:

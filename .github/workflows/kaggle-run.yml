@@ -1,0 +1,81 @@
+name: kaggle-run
+
+# Chạy notebook trên Kaggle bằng Kaggle API từ GitHub Actions (runner có Internet tới kaggle.com).
+# Cần secret KAGGLE_API_TOKEN (Settings -> Secrets and variables -> Actions). Kết quả (results/*.json + hình)
+# được commit vào nhánh results/kaggle-<nb>-<fraction>-<run id> để mở PR và review trước khi merge.
+on:
+  workflow_dispatch:
+    inputs:
+      notebooks:
+        description: "Notebook ids cách nhau bởi dấu cách, ví dụ: 01  hoặc  02 03 04"
+        required: true
+        default: "01"
+      fraction:
+        description: "Tỷ lệ người dùng (0.05 = thử nhanh, 1.0 = toàn bộ)"
+        required: true
+        default: "0.05"
+      mem:
+        description: "Spark driver memory trên Kaggle"
+        default: "20g"
+      mode:
+        description: "run = push + chờ + tải kết quả; output = chỉ tải kết quả của lần chạy gần nhất"
+        type: choice
+        options: [run, output]
+        default: run
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kaggle-${{ inputs.notebooks }}
+  cancel-in-progress: false
+
+jobs:
+  kaggle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    env:
+      KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
+      NBS: ${{ inputs.notebooks }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: Check secret
+        run: |
+          if [ -z "$KAGGLE_API_TOKEN" ]; then
+            echo "::error::Thiếu secret KAGGLE_API_TOKEN (Settings -> Secrets and variables -> Actions)"; exit 1
+          fi
+      - run: pip install -q kaggle
+      - name: Push notebooks
+        if: inputs.mode == 'run'
+        run: python tools/kaggle_run.py push $NBS --fraction "${{ inputs.fraction }}" --mem "${{ inputs.mem }}"
+      - name: Wait for Kaggle
+        id: wait
+        if: inputs.mode == 'run'
+        run: |
+          sleep 60
+          for nb in $NBS; do python tools/kaggle_run.py wait $nb --timeout-min 320; done
+      - name: Download results
+        if: always() && steps.wait.outcome != 'cancelled'
+        run: for nb in $NBS; do python tools/kaggle_run.py output $nb || true; done
+      - name: Commit results to a branch
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f results/*.json results/figures 2>/dev/null || true
+          if git diff --cached --quiet; then echo "no results downloaded"; exit 0; fi
+          br="results/kaggle-$(echo $NBS | tr ' ' '-')-${{ inputs.fraction }}-${{ github.run_id }}"
+          git switch -c "$br"
+          git commit -m "results: Kaggle run of notebooks $NBS (fraction ${{ inputs.fraction }})" \
+            -m "Kaggle notebooks: $(for nb in $NBS; do echo -n "https://www.kaggle.com/code/minhquangdng/$(python -c "import sys; sys.path.insert(0,'tools'); import kaggle_run as k; print(k.slug('$nb'))") "; done)" \
+            -m "GitHub run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          git push origin "$br"
+          echo "### Kết quả nằm ở nhánh \`$br\`" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kaggle-output-${{ github.run_id }}
+          path: results/
+          if-no-files-found: ignore
