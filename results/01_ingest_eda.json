@@ -1,0 +1,39 @@
+{
+  "experiment": "01_ingest_eda",
+  "created_utc": "2026-11-17T20:02:12.128767+00:00",
+  "fraction": 0.05,
+  "n_events": 5462959,
+  "timings_s": {
+    "csv_to_parquet": 129.761,
+    "overview": 4.552
+  },
+  "overview": {
+    "n_events": 5462959,
+    "n_users": 291487,
+    "n_products": 146490,
+    "n_sessions": 1150539,
+    "t_min": "2019-10-01 00:00:18",
+    "t_max": "2019-11-30 23:59:49",
+    "null_category_code": 0.31858229212410344,
+    "null_brand": 0.13833766645512074,
+    "null_session": 0.0,
+    "event_types": {
+      "purchase": 84164,
+      "view": 5179785,
+      "cart": 199010
+    },
+    "price_quantiles_0_25_50_75_99": [
+      0.0,
+      67.96,
+      164.46,
+      358.31,
+      2574.07
+    ]
+  },
+  "session_stats": {
+    "avg_events_per_session": 4.775334682406829,
+    "median_events": 2,
+    "median_duration_s": 62,
+    "session_conversion": 0.06220306906935782
+  }
+}
