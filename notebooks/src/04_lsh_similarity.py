@@ -39,7 +39,7 @@ print(f"{n_prod:,} product-sets; mean size {prod_sets.select(F.avg(F.size('users
 # ## 2. Ground truth on a subsample (naive O(n^2)) & recall of the LSH variants
 
 # %%
-N_EVAL = 3000
+N_EVAL = int(os.environ.get("BDM_LSH_EVAL", "10000"))  # naive O(n^2) baseline; more sets -> more true pairs
 sub = prod_sets.orderBy(F.rand(1)).limit(N_EVAL).collect()
 sub_sets = {r["product_id"]: set(r["users"]) for r in sub}
 t0 = time.perf_counter(); truth_d = exact_similar_pairs(sub_sets, THRESH); t_naive = time.perf_counter() - t0

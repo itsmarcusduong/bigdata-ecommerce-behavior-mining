@@ -22,6 +22,8 @@ def test_user_sampling_keeps_whole_users(events):
 def test_eda_overview(events):
     o = eda.overview(events)
     assert o["n_events"] == events.count() and o["n_users"] > 100
+    assert o["n_users"] == events.select("user_id").distinct().count()
+    assert o["n_products"] == events.select("product_id").distinct().count()
     assert 0 < o["null_category_code"] < 0.3
 
 
