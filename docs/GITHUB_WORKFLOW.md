@@ -44,6 +44,11 @@ Commit theo [Conventional Commits](https://www.conventionalcommits.org): `feat(s
 > Quy ước tag: `v0.N.0` đánh dấu *code-complete + kiểm thử* của milestone; kết quả Kaggle thật được ghi nhận qua các issue
 > "Run on Kaggle" và PR `results/...`. `v1.0.0` chỉ gắn sau khi M9 hoàn tất và báo cáo xong.
 
+## Tạo tag và release
+Tag `v0.N.0` trỏ vào commit squash-merge của PR milestone tương ứng. `tools/create_tags.sh` tạo toàn bộ tag đã có (v0.1.0 … v0.9.0) và pre-release
+(nội dung trong `docs/release_notes/`) bằng thông tin đăng nhập của bạn; chạy lại an toàn (bỏ qua tag đã tồn tại). Khi hoàn tất milestone mới, thêm
+một dòng `[vX.Y.Z]=<sha>` và file ghi chú rồi chạy lại.
+
 ## Label
 `task`, `bug`, `experiment`, `docs`, `kaggle-run`, `blocked`, và nhãn kỹ thuật: `streaming`, `itemsets`, `lsh`, `graph`, `recsys`, `clustering`, `hadoop`, `infra`.
 
