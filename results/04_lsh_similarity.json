@@ -1,0 +1,92 @@
+{
+  "experiment": "04_lsh_similarity",
+  "created_utc": "2026-11-17T20:11:59.817864+00:00",
+  "fraction": 0.05,
+  "threshold": 0.3,
+  "n_product_sets": 62763,
+  "eval_subset": 3000,
+  "naive_seconds_on_eval": 19.12418533799996,
+  "n_true_pairs_eval": 7,
+  "lsh_vs_naive": [
+    {
+      "n_hashes": 64,
+      "bands": 32,
+      "rows": 2,
+      "P(candidate | s=t)": 0.951,
+      "recall": 1.0,
+      "precision": 1.0,
+      "seconds": 7.72
+    },
+    {
+      "n_hashes": 128,
+      "bands": 64,
+      "rows": 2,
+      "P(candidate | s=t)": 0.998,
+      "recall": 1.0,
+      "precision": 1.0,
+      "seconds": 5.7
+    },
+    {
+      "n_hashes": 128,
+      "bands": 64,
+      "rows": 2,
+      "P(candidate | s=t)": 0.998,
+      "recall": 1.0,
+      "precision": 1.0,
+      "seconds": 5.3
+    },
+    {
+      "n_hashes": 256,
+      "bands": 128,
+      "rows": 2,
+      "P(candidate | s=t)": 1.0,
+      "recall": 1.0,
+      "precision": 1.0,
+      "seconds": 6.12
+    },
+    {
+      "n_hashes": "MLlib 10 tables",
+      "bands": null,
+      "rows": null,
+      "P(candidate | s=t)": NaN,
+      "recall": 1.0,
+      "precision": 1.0,
+      "seconds": 9.84
+    }
+  ],
+  "scaling": [
+    {
+      "n_sets": 250,
+      "naive_s": 0.12,
+      "lsh_s": 3.67
+    },
+    {
+      "n_sets": 500,
+      "naive_s": 0.51,
+      "lsh_s": 3.77
+    },
+    {
+      "n_sets": 1000,
+      "naive_s": 2.2,
+      "lsh_s": 4.13
+    },
+    {
+      "n_sets": 2000,
+      "naive_s": 8.42,
+      "lsh_s": 4.99
+    },
+    {
+      "n_sets": 3000,
+      "naive_s": 19.2,
+      "lsh_s": 5.38
+    }
+  ],
+  "naive_exponent": 2.0393229553497334,
+  "lsh_all": {
+    "pairs": 2541,
+    "seconds": 115.48481219200005,
+    "bands": 64,
+    "rows": 2,
+    "naive_extrapolated_hours": 2.3343372853333326
+  }
+}
