@@ -10,6 +10,7 @@ or on Kaggle (where the repo is cloned; add a GITHUB_TOKEN Kaggle secret if the 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import re
 from pathlib import Path
 
@@ -81,6 +82,8 @@ def build() -> list[Path]:
         nb = nbf.v4.new_notebook()
         cells = parse(src.read_text())
         nb.cells = [cells[0], nbf.v4.new_code_cell(HEADER)] + cells[1:]
+        for i, cell in enumerate(nb.cells):  # deterministic ids: regenerating must not change the file
+            cell["id"] = hashlib.sha1(f"{src.stem}:{i}".encode()).hexdigest()[:8]
         nb.metadata["kernelspec"] = {"name": "python3", "display_name": "Python 3", "language": "python"}
         dst = OUT / (src.stem + ".ipynb")
         nbf.write(nb, dst)
