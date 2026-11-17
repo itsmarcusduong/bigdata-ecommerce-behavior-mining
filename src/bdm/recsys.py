@@ -46,23 +46,29 @@ METRICS = {"precision": precision_at_k, "recall": recall_at_k, "hit_rate": hit_r
 
 
 def evaluate(recs_df: DataFrame, truth_df: DataFrame, seen_df: DataFrame | None = None,
-             ks=(10, 20), max_users: int | None = 50_000) -> dict:
+             ks=(10, 20), max_users: int | None = 50_000, users: DataFrame | None = None,
+             per_user: str | None = None) -> dict:
     """Average ranking metrics.
 
     ``recs_df``: (user_id, recs array<long>) best-first, long enough (e.g. 100) to survive
     filtering; ``truth_df``: (user_id, truth array<long>); ``seen_df``: optional
     (user_id, seen array<long>) whose items are removed from recs before scoring.
+    ``users``: optional (user_id) frame restricting the evaluation, so several models are scored on the
+    **same** users. ``per_user``: metric name (e.g. ``"ndcg@10"``) whose per-user values are returned under
+    ``"_per_user"`` as {user_id: value}, for paired bootstrap tests.
     """
     df = recs_df.join(truth_df, "user_id")
+    if users is not None:
+        df = df.join(users.select("user_id").distinct(), "user_id")
     if seen_df is not None:
         df = df.join(seen_df, "user_id", "left")
     else:
         df = df.withColumn("seen", F.array().cast("array<long>"))
     if max_users:
         df = df.orderBy(F.hash("user_id")).limit(max_users)  # reproducible subset, not arbitrary rows
-    rows = df.select("recs", "truth", "seen").collect()
+    rows = df.select("user_id", "recs", "truth", "seen").collect()
     acc = {f"{m}@{k}": [] for m in METRICS for k in ks}
-    for recs, truth, seen in rows:
+    for _, recs, truth, seen in rows:
         seen_s = set(seen or [])
         recs = [r for r in recs if r not in seen_s]
         for k in ks:
@@ -70,7 +76,34 @@ def evaluate(recs_df: DataFrame, truth_df: DataFrame, seen_df: DataFrame | None 
                 acc[f"{m}@{k}"].append(fn(recs, truth, k))
     out = {key: float(pd.Series(v).mean()) if v else 0.0 for key, v in acc.items()}
     out["n_users"] = len(rows)
+    if per_user:
+        out["_per_user"] = {int(r[0]): v for r, v in zip(rows, acc[per_user])}
     return out
+
+
+def with_fallback(recs_df: DataFrame, fallback_df: DataFrame) -> DataFrame:
+    """Users missing from ``recs_df`` (cold start) get the ``fallback_df`` list (e.g. popularity)."""
+    fb = fallback_df.withColumnRenamed("recs", "fb")
+    return (fb.join(recs_df, "user_id", "left")
+            .select("user_id", F.coalesce("recs", "fb").alias("recs")))
+
+
+def paired_bootstrap(a: dict, b: dict, n_boot: int = 2000, seed: int = 0) -> dict:
+    """Paired bootstrap over users of mean(a) - mean(b) for per-user metric dicts {user: value}.
+
+    Uses the users present in both. Returns the observed difference, a 95% percentile CI and the
+    fraction of resamples where the difference is <= 0 (a one-sided p-value for "a > b").
+    """
+    import numpy as np
+    common = sorted(set(a) & set(b))
+    if not common:
+        return {"n_users": 0}
+    d = np.array([a[u] - b[u] for u in common])
+    rng = np.random.default_rng(seed)
+    boots = d[rng.integers(0, len(d), size=(n_boot, len(d)))].mean(axis=1)
+    lo, hi = np.percentile(boots, [2.5, 97.5])
+    return {"n_users": len(d), "diff": float(d.mean()), "ci95": [float(lo), float(hi)],
+            "p_le_0": float((boots <= 0).mean())}
 
 
 # ---------------------------------------------------------------- models

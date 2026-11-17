@@ -49,3 +49,31 @@ def test_evaluate_subset_is_deterministic(spark, events):
     a = R.evaluate(pop, truth, seen, ks=(10,), max_users=100)
     b = R.evaluate(pop.repartition(7), truth, seen, ks=(10,), max_users=100)
     assert a == b and a["n_users"] == 100
+
+
+def test_evaluate_restricted_users_and_per_user(spark, events):
+    train, test = time_split(events, "2019-11-10")
+    truth, seen = R.truth_and_seen(train, test)
+    pop = R.popularity_recs(train.filter(F.col("event_type") == "purchase"), truth.select("user_id"), 100)
+    some = truth.select("user_id").orderBy("user_id").limit(30)
+    res = R.evaluate(pop, truth, seen, ks=(10,), users=some, per_user="ndcg@10")
+    assert res["n_users"] == 30 and len(res["_per_user"]) == 30
+    assert abs(sum(res["_per_user"].values()) / 30 - res["ndcg@10"]) < 1e-12
+
+
+def test_with_fallback_fills_missing_users(spark):
+    recs = spark.createDataFrame([(1, [10, 11])], "user_id long, recs array<long>")
+    fb = spark.createDataFrame([(1, [99]), (2, [99])], "user_id long, recs array<long>")
+    got = {r.user_id: r.recs for r in R.with_fallback(recs, fb).collect()}
+    assert got == {1: [10, 11], 2: [99]}
+
+
+def test_paired_bootstrap_detects_difference_and_no_difference():
+    import random
+    rnd = random.Random(0)
+    a = {u: rnd.random() for u in range(500)}
+    better = {u: v + 0.1 for u, v in a.items()}
+    r = R.paired_bootstrap(better, a)
+    assert abs(r["diff"] - 0.1) < 1e-9 and r["ci95"][0] > 0 and r["p_le_0"] == 0.0
+    same = R.paired_bootstrap(a, dict(a))
+    assert same["diff"] == 0.0 and same["ci95"] == [0.0, 0.0]
