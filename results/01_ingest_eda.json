@@ -1,39 +1,40 @@
 {
   "experiment": "01_ingest_eda",
-  "created_utc": "2026-11-17T20:02:12.128767+00:00",
-  "fraction": 0.05,
-  "n_events": 5462959,
+  "created_utc": "2026-11-17T22:04:23.868790+00:00",
+  "fraction": 1.0,
+  "n_events": 109950743,
   "timings_s": {
-    "csv_to_parquet": 129.761,
-    "overview": 4.552
+    "csv_to_parquet": 454.467,
+    "overview": 150.87
   },
   "overview": {
-    "n_events": 5462959,
-    "n_users": 291487,
-    "n_products": 146490,
-    "n_sessions": 1150539,
-    "t_min": "2019-10-01 00:00:18",
-    "t_max": "2019-11-30 23:59:49",
-    "null_category_code": 0.31858229212410344,
-    "null_brand": 0.13833766645512074,
-    "null_session": 0.0,
+    "n_events": 109950743,
+    "n_users": 5316649,
+    "n_products": 206876,
+    "n_sessions": 23016650,
+    "t_min": "2019-10-01 00:00:00",
+    "t_max": "2019-11-30 23:59:59",
+    "null_category_code": 0.32208768248159997,
+    "null_brand": 0.1394373751526172,
+    "null_session": 1.0913978089261297e-07,
+    "distinct_method": "exact",
     "event_types": {
-      "purchase": 84164,
-      "view": 5179785,
-      "cart": 199010
+      "purchase": 1659788,
+      "view": 104335509,
+      "cart": 3955446
     },
     "price_quantiles_0_25_50_75_99": [
       0.0,
-      67.96,
-      164.46,
-      358.31,
+      66.92,
+      164.23,
+      360.02,
       2574.07
     ]
   },
   "session_stats": {
-    "avg_events_per_session": 4.775334682406829,
+    "avg_events_per_session": 4.777008426508636,
     "median_events": 2,
-    "median_duration_s": 62,
-    "session_conversion": 0.06220306906935782
+    "median_duration_s": 61,
+    "session_conversion": 0.0609453591204628
   }
 }
