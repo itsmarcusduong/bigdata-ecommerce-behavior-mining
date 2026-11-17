@@ -1,12 +1,12 @@
 {
   "experiment": "04_lsh_similarity",
-  "created_utc": "2026-11-17T20:11:59.817864+00:00",
+  "created_utc": "2026-11-17T21:38:44.272350+00:00",
   "fraction": 0.05,
   "threshold": 0.3,
   "n_product_sets": 62763,
-  "eval_subset": 3000,
-  "naive_seconds_on_eval": 19.12418533799996,
-  "n_true_pairs_eval": 7,
+  "eval_subset": 10000,
+  "naive_seconds_on_eval": 275.50543990999995,
+  "n_true_pairs_eval": 61,
   "lsh_vs_naive": [
     {
       "n_hashes": 64,
@@ -15,7 +15,7 @@
       "P(candidate | s=t)": 0.951,
       "recall": 1.0,
       "precision": 1.0,
-      "seconds": 7.72
+      "seconds": 11.06
     },
     {
       "n_hashes": 128,
@@ -24,7 +24,7 @@
       "P(candidate | s=t)": 0.998,
       "recall": 1.0,
       "precision": 1.0,
-      "seconds": 5.7
+      "seconds": 9.49
     },
     {
       "n_hashes": 128,
@@ -33,7 +33,7 @@
       "P(candidate | s=t)": 0.998,
       "recall": 1.0,
       "precision": 1.0,
-      "seconds": 5.3
+      "seconds": 8.67
     },
     {
       "n_hashes": 256,
@@ -42,51 +42,51 @@
       "P(candidate | s=t)": 1.0,
       "recall": 1.0,
       "precision": 1.0,
-      "seconds": 6.12
+      "seconds": 11.1
     },
     {
       "n_hashes": "MLlib 10 tables",
       "bands": null,
       "rows": null,
       "P(candidate | s=t)": NaN,
-      "recall": 1.0,
+      "recall": 0.7869,
       "precision": 1.0,
-      "seconds": 9.84
+      "seconds": 15.6
     }
   ],
   "scaling": [
     {
       "n_sets": 250,
-      "naive_s": 0.12,
-      "lsh_s": 3.67
+      "naive_s": 0.13,
+      "lsh_s": 3.99
     },
     {
       "n_sets": 500,
-      "naive_s": 0.51,
-      "lsh_s": 3.77
+      "naive_s": 0.56,
+      "lsh_s": 4.26
     },
     {
       "n_sets": 1000,
-      "naive_s": 2.2,
-      "lsh_s": 4.13
+      "naive_s": 2.63,
+      "lsh_s": 4.62
     },
     {
       "n_sets": 2000,
-      "naive_s": 8.42,
-      "lsh_s": 4.99
+      "naive_s": 10.39,
+      "lsh_s": 5.58
     },
     {
       "n_sets": 3000,
-      "naive_s": 19.2,
-      "lsh_s": 5.38
+      "naive_s": 24.46,
+      "lsh_s": 6.75
     }
   ],
-  "naive_exponent": 2.0393229553497334,
+  "naive_exponent": 2.1086125251122128,
   "lsh_all": {
     "pairs": 2541,
-    "seconds": 115.48481219200005,
+    "seconds": 131.78831407999996,
     "bands": 64,
     "rows": 2,
-    "naive_extrapolated_hours": 2.3343372853333326
+    "naive_extrapolated_hours": 2.9738484374611107
   }
 }
