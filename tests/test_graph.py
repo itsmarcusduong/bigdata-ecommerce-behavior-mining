@@ -1,7 +1,8 @@
 import networkx as nx
 import numpy as np
+from pyspark.sql import functions as F
 
-from bdm.graph import hits, pagerank
+from bdm.graph import hits, pagerank, transition_edges
 
 
 def _edges(spark, n=60, m=300, seed=0):
@@ -46,3 +47,15 @@ def test_hits_matches_networkx(spark):
     s_h, s_a = sum(r["hub"] for r in res.values()), sum(r["auth"] for r in res.values())
     assert max(abs(res[k]["auth"] / s_a - a_ref[k]) for k in a_ref) < 1e-4
     assert max(abs(res[k]["hub"] / s_h - h_ref[k]) for k in h_ref) < 1e-4
+
+
+def _tied_edges(spark, order):
+    rows = [(f"s{i}", "2019-10-01 10:00:00", "view", p) for i in range(4) for p in order]
+    df = spark.createDataFrame(rows, ["user_session", "t", "event_type", "product_id"])
+    df = df.withColumn("event_time", F.to_timestamp("t"))
+    return {(r.src, r.dst) for r in transition_edges(df, min_weight=1).collect()}
+
+
+def test_transition_edges_deterministic_under_timestamp_ties(spark):
+    """Events with identical timestamps must give the same graph whatever the input row order."""
+    assert _tied_edges(spark, [1, 2, 3]) == _tied_edges(spark, [3, 2, 1]) == {(1, 2), (2, 3)}

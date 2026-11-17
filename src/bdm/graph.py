@@ -12,7 +12,7 @@ from pyspark.sql.window import Window
 
 def transition_edges(events: DataFrame, min_weight: int = 2) -> DataFrame:
     """Directed navigation graph: edge a->b when a user views b right after a in a session."""
-    w = Window.partitionBy("user_session").orderBy("event_time")
+    w = Window.partitionBy("user_session").orderBy("event_time", "product_id")  # ties: deterministic
     v = (events.filter((F.col("event_type") == "view") & F.col("user_session").isNotNull())
          .select("user_session", "event_time", F.col("product_id").alias("src"),
                  F.lead("product_id").over(w).alias("dst")))
