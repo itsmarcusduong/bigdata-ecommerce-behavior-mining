@@ -74,13 +74,14 @@ def push(nb: str, fraction: float, mem: str) -> int:
         # Kaggle's API cannot pass env vars, so bake the run parameters into the copy that is uploaded.
         hits = 0
         for cell in nbk["cells"]:
-            body = "".join(cell["source"])
-            new = body.replace('"BDM_FRACTION", "0.05"', f'"BDM_FRACTION", "{fraction}"')
-            new = new.replace('"BDM_SPARK_MEM", "20g"', f'"BDM_SPARK_MEM", "{mem}"')
+            body = cell["source"] if isinstance(cell["source"], str) else "".join(cell["source"])
+            new = re.sub(r"""(BDM_FRACTION['"]\s*,\s*['"])[^'"]*(['"])""", rf"\g<1>{fraction}\g<2>", body)
+            new = re.sub(r"""(BDM_SPARK_MEM['"]\s*,\s*['"])[^'"]*(['"])""", rf"\g<1>{mem}\g<2>", new)
             if new != body:
                 cell["source"], hits = new.splitlines(keepends=True), hits + 1
-        if hits != 1:
-            sys.exit(f"expected exactly one header cell with run parameters, found {hits}")
+        if hits < 1:
+            seen = [ln for c in nbk["cells"] for ln in "".join(c["source"]).splitlines() if "BDM_" in ln]
+            sys.exit(f"BDM_FRACTION line not found in {src} (run git pull). Lines with BDM_: {seen[:5]}")
         text = json.dumps(nbk, indent=1)
         (Path(tmp) / src.name).write_text(text, encoding="utf-8")
         (Path(tmp) / "kernel-metadata.json").write_text(json.dumps(metadata(nb, src.name), indent=2))
