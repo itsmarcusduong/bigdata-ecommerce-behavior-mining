@@ -112,7 +112,9 @@ def output(nb: str) -> int:
     dest = ROOT / "results" / "_kaggle" / slug(nb)
     shutil.rmtree(dest, ignore_errors=True)
     dest.mkdir(parents=True)
-    rc = kaggle("kernels", "output", f"{USER}/{slug(nb)}", "-p", str(dest))
+    # only results and logs: the events_parquet output of notebook 01 is several GB
+    rc = kaggle("kernels", "output", f"{USER}/{slug(nb)}", "-p", str(dest), "-o",
+                "--file-pattern", r".*(\.json|\.png|\.log|\.ipynb)$")
     for js in dest.rglob("*.json"):
         if js.parent.name == "results":
             (ROOT / "results").mkdir(exist_ok=True)
