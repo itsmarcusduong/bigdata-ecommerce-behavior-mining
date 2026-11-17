@@ -1,0 +1,22 @@
+{
+  "experiment": "hadoop_vs_pipe",
+  "hadoop_version": "3.3.6",
+  "data": "synthetic",
+  "users": "3000",
+  "run_url": "https://github.com/itsmarcusduong/bigdata-ecommerce-behavior-mining/actions/runs/44161304083",
+  "event_counts": {
+    "keys_hadoop": 2381,
+    "keys_pipe": 2381,
+    "total_hadoop": 82744,
+    "total_pipe": 82744,
+    "identical": true
+  },
+  "pair_counts": {
+    "keys_hadoop": 8548,
+    "keys_pipe": 8548,
+    "total_hadoop": 16399,
+    "total_pipe": 16399,
+    "identical": true
+  },
+  "identical": true
+}

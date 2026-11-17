@@ -1,0 +1,31 @@
+2026-11-17 19:42:34,165 INFO mapreduce.Job: Running job: job_local204538652_0001
+		Map input records=82745
+		Reduce output records=596
+		Reduce output records=593
+		Reduce output records=595
+		Reduce output records=597
+2026-11-17 19:42:36,182 INFO mapreduce.Job: Job job_local204538652_0001 completed successfully
+		Map input records=82745
+		Reduce output records=2381
+2026-11-17 19:42:37,945 INFO mapreduce.Job: Running job: job_local201597696_0001
+		Map input records=82745
+		Reduce output records=3606
+		Reduce output records=4831
+		Reduce output records=4144
+		Reduce output records=3818
+2026-11-17 19:42:38,956 INFO mapreduce.Job: Job job_local201597696_0001 completed successfully
+		Map input records=82745
+		Reduce output records=16399
+2026-11-17 19:42:40,739 INFO mapreduce.Job: Running job: job_local899892742_0001
+		Map input records=4831
+		Map input records=4144
+		Map input records=3818
+		Map input records=3606
+		Reduce output records=2154
+		Reduce output records=2142
+		Reduce output records=2136
+		Reduce output records=2116
+2026-11-17 19:42:42,752 INFO mapreduce.Job: Job job_local899892742_0001 completed successfully
+		Map input records=16399
+		Reduce output records=8548
+real	0m53.440s
