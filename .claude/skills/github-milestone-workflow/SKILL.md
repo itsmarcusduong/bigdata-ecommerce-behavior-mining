@@ -1,0 +1,24 @@
+---
+name: github-milestone-workflow
+description: Use when planning or doing GitHub project management in this repo - creating milestones, issues (one student, one result), branches, pull requests with review comments, squash-merge, tags and releases.
+---
+
+# github-milestone-workflow
+
+Full policy: `docs/GITHUB_WORKFLOW.md`. Milestones M1-M10 map to tags `v0.1.0`...`v1.0.0`.
+
+## Steps
+1. **Milestone**: title `M<n> - <name>`, description lists deliverables, due date (editable plan).
+2. **Issue** (template *Task*/*Experiment*): one measurable result, one assignee, labels (`task|experiment|bug|docs|kaggle-run` + area label), milestone, Definition of Done checklist. A real-data run is its own `kaggle-run` issue.
+3. **Branch** `feat|fix|docs|results/<milestone>-<short>` from `main`.
+4. **Commits**: Conventional Commits (`feat(lsh): ...`). Include a body when the reason is not obvious.
+5. **PR** from the template: summary, `Closes #n`, verification checklist (`make lint test smoke`), screenshots/metrics if any.
+6. **Review**: comment on specific lines (correctness, complexity, leakage, seeds, baselines); author replies/fixes; resolve threads; then **squash-merge** and delete the branch.
+7. **Tag at code-complete**: when the implementation issues of the milestone are merged and CI is green -> `git tag -a v0.N.0 -m "<deliverables>"`, `git push origin v0.N.0`, create a pre-release (notes: what shipped, how verified, known gaps).
+8. **Close the milestone** only when its `kaggle-run` issue is closed too (real-data run done, `results/` committed).
+
+## Rules
+* `main` stays green (CI = ruff + pytest + notebooks in sync). No direct pushes after M1.
+* Do not backdate commits or claim real-data results that were not run; mark such work as `kaggle-run` issues instead.
+* Never commit data, tokens, `kaggle.json`. End Claude-authored commits/PRs with the attribution lines required by the environment.
+* Use `gh api repos/<owner>/<repo>/...` (REST) when GraphQL is unavailable.
