@@ -14,8 +14,8 @@ Bài tập lớn môn **Khai phá dữ liệu lớn** (CS246 / Mining Massive Da
 |---|---|
 | Thư viện `src/bdm` + 36 unit test (đối chiếu `networkx`, brute-force, MapReduce vs Spark) | ✅ |
 | 8 notebook Kaggle chạy end-to-end trên dữ liệu synthetic cùng schema | ✅ |
-| Chạy trên dữ liệu thật (Kaggle) + số liệu báo cáo | ⬜ cần thực hiện - xem [docs/INSTRUCTIONS.md](docs/INSTRUCTIONS.md) và các issue `kaggle-run` |
-| Tag `v0.1.0`…`v0.9.0` + GitHub pre-release | ⬜ chạy `tools/create_tags.sh` một lần trên máy bạn (phiên tự động không được phép tạo tag/release) |
+| Chạy trên dữ liệu thật (Kaggle) + số liệu báo cáo | ⬜ cần thực hiện - xem [docs/KAGGLE_RUNBOOK.md](docs/KAGGLE_RUNBOOK.md) (làm tay từng notebook), [docs/INSTRUCTIONS.md](docs/INSTRUCTIONS.md) (API) và các issue `kaggle-run` |
+| Tag `v0.1.0`…`v0.9.0` + GitHub pre-release | ⬜ tab Actions → `release-tags` → Run workflow (hoặc `tools/create_tags.sh`); phiên tự động không được phép tạo tag/release |
 | Hadoop thật (standalone) | ⬜ script có sẵn, chưa chạy - xem [docs/HADOOP.md](docs/HADOOP.md) |
 
 ## Ý tưởng một dòng cho mỗi kỹ thuật
