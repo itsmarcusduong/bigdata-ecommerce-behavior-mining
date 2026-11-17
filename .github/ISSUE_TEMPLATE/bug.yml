@@ -1,0 +1,11 @@
+name: Bug report
+description: Something is wrong (wrong result, crash, Kaggle run fails)
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes: { label: What happened?, description: "Include notebook name, FRACTION, Kaggle session type, error text" }
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: Expected behaviour }

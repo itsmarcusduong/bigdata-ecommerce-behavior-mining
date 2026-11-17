@@ -1,0 +1,15 @@
+name: Experiment
+description: A hypothesis to test with a baseline and a metric
+labels: [experiment]
+body:
+  - type: textarea
+    id: hypothesis
+    attributes: { label: Hypothesis, placeholder: "PCY counts <50% of the candidate pairs A-Priori counts at support 0.2%" }
+    validations: { required: true }
+  - type: input
+    id: metric
+    attributes: { label: Metric and baseline }
+    validations: { required: true }
+  - type: textarea
+    id: protocol
+    attributes: { label: Protocol, description: "data split, parameters, seeds, ablations" }
