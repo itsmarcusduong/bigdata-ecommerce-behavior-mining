@@ -45,6 +45,24 @@ Với **mỗi** notebook 01..08 (file `notebooks/0X_*.ipynb`):
 Đọc [GITHUB_WORKFLOW.md](GITHUB_WORKFLOW.md): mỗi kết quả = một issue (một người), một nhánh `feat/...`, một PR có review, squash-merge,
 tag `v0.N.0` khi đóng milestone.
 
+## D2. Chạy bằng Kaggle API (không cần bấm trên giao diện)
+
+Cần một lần trên máy của bạn (không chạy được từ phiên Claude vì mạng bị chặn tới kaggle.com):
+```bash
+pip install kaggle
+# Kaggle -> Settings -> API -> tạo token; KHÔNG dán token vào chat/commit
+mkdir -p ~/.kaggle && echo <TOKEN> > ~/.kaggle/access_token && chmod 600 ~/.kaggle/access_token   # Windows: dùng biến môi trường KAGGLE_API_TOKEN
+kaggle datasets list -s ecommerce-behavior        # kiểm tra kết nối
+```
+Chạy từng notebook (tài khoản `minhquangdng`; sửa `USER` trong `tools/kaggle_run.py` nếu đổi):
+```bash
+python tools/kaggle_run.py push 01 --fraction 0.05    # chạy thử trên 5% người dùng
+python tools/kaggle_run.py status 01                   # chờ COMPLETE
+python tools/kaggle_run.py output 01                   # tải results/*.json + hình về results/
+python tools/kaggle_run.py push 02 03 04 05 06 07 08 --fraction 1.0   # sau khi 01 đã COMPLETE
+```
+Notebook 02-08 tự gắn output của 01 làm input (`kernel_sources`). Kiểm tra từng file JSON trước khi commit; chỉ số liệu từ lần chạy Kaggle thật mới được đưa vào báo cáo.
+
 ## E. Xử lý sự cố
 
 | Triệu chứng | Cách xử lý |
