@@ -89,20 +89,20 @@ FRACTION = **1**, chạy lúc `2026-11-17T23:20:17.965464+00:00`
 
 ## RQ5 - Hệ gợi ý - `results/06_recommender.json`
 
-FRACTION = **0.05**, chạy lúc `2026-11-17T21:27:53.201417+00:00`
+FRACTION = **1**, chạy lúc `2026-11-18T06:57:19.056932+00:00`
 
 | Chỉ số | Giá trị | Nguồn |
 |---|---|---|
 | Cutoff / validation cutoff | 2019-11-15 / 2019-11-08 | `cutoff, val_cutoff` |
-| User đánh giá / user chung | 10,298 / 4,713 | `n_eval_users, n_common_users` |
-| NDCG@10 popularity | 0.06521 | `models.popularity.ndcg@10` |
-| NDCG@10 item-kNN | 0.05788 | `models.item_knn.ndcg@10` |
-| NDCG@10 ALS | 0.09218 | `models.als_best.ndcg@10` |
-| Recall@10 ALS | 0.1405 | `models.als_best.recall@10` |
+| User đánh giá / user chung | 206,186 / 94,201 | `n_eval_users, n_common_users` |
+| NDCG@10 popularity | 0.06462 | `models.popularity.ndcg@10` |
+| NDCG@10 item-kNN | 0.0645 | `models.item_knn.ndcg@10` |
+| NDCG@10 ALS | 0.08987 | `models.als_best.ndcg@10` |
+| Recall@10 ALS | 0.1392 | `models.als_best.recall@10` |
 | ALS chọn (rank, alpha) | (64, 10) | `models.als_best.rank/alpha` |
-| ALS - popularity: diff [CI95] | +0.0270 [+0.0205, +0.0334], p=0 | `significance_ndcg@10_paired_bootstrap` |
-| ALS - item-kNN: diff [CI95] | +0.0343 [+0.0284, +0.0405], p=0 | `significance_ndcg@10_paired_bootstrap` |
-| item-kNN - popularity: diff [CI95] | -0.0073 [-0.0131, -0.0015], p=0.997 | `significance_ndcg@10_paired_bootstrap` |
+| ALS - popularity: diff [CI95] | +0.0253 [+0.0233, +0.0273], p=0 | `significance_ndcg@10_paired_bootstrap` |
+| ALS - item-kNN: diff [CI95] | +0.0254 [+0.0236, +0.0273], p=0 | `significance_ndcg@10_paired_bootstrap` |
+| item-kNN - popularity: diff [CI95] | -0.0001 [-0.0020, +0.0018], p=0.551 | `significance_ndcg@10_paired_bootstrap` |
 
 ## Phụ - Phân khúc và phễu - `results/07_segmentation_funnel.json`
 
