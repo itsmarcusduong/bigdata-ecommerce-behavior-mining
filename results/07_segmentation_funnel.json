@@ -1,228 +1,228 @@
 {
   "experiment": "07_segmentation_funnel",
-  "created_utc": "2026-11-17T21:02:26.037691+00:00",
-  "fraction": 0.05,
+  "created_utc": "2026-11-18T00:45:56.281740+00:00",
+  "fraction": 1.0,
   "funnel_top": [
     {
       "category": "electronics",
-      "view": 155672,
-      "cart": 32024,
-      "purchase": 20330,
-      "view_to_cart": 0.20571457937201296,
-      "cart_to_purchase": 0.6348363727204597,
-      "view_to_purchase": 0.1305950973842438
+      "view": 3107670,
+      "cart": 640941,
+      "purchase": 404255,
+      "view_to_cart": 0.2062448715597216,
+      "cart_to_purchase": 0.6307210804114576,
+      "view_to_purchase": 0.1300829882194699
     },
     {
       "category": "unknown",
-      "view": 143594,
-      "cart": 16643,
-      "purchase": 11636,
-      "view_to_cart": 0.11590317144170369,
-      "cart_to_purchase": 0.6991527969716999,
-      "view_to_purchase": 0.08103402649135757
+      "view": 2868261,
+      "cart": 333374,
+      "purchase": 231804,
+      "view_to_cart": 0.1162286137837526,
+      "cart_to_purchase": 0.6953271700852496,
+      "view_to_purchase": 0.08081691310518813
     },
     {
       "category": "appliances",
-      "view": 54795,
-      "cart": 8434,
-      "purchase": 5582,
-      "view_to_cart": 0.15391915320740943,
-      "cart_to_purchase": 0.6618449134455774,
-      "view_to_purchase": 0.10187060863217447
+      "view": 1087757,
+      "cart": 168509,
+      "purchase": 111151,
+      "view_to_cart": 0.1549141949902414,
+      "cart_to_purchase": 0.6596146199906237,
+      "view_to_purchase": 0.10218366785964145
     },
     {
       "category": "apparel",
-      "view": 31275,
-      "cart": 1086,
-      "purchase": 605,
-      "view_to_cart": 0.0347242206235012,
-      "cart_to_purchase": 0.5570902394106814,
-      "view_to_purchase": 0.019344524380495602
+      "view": 625281,
+      "cart": 23279,
+      "purchase": 13974,
+      "view_to_cart": 0.03722966154416974,
+      "cart_to_purchase": 0.6002835173332188,
+      "view_to_purchase": 0.022348352180859486
     },
     {
       "category": "computers",
-      "view": 27277,
-      "cart": 2876,
-      "purchase": 1789,
-      "view_to_cart": 0.10543681489899916,
-      "cart_to_purchase": 0.6220445062586927,
-      "view_to_purchase": 0.0655863914653371
+      "view": 547334,
+      "cart": 56799,
+      "purchase": 35784,
+      "view_to_cart": 0.10377392962980557,
+      "cart_to_purchase": 0.6300110917445729,
+      "view_to_purchase": 0.06537872670069829
     },
     {
       "category": "furniture",
-      "view": 21421,
-      "cart": 970,
-      "purchase": 644,
-      "view_to_cart": 0.04528266654217824,
-      "cart_to_purchase": 0.6639175257731958,
-      "view_to_purchase": 0.030063955931095655
+      "view": 432393,
+      "cart": 20106,
+      "purchase": 13293,
+      "view_to_cart": 0.0464993651608606,
+      "cart_to_purchase": 0.6611459265890779,
+      "view_to_purchase": 0.03074286586508107
     },
     {
       "category": "auto",
-      "view": 14321,
-      "cart": 1061,
-      "purchase": 722,
-      "view_to_cart": 0.0740870050974094,
-      "cart_to_purchase": 0.6804901036757776,
-      "view_to_purchase": 0.050415473779763985
+      "view": 287456,
+      "cart": 20956,
+      "purchase": 14835,
+      "view_to_cart": 0.07290159189580318,
+      "cart_to_purchase": 0.7079118152319145,
+      "view_to_purchase": 0.05160789825225426
     },
     {
       "category": "kids",
-      "view": 11191,
-      "cart": 541,
-      "purchase": 401,
-      "view_to_cart": 0.04834241801447592,
-      "cart_to_purchase": 0.7412199630314233,
-      "view_to_purchase": 0.035832365293539455
+      "view": 226188,
+      "cart": 10800,
+      "purchase": 7710,
+      "view_to_cart": 0.047747891134808214,
+      "cart_to_purchase": 0.7138888888888889,
+      "view_to_purchase": 0.03408668894901586
     },
     {
       "category": "construction",
-      "view": 10950,
-      "cart": 941,
-      "purchase": 561,
-      "view_to_cart": 0.08593607305936073,
-      "cart_to_purchase": 0.5961742826780021,
-      "view_to_purchase": 0.05123287671232877
+      "view": 219134,
+      "cart": 18893,
+      "purchase": 11354,
+      "view_to_cart": 0.08621665282429929,
+      "cart_to_purchase": 0.6009633197480548,
+      "view_to_purchase": 0.05181304589885641
     },
     {
       "category": "accessories",
-      "view": 5959,
-      "cart": 216,
-      "purchase": 145,
-      "view_to_cart": 0.036247692565866754,
-      "cart_to_purchase": 0.6712962962962963,
-      "view_to_purchase": 0.024332941768753145
+      "view": 115556,
+      "cart": 4063,
+      "purchase": 2716,
+      "view_to_cart": 0.03516044169060888,
+      "cart_to_purchase": 0.6684715727295102,
+      "view_to_purchase": 0.023503755754785558
     },
     {
       "category": "sport",
-      "view": 4172,
-      "cart": 175,
-      "purchase": 106,
-      "view_to_cart": 0.04194630872483222,
-      "cart_to_purchase": 0.6057142857142858,
-      "view_to_purchase": 0.025407478427612654
+      "view": 82276,
+      "cart": 3186,
+      "purchase": 1881,
+      "view_to_cart": 0.03872332150323302,
+      "cart_to_purchase": 0.5903954802259888,
+      "view_to_purchase": 0.022862073994846615
     },
     {
       "category": "country_yard",
-      "view": 404,
-      "cart": 7,
-      "purchase": 2,
-      "view_to_cart": 0.017326732673267328,
-      "cart_to_purchase": 0.2857142857142857,
-      "view_to_purchase": 0.0049504950495049506
+      "view": 8220,
+      "cart": 213,
+      "purchase": 113,
+      "view_to_cart": 0.025912408759124088,
+      "cart_to_purchase": 0.5305164319248826,
+      "view_to_purchase": 0.013746958637469586
     },
     {
       "category": "medicine",
-      "view": 348,
-      "cart": 46,
-      "purchase": 30,
-      "view_to_cart": 0.13218390804597702,
-      "cart_to_purchase": 0.6521739130434783,
-      "view_to_purchase": 0.08620689655172414
+      "view": 7564,
+      "cart": 862,
+      "purchase": 552,
+      "view_to_cart": 0.11396086726599683,
+      "cart_to_purchase": 0.6403712296983759,
+      "view_to_purchase": 0.07297726070861978
     },
     {
       "category": "stationery",
-      "view": 289,
-      "cart": 16,
-      "purchase": 10,
-      "view_to_cart": 0.05536332179930796,
-      "cart_to_purchase": 0.625,
-      "view_to_purchase": 0.03460207612456748
+      "view": 5690,
+      "cart": 380,
+      "purchase": 219,
+      "view_to_cart": 0.06678383128295255,
+      "cart_to_purchase": 0.5763157894736842,
+      "view_to_purchase": 0.038488576449912125
     }
   ],
   "rfm": {
-    "n_buyers": 34911,
+    "n_buyers": 697470,
     "best_k": 4,
     "silhouette": {
-      "3": 0.3888747770909752,
-      "4": 0.45332975333069925,
-      "5": 0.4225796764619973,
-      "6": 0.4248018976772636
+      "3": 0.3882235182593771,
+      "4": 0.45084350908339704,
+      "5": 0.4240779596687756,
+      "6": 0.4016340505708642
     },
     "profile": [
       {
         "segment": 0,
-        "users": 13683,
-        "avg_recency": 28.45991376160199,
-        "avg_frequency": 1.6085653730906966,
-        "avg_monetary": 706.9056259592189
+        "users": 272839,
+        "avg_recency": 28.28107052144305,
+        "avg_frequency": 1.6003907066071932,
+        "avg_monetary": 688.7752574961783
       },
       {
         "segment": 1,
-        "users": 12986,
-        "avg_recency": 30.75481287540428,
-        "avg_frequency": 1.0967965501309103,
-        "avg_monetary": 101.88668566148156
+        "users": 75093,
+        "avg_recency": 14.059592771629845,
+        "avg_frequency": 7.199246267961062,
+        "avg_monetary": 3414.5285403433068
       },
       {
         "segment": 2,
-        "users": 3656,
-        "avg_recency": 13.5109409190372,
-        "avg_frequency": 7.553063457330416,
-        "avg_monetary": 3587.455563457331
+        "users": 88004,
+        "avg_recency": 3.0818712785782463,
+        "avg_frequency": 1.5678264624335259,
+        "avg_monetary": 384.79054077087386
       },
       {
         "segment": 3,
-        "users": 4586,
-        "avg_recency": 3.2832533798517227,
-        "avg_frequency": 1.5902747492368077,
-        "avg_monetary": 389.5259398168341
+        "users": 261534,
+        "avg_recency": 30.895550865279468,
+        "avg_frequency": 1.0993637538522716,
+        "avg_monetary": 103.07394778499162
       }
     ],
-    "seconds": 161.6558288120001
+    "seconds": 166.99707774799992
   },
   "instacart": {
-    "reorder_rate": 0.5892020009308089,
+    "reorder_rate": 0.5896974667922161,
     "top_reordered": [
       {
-        "product_name": "Organic Lowfat 1% Milk",
-        "reorder_rate": 0.8522875816993464,
-        "n": 765
+        "product_name": "Half And Half Ultra Pasteurized",
+        "reorder_rate": 0.8616912016432728,
+        "n": 2921
+      },
+      {
+        "product_name": "Whole Organic Omega 3 Milk",
+        "reorder_rate": 0.8602327624066755,
+        "n": 9108
+      },
+      {
+        "product_name": "Organic Lactose Free Whole Milk",
+        "reorder_rate": 0.8590303173292438,
+        "n": 8477
+      },
+      {
+        "product_name": "Organic Homogenized Whole Milk",
+        "reorder_rate": 0.8576826196473551,
+        "n": 3970
+      },
+      {
+        "product_name": "Ultra-Purified Water",
+        "reorder_rate": 0.857622565480188,
+        "n": 1489
       },
       {
         "product_name": "Milk, Organic, Vitamin D",
-        "reorder_rate": 0.8502066115702479,
-        "n": 968
-      },
-      {
-        "product_name": "Banana",
-        "reorder_rate": 0.8469387755102041,
-        "n": 23618
-      },
-      {
-        "product_name": "Organic Original Almond Milk",
-        "reorder_rate": 0.8410852713178295,
-        "n": 516
+        "reorder_rate": 0.8543420140607981,
+        "n": 20198
       },
       {
         "product_name": "Organic Reduced Fat Milk",
-        "reorder_rate": 0.8389553862894451,
-        "n": 1838
+        "reorder_rate": 0.8506855844993411,
+        "n": 35663
       },
       {
-        "product_name": "0% Greek Strained Yogurt",
-        "reorder_rate": 0.8328267477203647,
-        "n": 658
+        "product_name": "Goat Milk",
+        "reorder_rate": 0.8499517839922854,
+        "n": 5185
       },
       {
-        "product_name": "Organic Fat Free Milk",
-        "reorder_rate": 0.8316618911174785,
-        "n": 1396
+        "product_name": "Banana",
+        "reorder_rate": 0.8435008940569022,
+        "n": 472565
       },
       {
-        "product_name": "Organic Whole Milk",
-        "reorder_rate": 0.8314820228003508,
-        "n": 6842
-      },
-      {
-        "product_name": "Organic Milk Reduced Fat, 2% Milkfat",
-        "reorder_rate": 0.8292307692307692,
-        "n": 650
-      },
-      {
-        "product_name": "Bag of Organic Bananas",
-        "reorder_rate": 0.8284246934283618,
-        "n": 19082
+        "product_name": "Organic  Whole Milk",
+        "reorder_rate": 0.8411908148750254,
+        "n": 9842
       }
     ]
   }
