@@ -55,7 +55,7 @@ FRACTION = **1**, chạy lúc `2026-11-18T01:24:09.239914+00:00`
 
 ## RQ3 - LSH - `results/04_lsh_similarity.json`
 
-FRACTION = **1**, chạy lúc `2026-11-18T01:43:48.650941+00:00`
+FRACTION = **1**, chạy lúc `2026-11-18T02:57:07.107317+00:00`
 
 | Chỉ số | Giá trị | Nguồn |
 |---|---|---|
@@ -64,11 +64,14 @@ FRACTION = **1**, chạy lúc `2026-11-18T01:43:48.650941+00:00`
 | Cặp đúng (Jaccard >= ngưỡng) | 3 | `n_true_pairs_eval` |
 | Ngưỡng | 0.3 | `threshold` |
 | LSH 128 hash: recall / precision | 1 / 1 | `lsh_vs_naive[1]` |
+| Phân tầng theo danh mục: số tập / cặp đúng | 10,410 / 35 | `eval_category_stratified` |
+| Phân tầng: LSH 128 hash recall [CI95] | 1 [0.9011, 1] | `eval_category_stratified.lsh_vs_naive[1]` |
+| Phân tầng: MLlib recall [CI95] | 0.9143 [0.7762, 0.9704] | `eval_category_stratified.lsh_vs_naive[-1]` |
 | MLlib MinHashLSH: recall | 0.6667 | `lsh_vs_naive.-1.recall` |
-| Mũ thực nghiệm naive | 2.136 | `naive_exponent` |
+| Mũ thực nghiệm naive | 2.114 | `naive_exponent` |
 | LSH toàn bộ: số cặp | 1,578 | `lsh_all.pairs` |
-| LSH toàn bộ: thời gian (s) | 141.8 | `lsh_all.seconds` |
-| Naive ngoại suy (giờ) | 52.83 | `lsh_all.naive_extrapolated_hours` |
+| LSH toàn bộ: thời gian (s) | 244 | `lsh_all.seconds` |
+| Naive ngoại suy (giờ) | 89.93 | `lsh_all.naive_extrapolated_hours` |
 
 ## RQ4 - PageRank / HITS - `results/05_link_analysis.json`
 
