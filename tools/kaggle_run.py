@@ -128,6 +128,18 @@ def wait(nb: str, timeout_min: float, poll_s: int = 60) -> int:
         time.sleep(poll_s)
 
 
+def print_log_tail(path: Path, n: int = 60) -> None:
+    """Print the end of a Kaggle kernel log (a JSON list of {stream_name, data}) so errors show in CI logs."""
+    try:
+        entries = json.loads(path.read_text(encoding="utf-8", errors="replace"))
+        text = "".join(e.get("data", "") for e in entries if isinstance(e, dict))
+    except (json.JSONDecodeError, OSError):
+        text = path.read_text(encoding="utf-8", errors="replace")
+    print(f"----- last {n} lines of {path.name} -----")
+    print("\n".join(text.splitlines()[-n:]))
+    print("-----")
+
+
 def output(nb: str) -> int:
     dest = ROOT / "results" / "_kaggle" / slug(nb)
     shutil.rmtree(dest, ignore_errors=True)
@@ -144,6 +156,8 @@ def output(nb: str) -> int:
     for png in (out_dir / "figures").glob("*.png"):
         (ROOT / "results" / "figures").mkdir(parents=True, exist_ok=True)
         shutil.copy(png, ROOT / "results" / "figures" / png.name)
+    for log in dest.glob("*.log"):
+        print_log_tail(log)
     print(f"downloaded to {dest}; copied results/*.json and figures (review before committing)")
     return rc
 
