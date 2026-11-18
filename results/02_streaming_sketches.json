@@ -1,54 +1,54 @@
 {
   "experiment": "02_streaming_sketches",
-  "created_utc": "2026-11-17T20:08:53.426616+00:00",
-  "fraction": 0.05,
+  "created_utc": "2026-11-17T22:53:07.547005+00:00",
+  "fraction": 1.0,
   "n_days": 61,
   "cms": {
     "eps": 2e-05,
     "delta": 0.01,
     "top_k_overlap": 1.0,
-    "top_k_mean_rel_err": 0.0,
+    "top_k_mean_rel_err": 2.3499394573962365e-06,
     "memory_mb": 5.4366,
-    "n_stream": 5179785,
-    "n_distinct_products": 138832,
+    "n_stream": 104335509,
+    "n_distinct_products": 206876,
     "within_bound_fraction": 1.0,
-    "seconds": 22.033573588000024,
+    "seconds": 483.60413011699995,
     "distributed_equals_sequential": true,
-    "distributed_seconds": 7.045862462999992
+    "distributed_seconds": 186.44540854000002
   },
   "bloom": {
-    "n_bits": 2793920,
+    "n_bits": 56810891,
     "k": 7,
-    "empirical_fpr": 0.0011310984431425748,
+    "empirical_fpr": 0.0007587486027383038,
     "target_fpr": 0.01,
-    "memory_mb": 0.34924
+    "memory_mb": 7.101361375
   },
   "dgim": {
     "window": 100000,
     "n_stream": 1000000,
     "n_buckets": 15,
-    "max_rel_err": 0.2988843217850851,
-    "mean_rel_err": 0.11334789741653548
+    "max_rel_err": 0.2923906530856801,
+    "mean_rel_err": 0.11601979928198101
   },
   "hll": [
     {
       "rsd": 0.2,
-      "estimate": 287790,
-      "rel_err": 0.08145787691694882,
-      "seconds": 0.3047509790000049
+      "estimate": 5452809,
+      "rel_err": 0.025610116447408886,
+      "seconds": 4.215319959999988
     },
     {
       "rsd": 0.05,
-      "estimate": 291487,
-      "rel_err": 0.09535047141627805,
-      "seconds": 0.3804537560000085
+      "estimate": 5927026,
+      "rel_err": 0.1148048328938021,
+      "seconds": 4.618834184000207
     },
     {
       "rsd": 0.01,
-      "estimate": 264875,
-      "rel_err": 0.004652159045217633,
-      "seconds": 1.8658207220000236
+      "estimate": 5395292,
+      "rel_err": 0.014791835985411112,
+      "seconds": 14.777857551000125
     }
   ],
-  "exact_distinct_users": 266113
+  "exact_distinct_users": 5316649
 }
