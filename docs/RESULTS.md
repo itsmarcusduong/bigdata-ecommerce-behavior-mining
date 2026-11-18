@@ -72,17 +72,17 @@ FRACTION = **0.05**, chạy lúc `2026-11-17T21:38:44.272350+00:00`
 
 ## RQ4 - PageRank / HITS - `results/05_link_analysis.json`
 
-FRACTION = **0.05**, chạy lúc `2026-11-17T20:46:35.311920+00:00`
+FRACTION = **1**, chạy lúc `2026-11-17T23:20:17.965464+00:00`
 
 | Chỉ số | Giá trị | Nguồn |
 |---|---|---|
-| Nút / cạnh | 51,987 / 288,190 | `graph` |
-| Spearman(PR, views) | 0.6796 | `pagerank.spearman.rank.views` |
-| Spearman(PR, purchases) | 0.4267 | `pagerank.spearman.rank.purchases` |
-| Top-1000 trùng views | 0.622 | `pagerank.top1000_overlap_with_views` |
-| Topic mass: toàn cục -> cá nhân hóa | 0.1396 -> 0.3601 (electronics) | `topic_sensitive` |
-| PageRank thời gian (s) | 259.9 | `pagerank.seconds` |
-| HITS thời gian (s) | 916.7 | `hits_seconds` |
+| Nút / cạnh | 152,189 / 4,445,337 | `graph` |
+| Spearman(PR, views) | 0.7948 | `pagerank.spearman.rank.views` |
+| Spearman(PR, purchases) | 0.5957 | `pagerank.spearman.rank.purchases` |
+| Top-1000 trùng views | 0.569 | `pagerank.top1000_overlap_with_views` |
+| Topic mass: toàn cục -> cá nhân hóa | 0.08299 -> 0.631 (apparel) | `topic_sensitive` |
+| PageRank thời gian (s) | 271.9 | `pagerank.seconds` |
+| HITS thời gian (s) | 1,243 | `hits_seconds` |
 
 ## RQ5 - Hệ gợi ý - `results/06_recommender.json`
 
@@ -103,13 +103,13 @@ FRACTION = **0.05**, chạy lúc `2026-11-17T21:27:53.201417+00:00`
 
 ## Phụ - Phân khúc và phễu - `results/07_segmentation_funnel.json`
 
-FRACTION = **0.05**, chạy lúc `2026-11-17T21:02:26.037691+00:00`
+FRACTION = **1**, chạy lúc `2026-11-18T00:45:56.281740+00:00`
 
 | Chỉ số | Giá trị | Nguồn |
 |---|---|---|
-| Người mua | 34,911 | `rfm.n_buyers` |
+| Người mua | 697,470 | `rfm.n_buyers` |
 | k tốt nhất | 4 | `rfm.best_k` |
-| Tỷ lệ mua lại Instacart | 0.5892 | `instacart.reorder_rate` |
+| Tỷ lệ mua lại Instacart | 0.5897 | `instacart.reorder_rate` |
 
 ## RQ6 - Khả năng mở rộng - `results/08_scalability_benchmark.json`
 
