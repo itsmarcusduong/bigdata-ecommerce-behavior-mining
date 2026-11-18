@@ -122,7 +122,8 @@ def train_als(ui: DataFrame, rank: int = 32, reg: float = 0.05, alpha: float = 2
     data = ui.select(F.col("user_id").cast("int").alias("u"), F.col("product_id").cast("int").alias("i"),
                      F.col("rating").cast("float").alias("r"))
     return ALS(userCol="u", itemCol="i", ratingCol="r", implicitPrefs=True, rank=rank, regParam=reg,
-               alpha=alpha, maxIter=max_iter, seed=seed, coldStartStrategy="drop").fit(data)
+               alpha=alpha, maxIter=max_iter, seed=seed, coldStartStrategy="drop",
+               checkpointInterval=2).fit(data)  # truncate lineage: bounded shuffle files on disk
 
 
 def als_recs(model, users: DataFrame, n: int = 100) -> DataFrame:

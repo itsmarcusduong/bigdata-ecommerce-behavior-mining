@@ -18,6 +18,7 @@
 # Differences are tested with a **paired bootstrap over users** (95% CI).
 
 # %%
+import gc
 import time
 
 from datetime import date, timedelta
@@ -84,6 +85,7 @@ for rank in (16, 32, 64):
         if m["ndcg@10"] > best_ndcg:
             best_ndcg, best_key = m["ndcg@10"], (rank, alpha)
         print(row)
+        del model; gc.collect()   # release the model so Spark can delete its shuffle files
 best_model = recsys.train_als(ui, rank=best_key[0], reg=0.05, alpha=best_key[1], max_iter=8)  # refit on all train
 print("selected on validation:", best_key)
 grid_df = pd.DataFrame(grid); grid_df
@@ -127,6 +129,7 @@ for name, types in variants.items():
     mdl = recsys.train_als(mat, rank=rank, alpha=alpha, max_iter=8)
     # same users for every variant: users a variant cannot serve fall back to popularity
     abl[name] = recsys.evaluate(recsys.with_fallback(recsys.als_recs(mdl, users, 100), pop), truth, seen, users=common)
+    del mdl; gc.collect()
 abl_df = pd.DataFrame(abl).T[["precision@10", "recall@10", "map@10", "ndcg@10", "ndcg@20", "n_users"]]
 abl_df
 

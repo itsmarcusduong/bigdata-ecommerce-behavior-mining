@@ -68,7 +68,10 @@ def get_spark(app_name: str = "bdm", driver_memory: str | None = None,
 
     mem = driver_memory or os.environ.get("BDM_SPARK_MEM", "4g")
     parts = shuffle_partitions or int(os.environ.get("BDM_SHUFFLE_PARTITIONS", "64"))
-    tmp = WORK_DIR / "spark-tmp"
+    # Shuffle/spill files: on Kaggle /kaggle/working is the size-limited *output* disk (and ALS on the full
+    # data filled it); /tmp is the larger scratch disk. Override with BDM_LOCAL_DIR.
+    default_tmp = "/tmp/bdm-spark-tmp" if on_kaggle() else str(WORK_DIR / "spark-tmp")
+    tmp = Path(os.environ.get("BDM_LOCAL_DIR", default_tmp))
     tmp.mkdir(parents=True, exist_ok=True)
     spark = (
         SparkSession.builder.master(f"local[{cores}]")
@@ -80,6 +83,8 @@ def get_spark(app_name: str = "bdm", driver_memory: str | None = None,
         .config("spark.sql.session.timeZone", "UTC")
         .config("spark.local.dir", str(tmp))
         .config("spark.ui.showConsoleProgress", "false")
+        # remove shuffle files of unreferenced RDDs/models promptly (default periodic GC: every 30 min)
+        .config("spark.cleaner.periodicGC.interval", "2min")
         .config("spark.sql.files.maxPartitionBytes", str(128 * 1024 * 1024))
         # Arrow off: toPandas() is only used on small aggregates, and with limit() Spark 3.5 prints
         # noisy "Memory was leaked by query" errors when Arrow batches are cancelled.
@@ -87,4 +92,7 @@ def get_spark(app_name: str = "bdm", driver_memory: str | None = None,
         .getOrCreate()
     )
     spark.sparkContext.setLogLevel("ERROR")
+    ckpt = tmp / "checkpoints"
+    ckpt.mkdir(parents=True, exist_ok=True)
+    spark.sparkContext.setCheckpointDir(str(ckpt))  # lets ALS truncate lineage (checkpointInterval)
     return spark
