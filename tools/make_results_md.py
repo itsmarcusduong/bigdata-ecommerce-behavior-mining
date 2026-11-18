@@ -108,6 +108,9 @@ ROWS = [
             ("Cặp đúng (Jaccard >= ngưỡng)", "n_true_pairs_eval"),
             ("Ngưỡng", "threshold"),
             ("LSH 128 hash: recall / precision", None),
+            ("Phân tầng theo danh mục: số tập / cặp đúng", None),
+            ("Phân tầng: LSH 128 hash recall [CI95]", None),
+            ("Phân tầng: MLlib recall [CI95]", None),
             ("MLlib MinHashLSH: recall", "lsh_vs_naive.-1.recall"),
             ("Mũ thực nghiệm naive", "naive_exponent"),
             ("LSH toàn bộ: số cặp", "lsh_all.pairs"),
@@ -197,6 +200,27 @@ def composite(name: str, label: str, d: dict) -> tuple[str, str]:
         "LSH 128 hash: recall / precision": (
             lambda: f"{fmt(get(d, 'lsh_vs_naive.1.recall'))} / {fmt(get(d, 'lsh_vs_naive.1.precision'))}",
             "lsh_vs_naive[1]",
+        ),
+        "Phân tầng theo danh mục: số tập / cặp đúng": (
+            lambda: (
+                f"{fmt(get(d, 'eval_category_stratified.n_sets'))} / "
+                f"{fmt(get(d, 'eval_category_stratified.n_true_pairs'))}"
+            ),
+            "eval_category_stratified",
+        ),
+        "Phân tầng: LSH 128 hash recall [CI95]": (
+            lambda: (
+                f"{fmt(get(d, 'eval_category_stratified.lsh_vs_naive.1.recall'))} "
+                f"{fmt(get(d, 'eval_category_stratified.lsh_vs_naive.1.recall_ci95'))}"
+            ),
+            "eval_category_stratified.lsh_vs_naive[1]",
+        ),
+        "Phân tầng: MLlib recall [CI95]": (
+            lambda: (
+                f"{fmt(get(d, 'eval_category_stratified.lsh_vs_naive.-1.recall'))} "
+                f"{fmt(get(d, 'eval_category_stratified.lsh_vs_naive.-1.recall_ci95'))}"
+            ),
+            "eval_category_stratified.lsh_vs_naive[-1]",
         ),
         "Nút / cạnh": (lambda: f"{fmt(get(d, 'graph.nodes'))} / {fmt(get(d, 'graph.edges'))}", "graph"),
         "Topic mass: toàn cục -> cá nhân hóa": (

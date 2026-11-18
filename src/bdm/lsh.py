@@ -114,6 +114,17 @@ def pair_recall_precision(found: set, truth: set) -> tuple[float, float]:
     return (tp / len(truth) if truth else 1.0), (tp / len(found) if found else 1.0)
 
 
+def wilson_ci(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
+    """Wilson score interval for a proportion k/n (well-behaved at 0 and 1, unlike the normal interval)."""
+    if n == 0:
+        return (0.0, 1.0)
+    p = k / n
+    den = 1 + z * z / n
+    centre = (p + z * z / (2 * n)) / den
+    half = z * ((p * (1 - p) / n + z * z / (4 * n * n)) ** 0.5) / den
+    return (max(0.0, centre - half), min(1.0, centre + half))
+
+
 def mllib_minhash_pairs(df, id_col: str, items_col: str, jaccard_threshold: float,
                         num_tables: int = 8, seed: int = 0):
     """Spark MLlib ``MinHashLSH`` self-join; returns DataFrame (id_a, id_b, jaccard)."""

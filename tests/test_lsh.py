@@ -57,3 +57,12 @@ def test_mllib_minhash_runs(spark):
     truth = set(exact_similar_pairs(sets, 0.5))
     found = {(r.id_a, r.id_b) for r in out}
     assert pair_recall_precision(found, truth)[0] >= 0.8
+
+
+def test_wilson_ci_known_values():
+    from bdm.lsh import wilson_ci
+    lo, hi = wilson_ci(3, 3)          # 3/3 is consistent with a recall well below 1
+    assert hi == 1.0 and 0.43 < lo < 0.45
+    lo, hi = wilson_ci(50, 100)
+    assert abs(lo - 0.4038) < 1e-3 and abs(hi - 0.5962) < 1e-3
+    assert wilson_ci(0, 0) == (0.0, 1.0)
