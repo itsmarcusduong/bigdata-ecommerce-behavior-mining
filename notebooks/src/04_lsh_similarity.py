@@ -16,7 +16,7 @@ from pyspark.sql import functions as F
 
 from bdm import config, eda, io
 from bdm.lsh import (best_bands_rows, exact_similar_pairs, lsh_similar_pairs, mllib_minhash_pairs,
-                     pair_recall_precision, s_curve)
+                     pair_recall_precision, s_curve, wilson_ci)
 from bdm.results import save_fig, save_result
 
 spark = config.get_spark("04-lsh", driver_memory=SPARK_MEM)
@@ -36,36 +36,64 @@ n_prod = prod_sets.count()
 print(f"{n_prod:,} product-sets; mean size {prod_sets.select(F.avg(F.size('users'))).first()[0]:.1f}")
 
 # %% [markdown]
-# ## 2. Ground truth on a subsample (naive O(n^2)) & recall of the LSH variants
+# ## 2. Ground truth on subsamples (naive O(n^2)) & recall of the LSH variants
+# Two evaluation sets, both chosen **independently of LSH**:
+# * **random** products - unbiased, but on the full data it contains very few pairs above the threshold;
+# * **category-stratified** - all products of the largest categories (similar pairs concentrate inside a
+#   category), giving enough true pairs for a meaningful recall. Recall gets a Wilson 95% interval.
 
 # %%
 N_EVAL = int(os.environ.get("BDM_LSH_EVAL", "10000"))  # naive O(n^2) baseline; more sets -> more true pairs
+N_EVAL_CAT = int(os.environ.get("BDM_LSH_EVAL_CAT", "8000"))
 sub = prod_sets.orderBy(F.rand(1)).limit(N_EVAL).collect()
 sub_sets = {r["product_id"]: set(r["users"]) for r in sub}
-t0 = time.perf_counter(); truth_d = exact_similar_pairs(sub_sets, THRESH); t_naive = time.perf_counter() - t0
-truth = set(truth_d)
-print(f"naive on {len(sub_sets)} sets: {len(truth):,} similar pairs, {t_naive:.1f}s")
 
-sub_rdd = spark.sparkContext.parallelize([(k, sorted(v)) for k, v in sub_sets.items()], 16)
-rows = []
-for n_hashes, min_prob in [(64, 0.8), (128, 0.9), (128, 0.99), (256, 0.99)]:
-    b, r = best_bands_rows(n_hashes, THRESH, min_prob)
+prod_cat = events.groupBy("product_id").agg(F.first("category_id", ignorenulls=True).alias("category_id"))
+cat_sets = prod_sets.join(prod_cat, "product_id")
+cat_size = cat_sets.groupBy("category_id").count().orderBy(F.desc("count"), "category_id").collect()
+chosen, total = [], 0
+for row in cat_size:                      # whole categories, largest first, until N_EVAL_CAT products
+    if total + row["count"] > N_EVAL_CAT and chosen:
+        continue
+    chosen.append(row["category_id"]); total += row["count"]
+    if total >= 0.9 * N_EVAL_CAT:
+        break
+cat_sub = cat_sets.filter(F.col("category_id").isin(chosen)).collect()
+cat_sub_sets = {r["product_id"]: set(r["users"]) for r in cat_sub}
+print(f"category-stratified subset: {len(cat_sub_sets):,} products from {len(chosen)} categories")
+
+
+def evaluate_subset(sets: dict, label: str) -> tuple[pd.DataFrame, dict]:
+    t0 = time.perf_counter(); truth = set(exact_similar_pairs(sets, THRESH)); t_naive = time.perf_counter() - t0
+    print(f"[{label}] naive on {len(sets):,} sets: {len(truth):,} similar pairs, {t_naive:.1f}s")
+    rdd = spark.sparkContext.parallelize([(k, sorted(v)) for k, v in sets.items()], 16)
+    rows = []
+    for n_hashes, min_prob in [(64, 0.8), (128, 0.9), (128, 0.99), (256, 0.99)]:
+        b, r = best_bands_rows(n_hashes, THRESH, min_prob)
+        t0 = time.perf_counter()
+        pairs, _ = lsh_similar_pairs(rdd, THRESH, n_hashes, seed=1, min_prob=min_prob)
+        found = {k for k, _ in pairs.collect()}; t = time.perf_counter() - t0
+        rec, prec = pair_recall_precision(found, truth)
+        lo, hi = wilson_ci(len(found & truth), len(truth))
+        rows.append({"subset": label, "n_hashes": n_hashes, "bands": b, "rows": r,
+                     "P(candidate | s=t)": round(s_curve(THRESH, b, r), 3), "recall": round(rec, 4),
+                     "recall_ci95": [round(lo, 4), round(hi, 4)], "precision": round(prec, 4), "seconds": round(t, 2)})
+    mdf = spark.createDataFrame([(k, sorted(v)) for k, v in sets.items()], "pid long, users array<long>")
     t0 = time.perf_counter()
-    pairs, info = lsh_similar_pairs(sub_rdd, THRESH, n_hashes, seed=1, min_prob=min_prob)
-    found = {k for k, _ in pairs.collect()}; t = time.perf_counter() - t0
-    rec, prec = pair_recall_precision(found, truth)
-    rows.append({"n_hashes": n_hashes, "bands": b, "rows": r, "P(candidate | s=t)": round(s_curve(THRESH, b, r), 3),
-                 "recall": round(rec, 4), "precision": round(prec, 4), "seconds": round(t, 2)})
-lsh_tab = pd.DataFrame(rows)
-# MLlib MinHashLSH
-mdf = spark.createDataFrame([(k, sorted(v)) for k, v in sub_sets.items()], "pid long, users array<long>")
-t0 = time.perf_counter()
-ml = {(r.id_a, r.id_b) for r in mllib_minhash_pairs(mdf, "pid", "users", THRESH, num_tables=10).collect()}
-t_ml = time.perf_counter() - t0
-rec_ml, prec_ml = pair_recall_precision(ml, truth)
-lsh_tab.loc[len(lsh_tab)] = {"n_hashes": "MLlib 10 tables", "bands": None, "rows": None, "P(candidate | s=t)": None,
-                             "recall": round(rec_ml, 4), "precision": round(prec_ml, 4), "seconds": round(t_ml, 2)}
-lsh_tab
+    ml = {(r.id_a, r.id_b) for r in mllib_minhash_pairs(mdf, "pid", "users", THRESH, num_tables=10).collect()}
+    t_ml = time.perf_counter() - t0
+    rec_ml, prec_ml = pair_recall_precision(ml, truth)
+    lo, hi = wilson_ci(len(ml & truth), len(truth))
+    rows.append({"subset": label, "n_hashes": "MLlib 10 tables", "bands": None, "rows": None, "P(candidate | s=t)": None,
+                 "recall": round(rec_ml, 4), "recall_ci95": [round(lo, 4), round(hi, 4)],
+                 "precision": round(prec_ml, 4), "seconds": round(t_ml, 2)})
+    return pd.DataFrame(rows), {"n_sets": len(sets), "n_true_pairs": len(truth), "naive_seconds": t_naive}
+
+
+lsh_tab, info_rand = evaluate_subset(sub_sets, "random")
+lsh_tab_cat, info_cat = evaluate_subset(cat_sub_sets, "category-stratified")
+t_naive = info_rand["naive_seconds"]
+pd.concat([lsh_tab, lsh_tab_cat], ignore_index=True)
 
 # %% [markdown]
 # ## 3. S-curve: theory vs measurement
@@ -114,7 +142,9 @@ pd.DataFrame([{"product_a": a, "product_b": b, "jaccard": round(j, 3), "cat_a": 
 
 # %%
 out.update({"n_product_sets": n_prod, "eval_subset": N_EVAL, "naive_seconds_on_eval": t_naive,
-            "n_true_pairs_eval": len(truth), "lsh_vs_naive": lsh_tab.to_dict("records"),
+            "n_true_pairs_eval": info_rand["n_true_pairs"], "lsh_vs_naive": lsh_tab.to_dict("records"),
+            "eval_category_stratified": {**info_cat, "n_categories": len(chosen),
+                                         "lsh_vs_naive": lsh_tab_cat.to_dict("records")},
             "scaling": scal.to_dict("records"), "naive_exponent": coef,
             "lsh_all": {"pairs": n_pairs_all, "seconds": t_all, "bands": info_all["bands"], "rows": info_all["rows"],
                         "naive_extrapolated_hours": naive_est / 3600}})
