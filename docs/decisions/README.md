@@ -10,7 +10,7 @@ commit/PR nơi quyết định thực sự có hiệu lực, để thời điể
 
 | ADR | Quyết định | Trạng thái | Có hiệu lực từ |
 |---|---|---|---|
-| [0001](ADR-0001-data-and-split.md) | Dữ liệu REES46 + Instacart, tách train/val/test theo ngày | Accepted (license: NEEDS_REVIEW) | #32, #47 |
+| [0001](ADR-0001-data-and-split.md) | Dữ liệu REES46 + Instacart, tách train/val/test theo ngày | Accepted (license REES46 đã kiểm; Instacart gốc NEEDS_REVIEW) | #32, #47 |
 | [0002](ADR-0002-model-selection-rules.md) | Luật chọn mô hình đặt trước cho 04, 06, 07 | Accepted | #64, #67 (trước run 21/11 08:13 UTC) |
 | [0003](ADR-0003-hadoop-local-mode.md) | Hadoop 3.3.6 local mode để đối chiếu độ đúng với Spark | Accepted | #67, #68 |
 | [0004](ADR-0004-kaggle-via-actions.md) | Chạy Kaggle qua GitHub Actions, mỗi run một nhánh results/ + PR | Accepted | #39, #48 |
