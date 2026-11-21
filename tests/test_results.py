@@ -18,9 +18,7 @@ import make_results_md as mr  # noqa: E402
 
 # Results produced by an older notebook version and awaiting a rerun. Each entry must name why; remove it when the
 # new run is merged (the test then enforces the new keys).
-PENDING = {
-    "06_recommender": "rerun of the pre-registered multi-model protocol (#67) still on Kaggle",
-}
+PENDING: dict[str, str] = {}
 
 
 def test_mark_stage_appends(tmp_path, monkeypatch):
