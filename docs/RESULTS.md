@@ -21,7 +21,7 @@ FRACTION = **1**, chạy lúc `2026-11-17T22:04:23.868790+00:00`
 
 ## RQ1 - Sketch luồng - `results/02_streaming_sketches.json`
 
-FRACTION = **1**, chạy lúc `2026-11-17T22:53:07.547005+00:00`
+FRACTION = **1**, chạy lúc `2026-11-21T08:51:51.874193+00:00`
 
 | Chỉ số | Giá trị | Nguồn |
 |---|---|---|
@@ -36,6 +36,22 @@ FRACTION = **1**, chạy lúc `2026-11-17T22:53:07.547005+00:00`
 | HLL rsd=0.01: sai số | 0.01479 | `hll.2.rel_err` |
 | Distinct users chính xác | 5,316,649 | `exact_distinct_users` |
 
+**Count-Min theo seed** (`cms_seeds`)
+
+| seed | never_under | within_bound | mean_abs_err |
+|---|---|---|---|
+| 42 | có | 1 | 10.6 |
+| 7 | có | 1 | 8.565 |
+| 2024 | có | 1 | 10.02 |
+
+**HyperLogLog: phân bố sai số qua các salt** (`hll_salted`)
+
+| rsd | mean_rel_err | sd_rel_err | mean_abs_rel_err | within_2rsd |
+|---|---|---|---|---|
+| 0.01 | -0.004797 | 0.01048 | 0.007289 | 0.9 |
+| 0.05 | 0.01357 | 0.03299 | 0.02832 | 1 |
+| 0.2 | 0.05792 | 0.1622 | 0.1422 | 1 |
+
 ## RQ2 - Tập phổ biến (Instacart) - `results/03_frequent_itemsets.json`
 
 FRACTION = **1**, chạy lúc `2026-11-18T01:24:09.239914+00:00`
@@ -43,13 +59,13 @@ FRACTION = **1**, chạy lúc `2026-11-18T01:24:09.239914+00:00`
 | Chỉ số | Giá trị | Nguồn |
 |---|---|---|
 | Số giỏ | 3,055,045 | `instacart.n_baskets` |
-| Support 0.001: cặp phổ biến | 2,025 | `instacart.benchmark.-1.frequent_pairs` |
+| Support 0.001: cặp phổ biến | 2025 | `instacart.benchmark.-1.frequent_pairs` |
 | Support 0.001: ứng viên A-Priori | 1,517,074 | `instacart.benchmark.-1.apriori_candidates` |
-| Support 0.001: ứng viên PCY | 6,161 | `instacart.benchmark.-1.pcy_candidates` |
+| Support 0.001: ứng viên PCY | 6161 | `instacart.benchmark.-1.pcy_candidates` |
 | Support 0.001: PCY giảm ứng viên | 0.9959 | `instacart.benchmark.-1.pcy_candidate_reduction` |
 | A-Priori = PCY | có | `instacart.benchmark.-1.same_result` |
 | Thời gian A-Priori / PCY / FP-Growth (s) | 266.3 / 379.1 / 1,534 | `instacart.benchmark[-1].t_*` |
-| FP-Growth: số itemset | 4,118 | `instacart.n_itemsets` |
+| FP-Growth: số itemset | 4118 | `instacart.n_itemsets` |
 | Luật lift > 2 | 524 | `instacart.n_rules_lift_gt_2` |
 | REES46 giỏ phiên / luật | 325,169 / 128 | `rees46_sessions` |
 
@@ -64,12 +80,9 @@ FRACTION = **1**, chạy lúc `2026-11-18T02:57:07.107317+00:00`
 | Cặp đúng (Jaccard >= ngưỡng) | 3 | `n_true_pairs_eval` |
 | Ngưỡng | 0.3 | `threshold` |
 | LSH 128 hash: recall / precision | 1 / 1 | `lsh_vs_naive[1]` |
-| Phân tầng theo danh mục: số tập / cặp đúng | 10,410 / 35 | `eval_category_stratified` |
-| Phân tầng: LSH 128 hash recall [CI95] | 1 [0.9011, 1] | `eval_category_stratified.lsh_vs_naive[1]` |
-| Phân tầng: MLlib recall [CI95] | 0.9143 [0.7762, 0.9704] | `eval_category_stratified.lsh_vs_naive[-1]` |
 | MLlib MinHashLSH: recall | 0.6667 | `lsh_vs_naive.-1.recall` |
 | Mũ thực nghiệm naive | 2.114 | `naive_exponent` |
-| LSH toàn bộ: số cặp | 1,578 | `lsh_all.pairs` |
+| LSH toàn bộ: số cặp | 1578 | `lsh_all.pairs` |
 | LSH toàn bộ: thời gian (s) | 244 | `lsh_all.seconds` |
 | Naive ngoại suy (giờ) | 89.93 | `lsh_all.naive_extrapolated_hours` |
 
@@ -95,14 +108,8 @@ FRACTION = **1**, chạy lúc `2026-11-18T06:57:19.056932+00:00`
 |---|---|---|
 | Cutoff / validation cutoff | 2019-11-15 / 2019-11-08 | `cutoff, val_cutoff` |
 | User đánh giá / user chung | 206,186 / 94,201 | `n_eval_users, n_common_users` |
-| NDCG@10 popularity | 0.06462 | `models.popularity.ndcg@10` |
-| NDCG@10 item-kNN | 0.0645 | `models.item_knn.ndcg@10` |
-| NDCG@10 ALS | 0.08987 | `models.als_best.ndcg@10` |
-| Recall@10 ALS | 0.1392 | `models.als_best.recall@10` |
-| ALS chọn (rank, alpha) | (64, 10) | `models.als_best.rank/alpha` |
-| ALS - popularity: diff [CI95] | +0.0253 [+0.0233, +0.0273], p=0 | `significance_ndcg@10_paired_bootstrap` |
-| ALS - item-kNN: diff [CI95] | +0.0254 [+0.0236, +0.0273], p=0 | `significance_ndcg@10_paired_bootstrap` |
-| item-kNN - popularity: diff [CI95] | -0.0001 [-0.0020, +0.0018], p=0.551 | `significance_ndcg@10_paired_bootstrap` |
+| Mô hình được chọn (luật đặt trước, theo validation) | chưa chạy | `selected` |
+| Seed | chưa chạy | `seeds` |
 
 ## Phụ - Phân khúc và phễu - `results/07_segmentation_funnel.json`
 
@@ -111,6 +118,7 @@ FRACTION = **1**, chạy lúc `2026-11-18T00:45:56.281740+00:00`
 | Chỉ số | Giá trị | Nguồn |
 |---|---|---|
 | Người mua | 697,470 | `rfm.n_buyers` |
+| Thuật toán được chọn | chưa chạy | `rfm.selected_algo` |
 | k tốt nhất | 4 | `rfm.best_k` |
 | Tỷ lệ mua lại Instacart | 0.5897 | `instacart.reorder_rate` |
 
@@ -129,11 +137,15 @@ FRACTION = **1**, chạy lúc `2026-11-18T02:53:21.444756+00:00`
 | Speed-up 4 lõi: ALS | 1.97 | `speedup.-1.speedup_als3` |
 | Speed-up 4 lõi: aggregate | 1.79 | `speedup.-1.speedup_aggregate` |
 
-## Hadoop 3.3.6 thật - `results/hadoop/hadoop_vs_pipe.json`
+## Hadoop MapReduce trên dữ liệu thật - `results/09_hadoop_real.json`
+
+_chưa chạy_
+
+## Hadoop 3.3.6 thật trên dữ liệu synthetic - `results/hadoop/hadoop_vs_pipe.json`
 
 Dữ liệu: **synthetic** (3000 user) - kiểm chứng cách chạy, không phải số liệu dữ liệu thật.
 
 | Job | Khóa Hadoop / pipe | Tổng Hadoop / pipe | Trùng khớp |
 |---|---|---|---|
-| event_counts | 2,381 / 2,381 | 82,744 / 82,744 | có |
-| pair_counts | 8,548 / 8,548 | 16,399 / 16,399 | có |
+| event_counts | 2381 / 2381 | 82,744 / 82,744 | có |
+| pair_counts | 8548 / 8548 | 16,399 / 16,399 | có |
