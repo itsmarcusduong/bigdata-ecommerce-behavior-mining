@@ -164,7 +164,17 @@ FRACTION = **1**, chạy lúc `2026-11-18T02:53:21.444756+00:00`
 
 ## Hadoop MapReduce trên dữ liệu thật - `results/09_hadoop_real.json`
 
-_chưa chạy_
+FRACTION = **1**, chạy lúc `2026-11-21T10:35:19.376490+00:00`
+
+| Chỉ số | Giá trị | Nguồn |
+|---|---|---|
+| Engine | hadoop | `engine` |
+| Dữ liệu vào | [2019-Oct.csv, 2019-Nov.csv] | `inputs` |
+| Kết quả Hadoop = Spark | có | `identical` |
+| Đếm sự kiện: số khóa / khóa lệch | 356,254 / 0 | `compare_event_counts` |
+| Đếm cặp: số khóa / khóa lệch | 355,861 / 0 | `compare_pair_counts` |
+| Thời gian Hadoop: đếm / giỏ+cặp (s) | 327.1 / 102.3 | `jobs.*.seconds` |
+| Thời gian Spark: đếm / cặp (s) | 100.7 / 168.6 | `spark` |
 
 ## Hadoop 3.3.6 thật trên dữ liệu synthetic - `results/hadoop/hadoop_vs_pipe.json`
 
