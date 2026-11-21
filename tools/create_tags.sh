@@ -37,7 +37,9 @@ for tag in $(printf '%s\n' "${!SHA[@]}" | sort -V); do
     echo "release $tag already exists - skipping"
   else
     tail -n +2 "docs/release_notes/$tag.md" > "/tmp/notes-$tag.md"
-    gh release create "$tag" --verify-tag --prerelease --title "$tag - $title" --notes-file "/tmp/notes-$tag.md"
+    kind=--prerelease
+    [[ $tag == v1.* ]] && kind=--latest   # v1.x = finished project, not a milestone pre-release
+    gh release create "$tag" --verify-tag $kind --title "$tag - $title" --notes-file "/tmp/notes-$tag.md"
   fi
 done
-echo "Done. Tag v1.0.0 only after M9 and M10 are finished (see docs/GITHUB_WORKFLOW.md)."
+echo "Done."
