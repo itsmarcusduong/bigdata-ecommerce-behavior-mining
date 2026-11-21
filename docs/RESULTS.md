@@ -71,7 +71,7 @@ FRACTION = **1**, chạy lúc `2026-11-18T01:24:09.239914+00:00`
 
 ## RQ3 - LSH - `results/04_lsh_similarity.json`
 
-FRACTION = **1**, chạy lúc `2026-11-18T02:57:07.107317+00:00`
+FRACTION = **1**, chạy lúc `2026-11-21T09:31:32.015306+00:00`
 
 | Chỉ số | Giá trị | Nguồn |
 |---|---|---|
@@ -83,8 +83,33 @@ FRACTION = **1**, chạy lúc `2026-11-18T02:57:07.107317+00:00`
 | MLlib MinHashLSH: recall | 0.6667 | `lsh_vs_naive.-1.recall` |
 | Mũ thực nghiệm naive | 2.114 | `naive_exponent` |
 | LSH toàn bộ: số cặp | 1578 | `lsh_all.pairs` |
-| LSH toàn bộ: thời gian (s) | 244 | `lsh_all.seconds` |
-| Naive ngoại suy (giờ) | 89.93 | `lsh_all.naive_extrapolated_hours` |
+| LSH toàn bộ: thời gian (s) | 202.3 | `lsh_all.seconds` |
+| Naive ngoại suy (giờ) | 80.56 | `lsh_all.naive_extrapolated_hours` |
+
+**LSH: recall theo tập đánh giá, ngưỡng, phương pháp (qua các seed)** (`lsh_eval_summary`)
+
+| subset | threshold | method | n_true | recall_mean | recall_min | precision_min |
+|---|---|---|---|---|---|---|
+| multi-category | 0.2 | 128h, P>=0.9 | 386 | 0.975 | 0.9715 | 1 |
+| multi-category | 0.2 | 128h, P>=0.99 | 386 | 1 | 1 | 1 |
+| multi-category | 0.2 | 256h, P>=0.99 | 386 | 0.9983 | 0.9948 | 1 |
+| multi-category | 0.2 | 64h, P>=0.8 | 386 | 1 | 1 | 1 |
+| multi-category | 0.2 | MLlib 10 tables | 386 | 0.8696 | 0.7979 | 1 |
+| multi-category | 0.3 | 128h, P>=0.9 | 86 | 1 | 1 | 1 |
+| multi-category | 0.3 | 128h, P>=0.99 | 86 | 1 | 1 | 1 |
+| multi-category | 0.3 | 256h, P>=0.99 | 86 | 1 | 1 | 1 |
+| multi-category | 0.3 | 64h, P>=0.8 | 86 | 0.9922 | 0.9767 | 1 |
+| multi-category | 0.3 | MLlib 10 tables | 86 | 0.9767 | 0.9302 | 1 |
+| random | 0.2 | 128h, P>=0.9 | 64 | 0.974 | 0.9688 | 1 |
+| random | 0.2 | 128h, P>=0.99 | 64 | 1 | 1 | 1 |
+| random | 0.2 | 256h, P>=0.99 | 64 | 0.9948 | 0.9844 | 1 |
+| random | 0.2 | 64h, P>=0.8 | 64 | 1 | 1 | 1 |
+| random | 0.2 | MLlib 10 tables | 64 | 0.6198 | 0.6094 | 1 |
+| random | 0.3 | 128h, P>=0.9 | 3 | 1 | 1 | 1 |
+| random | 0.3 | 128h, P>=0.99 | 3 | 1 | 1 | 1 |
+| random | 0.3 | 256h, P>=0.99 | 3 | 1 | 1 | 1 |
+| random | 0.3 | 64h, P>=0.8 | 3 | 1 | 1 | 1 |
+| random | 0.3 | MLlib 10 tables | 3 | 0.6667 | 0.6667 | 1 |
 
 ## RQ4 - PageRank / HITS - `results/05_link_analysis.json`
 
