@@ -1,195 +1,1395 @@
 {
   "experiment": "04_lsh_similarity",
-  "created_utc": "2026-11-18T02:57:07.107317+00:00",
+  "created_utc": "2026-11-21T09:31:32.015306+00:00",
   "fraction": 1.0,
   "threshold": 0.3,
   "n_product_sets": 168626,
   "eval_subset": 10000,
-  "naive_seconds_on_eval": 1160.4769995890001,
+  "naive_seconds_on_eval": 1030.763371601,
   "n_true_pairs_eval": 3,
   "lsh_vs_naive": [
     {
       "subset": "random",
-      "n_hashes": 64,
+      "threshold": 0.3,
+      "seed": 42,
+      "method": "64h, P>=0.8",
       "bands": 32.0,
       "rows": 2.0,
       "P(candidate | s=t)": 0.951,
+      "n_true": 3,
       "recall": 1.0,
       "recall_ci95": [
-        0.4385,
+        0.43849391955098227,
         1.0
       ],
       "precision": 1.0,
-      "seconds": 19.12
+      "seconds": 13.44
     },
     {
       "subset": "random",
-      "n_hashes": 128,
+      "threshold": 0.3,
+      "seed": 42,
+      "method": "128h, P>=0.9",
       "bands": 64.0,
       "rows": 2.0,
       "P(candidate | s=t)": 0.998,
+      "n_true": 3,
       "recall": 1.0,
       "recall_ci95": [
-        0.4385,
+        0.43849391955098227,
         1.0
       ],
       "precision": 1.0,
-      "seconds": 13.65
+      "seconds": 9.73
     },
     {
       "subset": "random",
-      "n_hashes": 128,
+      "threshold": 0.3,
+      "seed": 42,
+      "method": "128h, P>=0.99",
       "bands": 64.0,
       "rows": 2.0,
       "P(candidate | s=t)": 0.998,
+      "n_true": 3,
       "recall": 1.0,
       "recall_ci95": [
-        0.4385,
+        0.43849391955098227,
         1.0
       ],
       "precision": 1.0,
-      "seconds": 12.14
+      "seconds": 9.73
     },
     {
       "subset": "random",
-      "n_hashes": 256,
+      "threshold": 0.3,
+      "seed": 42,
+      "method": "256h, P>=0.99",
       "bands": 128.0,
       "rows": 2.0,
       "P(candidate | s=t)": 1.0,
+      "n_true": 3,
       "recall": 1.0,
       "recall_ci95": [
-        0.4385,
+        0.43849391955098227,
         1.0
       ],
       "precision": 1.0,
-      "seconds": 15.39
+      "seconds": 12.36
     },
     {
       "subset": "random",
-      "n_hashes": "MLlib 10 tables",
+      "threshold": 0.3,
+      "seed": 42,
+      "method": "MLlib 10 tables",
       "bands": NaN,
       "rows": NaN,
       "P(candidate | s=t)": NaN,
-      "recall": 0.6667,
+      "n_true": 3,
+      "recall": 0.6666666666666666,
       "recall_ci95": [
-        0.2077,
-        0.9385
+        0.2076549551264879,
+        0.9385096847238394
       ],
       "precision": 1.0,
-      "seconds": 27.65
+      "seconds": 22.13
     }
   ],
-  "eval_category_stratified": {
-    "n_sets": 10410,
-    "n_true_pairs": 35,
-    "naive_seconds": 1199.0453069679997,
-    "n_categories": 1,
-    "lsh_vs_naive": [
-      {
-        "subset": "category-stratified",
-        "n_hashes": 64,
-        "bands": 32.0,
-        "rows": 2.0,
-        "P(candidate | s=t)": 0.951,
-        "recall": 1.0,
-        "recall_ci95": [
-          0.9011,
-          1.0
-        ],
-        "precision": 1.0,
-        "seconds": 16.1
-      },
-      {
-        "subset": "category-stratified",
-        "n_hashes": 128,
-        "bands": 64.0,
-        "rows": 2.0,
-        "P(candidate | s=t)": 0.998,
-        "recall": 1.0,
-        "recall_ci95": [
-          0.9011,
-          1.0
-        ],
-        "precision": 1.0,
-        "seconds": 16.81
-      },
-      {
-        "subset": "category-stratified",
-        "n_hashes": 128,
-        "bands": 64.0,
-        "rows": 2.0,
-        "P(candidate | s=t)": 0.998,
-        "recall": 1.0,
-        "recall_ci95": [
-          0.9011,
-          1.0
-        ],
-        "precision": 1.0,
-        "seconds": 12.56
-      },
-      {
-        "subset": "category-stratified",
-        "n_hashes": 256,
-        "bands": 128.0,
-        "rows": 2.0,
-        "P(candidate | s=t)": 1.0,
-        "recall": 1.0,
-        "recall_ci95": [
-          0.9011,
-          1.0
-        ],
-        "precision": 1.0,
-        "seconds": 17.81
-      },
-      {
-        "subset": "category-stratified",
-        "n_hashes": "MLlib 10 tables",
-        "bands": NaN,
-        "rows": NaN,
-        "P(candidate | s=t)": NaN,
-        "recall": 0.9143,
-        "recall_ci95": [
-          0.7762,
-          0.9704
-        ],
-        "precision": 1.0,
-        "seconds": 27.72
-      }
-    ]
+  "eval_multi_category": {
+    "n_sets": 12500,
+    "n_true_pairs": {
+      "0.3": 86,
+      "0.2": 386
+    },
+    "naive_seconds": 1702.3754486469998,
+    "n_categories": 5,
+    "cap_per_category": 2500
   },
+  "lsh_eval_by_seed": [
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "seed": 42,
+      "method": "64h, P>=0.8",
+      "bands": 32.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.951,
+      "n_true": 3,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.43849391955098227,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 13.44
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "seed": 42,
+      "method": "128h, P>=0.9",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.998,
+      "n_true": 3,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.43849391955098227,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 9.73
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "seed": 42,
+      "method": "128h, P>=0.99",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.998,
+      "n_true": 3,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.43849391955098227,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 9.73
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "seed": 42,
+      "method": "256h, P>=0.99",
+      "bands": 128.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 3,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.43849391955098227,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 12.36
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "seed": 42,
+      "method": "MLlib 10 tables",
+      "bands": NaN,
+      "rows": NaN,
+      "P(candidate | s=t)": NaN,
+      "n_true": 3,
+      "recall": 0.6666666666666666,
+      "recall_ci95": [
+        0.2076549551264879,
+        0.9385096847238394
+      ],
+      "precision": 1.0,
+      "seconds": 22.13
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "seed": 7,
+      "method": "64h, P>=0.8",
+      "bands": 32.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.951,
+      "n_true": 3,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.43849391955098227,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 8.7
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "seed": 7,
+      "method": "128h, P>=0.9",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.998,
+      "n_true": 3,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.43849391955098227,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 8.23
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "seed": 7,
+      "method": "128h, P>=0.99",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.998,
+      "n_true": 3,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.43849391955098227,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 8.12
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "seed": 7,
+      "method": "256h, P>=0.99",
+      "bands": 128.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 3,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.43849391955098227,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 12.06
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "seed": 7,
+      "method": "MLlib 10 tables",
+      "bands": NaN,
+      "rows": NaN,
+      "P(candidate | s=t)": NaN,
+      "n_true": 3,
+      "recall": 0.6666666666666666,
+      "recall_ci95": [
+        0.2076549551264879,
+        0.9385096847238394
+      ],
+      "precision": 1.0,
+      "seconds": 12.79
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "seed": 2024,
+      "method": "64h, P>=0.8",
+      "bands": 32.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.951,
+      "n_true": 3,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.43849391955098227,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 6.22
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "seed": 2024,
+      "method": "128h, P>=0.9",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.998,
+      "n_true": 3,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.43849391955098227,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 7.93
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "seed": 2024,
+      "method": "128h, P>=0.99",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.998,
+      "n_true": 3,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.43849391955098227,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 8.08
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "seed": 2024,
+      "method": "256h, P>=0.99",
+      "bands": 128.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 3,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.43849391955098227,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 11.61
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "seed": 2024,
+      "method": "MLlib 10 tables",
+      "bands": NaN,
+      "rows": NaN,
+      "P(candidate | s=t)": NaN,
+      "n_true": 3,
+      "recall": 0.6666666666666666,
+      "recall_ci95": [
+        0.2076549551264879,
+        0.9385096847238394
+      ],
+      "precision": 1.0,
+      "seconds": 11.68
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "seed": 42,
+      "method": "64h, P>=0.8",
+      "bands": 64.0,
+      "rows": 1.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 64,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9433739770288436,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 17.17
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "seed": 42,
+      "method": "128h, P>=0.9",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.927,
+      "n_true": 64,
+      "recall": 0.96875,
+      "recall_ci95": [
+        0.8930250611770575,
+        0.9913880422874833
+      ],
+      "precision": 1.0,
+      "seconds": 8.18
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "seed": 42,
+      "method": "128h, P>=0.99",
+      "bands": 128.0,
+      "rows": 1.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 64,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9433739770288436,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 26.51
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "seed": 42,
+      "method": "256h, P>=0.99",
+      "bands": 128.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.995,
+      "n_true": 64,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9433739770288436,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 11.64
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "seed": 42,
+      "method": "MLlib 10 tables",
+      "bands": NaN,
+      "rows": NaN,
+      "P(candidate | s=t)": NaN,
+      "n_true": 64,
+      "recall": 0.625,
+      "recall_ci95": [
+        0.5025015331382642,
+        0.7333419611189468
+      ],
+      "precision": 1.0,
+      "seconds": 12.27
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "seed": 7,
+      "method": "64h, P>=0.8",
+      "bands": 64.0,
+      "rows": 1.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 64,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9433739770288436,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 16.6
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "seed": 7,
+      "method": "128h, P>=0.9",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.927,
+      "n_true": 64,
+      "recall": 0.96875,
+      "recall_ci95": [
+        0.8930250611770575,
+        0.9913880422874833
+      ],
+      "precision": 1.0,
+      "seconds": 7.9
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "seed": 7,
+      "method": "128h, P>=0.99",
+      "bands": 128.0,
+      "rows": 1.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 64,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9433739770288436,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 26.87
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "seed": 7,
+      "method": "256h, P>=0.99",
+      "bands": 128.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.995,
+      "n_true": 64,
+      "recall": 0.984375,
+      "recall_ci95": [
+        0.9166570109970937,
+        0.9972365292495986
+      ],
+      "precision": 1.0,
+      "seconds": 11.76
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "seed": 7,
+      "method": "MLlib 10 tables",
+      "bands": NaN,
+      "rows": NaN,
+      "P(candidate | s=t)": NaN,
+      "n_true": 64,
+      "recall": 0.609375,
+      "recall_ci95": [
+        0.486916942944024,
+        0.7194461145310355
+      ],
+      "precision": 1.0,
+      "seconds": 14.67
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "seed": 2024,
+      "method": "64h, P>=0.8",
+      "bands": 64.0,
+      "rows": 1.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 64,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9433739770288436,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 16.52
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "seed": 2024,
+      "method": "128h, P>=0.9",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.927,
+      "n_true": 64,
+      "recall": 0.984375,
+      "recall_ci95": [
+        0.9166570109970937,
+        0.9972365292495986
+      ],
+      "precision": 1.0,
+      "seconds": 7.97
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "seed": 2024,
+      "method": "128h, P>=0.99",
+      "bands": 128.0,
+      "rows": 1.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 64,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9433739770288436,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 26.46
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "seed": 2024,
+      "method": "256h, P>=0.99",
+      "bands": 128.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.995,
+      "n_true": 64,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9433739770288436,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 11.6
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "seed": 2024,
+      "method": "MLlib 10 tables",
+      "bands": NaN,
+      "rows": NaN,
+      "P(candidate | s=t)": NaN,
+      "n_true": 64,
+      "recall": 0.625,
+      "recall_ci95": [
+        0.5025015331382642,
+        0.7333419611189468
+      ],
+      "precision": 1.0,
+      "seconds": 14.09
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "seed": 42,
+      "method": "64h, P>=0.8",
+      "bands": 32.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.951,
+      "n_true": 86,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9572402984808819,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 11.71
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "seed": 42,
+      "method": "128h, P>=0.9",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.998,
+      "n_true": 86,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9572402984808819,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 11.1
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "seed": 42,
+      "method": "128h, P>=0.99",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.998,
+      "n_true": 86,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9572402984808819,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 10.69
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "seed": 42,
+      "method": "256h, P>=0.99",
+      "bands": 128.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 86,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9572402984808819,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 17.05
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "seed": 42,
+      "method": "MLlib 10 tables",
+      "bands": NaN,
+      "rows": NaN,
+      "P(candidate | s=t)": NaN,
+      "n_true": 86,
+      "recall": 0.9302325581395349,
+      "recall_ci95": [
+        0.8560368582572241,
+        0.9676350264821391
+      ],
+      "precision": 1.0,
+      "seconds": 31.96
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "seed": 7,
+      "method": "64h, P>=0.8",
+      "bands": 32.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.951,
+      "n_true": 86,
+      "recall": 0.9767441860465116,
+      "recall_ci95": [
+        0.9191182859198535,
+        0.993599207980522
+      ],
+      "precision": 1.0,
+      "seconds": 7.73
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "seed": 7,
+      "method": "128h, P>=0.9",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.998,
+      "n_true": 86,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9572402984808819,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 11.06
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "seed": 7,
+      "method": "128h, P>=0.99",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.998,
+      "n_true": 86,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9572402984808819,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 10.75
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "seed": 7,
+      "method": "256h, P>=0.99",
+      "bands": 128.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 86,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9572402984808819,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 16.63
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "seed": 7,
+      "method": "MLlib 10 tables",
+      "bands": NaN,
+      "rows": NaN,
+      "P(candidate | s=t)": NaN,
+      "n_true": 86,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9572402984808819,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 33.3
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "seed": 2024,
+      "method": "64h, P>=0.8",
+      "bands": 32.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.951,
+      "n_true": 86,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9572402984808819,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 7.77
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "seed": 2024,
+      "method": "128h, P>=0.9",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.998,
+      "n_true": 86,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9572402984808819,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 10.84
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "seed": 2024,
+      "method": "128h, P>=0.99",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.998,
+      "n_true": 86,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9572402984808819,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 10.81
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "seed": 2024,
+      "method": "256h, P>=0.99",
+      "bands": 128.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 86,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9572402984808819,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 17.49
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "seed": 2024,
+      "method": "MLlib 10 tables",
+      "bands": NaN,
+      "rows": NaN,
+      "P(candidate | s=t)": NaN,
+      "n_true": 86,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9572402984808819,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 25.97
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "seed": 42,
+      "method": "64h, P>=0.8",
+      "bands": 64.0,
+      "rows": 1.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 386,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9901457412446493,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 75.06
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "seed": 42,
+      "method": "128h, P>=0.9",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.927,
+      "n_true": 386,
+      "recall": 0.9715025906735751,
+      "recall_ci95": [
+        0.9496980082840325,
+        0.9840145559984865
+      ],
+      "precision": 1.0,
+      "seconds": 10.61
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "seed": 42,
+      "method": "128h, P>=0.99",
+      "bands": 128.0,
+      "rows": 1.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 386,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9901457412446493,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 115.97
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "seed": 42,
+      "method": "256h, P>=0.99",
+      "bands": 128.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.995,
+      "n_true": 386,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9901457412446493,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 16.73
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "seed": 42,
+      "method": "MLlib 10 tables",
+      "bands": NaN,
+      "rows": NaN,
+      "P(candidate | s=t)": NaN,
+      "n_true": 386,
+      "recall": 0.7979274611398963,
+      "recall_ci95": [
+        0.7550227150233151,
+        0.834960498671683
+      ],
+      "precision": 1.0,
+      "seconds": 27.53
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "seed": 7,
+      "method": "64h, P>=0.8",
+      "bands": 64.0,
+      "rows": 1.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 386,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9901457412446493,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 74.29
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "seed": 7,
+      "method": "128h, P>=0.9",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.927,
+      "n_true": 386,
+      "recall": 0.9792746113989638,
+      "recall_ci95": [
+        0.9596417766088674,
+        0.9894616541178689
+      ],
+      "precision": 1.0,
+      "seconds": 12.3
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "seed": 7,
+      "method": "128h, P>=0.99",
+      "bands": 128.0,
+      "rows": 1.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 386,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9901457412446493,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 124.56
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "seed": 7,
+      "method": "256h, P>=0.99",
+      "bands": 128.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.995,
+      "n_true": 386,
+      "recall": 0.9948186528497409,
+      "recall_ci95": [
+        0.9813071980079586,
+        0.9985779656072122
+      ],
+      "precision": 1.0,
+      "seconds": 16.3
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "seed": 7,
+      "method": "MLlib 10 tables",
+      "bands": NaN,
+      "rows": NaN,
+      "P(candidate | s=t)": NaN,
+      "n_true": 386,
+      "recall": 0.9093264248704663,
+      "recall_ci95": [
+        0.876504413537927,
+        0.9340812191908532
+      ],
+      "precision": 1.0,
+      "seconds": 36.23
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "seed": 2024,
+      "method": "64h, P>=0.8",
+      "bands": 64.0,
+      "rows": 1.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 386,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9901457412446493,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 71.97
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "seed": 2024,
+      "method": "128h, P>=0.9",
+      "bands": 64.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.927,
+      "n_true": 386,
+      "recall": 0.9740932642487047,
+      "recall_ci95": [
+        0.9529744216217577,
+        0.9858684314755004
+      ],
+      "precision": 1.0,
+      "seconds": 10.78
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "seed": 2024,
+      "method": "128h, P>=0.99",
+      "bands": 128.0,
+      "rows": 1.0,
+      "P(candidate | s=t)": 1.0,
+      "n_true": 386,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9901457412446493,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 118.1
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "seed": 2024,
+      "method": "256h, P>=0.99",
+      "bands": 128.0,
+      "rows": 2.0,
+      "P(candidate | s=t)": 0.995,
+      "n_true": 386,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.9901457412446493,
+        1.0
+      ],
+      "precision": 1.0,
+      "seconds": 17.21
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "seed": 2024,
+      "method": "MLlib 10 tables",
+      "bands": NaN,
+      "rows": NaN,
+      "P(candidate | s=t)": NaN,
+      "n_true": 386,
+      "recall": 0.9015544041450777,
+      "recall_ci95": [
+        0.8677600995345726,
+        0.9274346667499903
+      ],
+      "precision": 1.0,
+      "seconds": 26.51
+    }
+  ],
+  "lsh_eval_summary": [
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "method": "128h, P>=0.9",
+      "n_true": 386,
+      "recall_mean": 0.9749568221070812,
+      "recall_min": 0.9715025906735751,
+      "recall_std": 0.003957319252984335,
+      "precision_min": 1.0,
+      "seconds": 11.229999999999999
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "method": "128h, P>=0.99",
+      "n_true": 386,
+      "recall_mean": 1.0,
+      "recall_min": 1.0,
+      "recall_std": 0.0,
+      "precision_min": 1.0,
+      "seconds": 119.54333333333334
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "method": "256h, P>=0.99",
+      "n_true": 386,
+      "recall_mean": 0.998272884283247,
+      "recall_min": 0.9948186528497409,
+      "recall_std": 0.0029914521719669753,
+      "precision_min": 1.0,
+      "seconds": 16.746666666666666
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "method": "64h, P>=0.8",
+      "n_true": 386,
+      "recall_mean": 1.0,
+      "recall_min": 1.0,
+      "recall_std": 0.0,
+      "precision_min": 1.0,
+      "seconds": 73.77333333333333
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.2,
+      "method": "MLlib 10 tables",
+      "n_true": 386,
+      "recall_mean": 0.8696027633851467,
+      "recall_min": 0.7979274611398963,
+      "recall_std": 0.0621941539897439,
+      "precision_min": 1.0,
+      "seconds": 30.09
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "method": "128h, P>=0.9",
+      "n_true": 86,
+      "recall_mean": 1.0,
+      "recall_min": 1.0,
+      "recall_std": 0.0,
+      "precision_min": 1.0,
+      "seconds": 11.0
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "method": "128h, P>=0.99",
+      "n_true": 86,
+      "recall_mean": 1.0,
+      "recall_min": 1.0,
+      "recall_std": 0.0,
+      "precision_min": 1.0,
+      "seconds": 10.75
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "method": "256h, P>=0.99",
+      "n_true": 86,
+      "recall_mean": 1.0,
+      "recall_min": 1.0,
+      "recall_std": 0.0,
+      "precision_min": 1.0,
+      "seconds": 17.05666666666667
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "method": "64h, P>=0.8",
+      "n_true": 86,
+      "recall_mean": 0.9922480620155039,
+      "recall_min": 0.9767441860465116,
+      "recall_std": 0.01342675044627039,
+      "precision_min": 1.0,
+      "seconds": 9.07
+    },
+    {
+      "subset": "multi-category",
+      "threshold": 0.3,
+      "method": "MLlib 10 tables",
+      "n_true": 86,
+      "recall_mean": 0.9767441860465116,
+      "recall_min": 0.9302325581395349,
+      "recall_std": 0.04028025133881115,
+      "precision_min": 1.0,
+      "seconds": 30.409999999999997
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "method": "128h, P>=0.9",
+      "n_true": 64,
+      "recall_mean": 0.9739583333333334,
+      "recall_min": 0.96875,
+      "recall_std": 0.009021097956087886,
+      "precision_min": 1.0,
+      "seconds": 8.016666666666667
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "method": "128h, P>=0.99",
+      "n_true": 64,
+      "recall_mean": 1.0,
+      "recall_min": 1.0,
+      "recall_std": 0.0,
+      "precision_min": 1.0,
+      "seconds": 26.613333333333333
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "method": "256h, P>=0.99",
+      "n_true": 64,
+      "recall_mean": 0.9947916666666666,
+      "recall_min": 0.984375,
+      "recall_std": 0.00902109795608791,
+      "precision_min": 1.0,
+      "seconds": 11.666666666666666
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "method": "64h, P>=0.8",
+      "n_true": 64,
+      "recall_mean": 1.0,
+      "recall_min": 1.0,
+      "recall_std": 0.0,
+      "precision_min": 1.0,
+      "seconds": 16.763333333333335
+    },
+    {
+      "subset": "random",
+      "threshold": 0.2,
+      "method": "MLlib 10 tables",
+      "n_true": 64,
+      "recall_mean": 0.6197916666666666,
+      "recall_min": 0.609375,
+      "recall_std": 0.00902109795608791,
+      "precision_min": 1.0,
+      "seconds": 13.676666666666668
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "method": "128h, P>=0.9",
+      "n_true": 3,
+      "recall_mean": 1.0,
+      "recall_min": 1.0,
+      "recall_std": 0.0,
+      "precision_min": 1.0,
+      "seconds": 8.63
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "method": "128h, P>=0.99",
+      "n_true": 3,
+      "recall_mean": 1.0,
+      "recall_min": 1.0,
+      "recall_std": 0.0,
+      "precision_min": 1.0,
+      "seconds": 8.643333333333333
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "method": "256h, P>=0.99",
+      "n_true": 3,
+      "recall_mean": 1.0,
+      "recall_min": 1.0,
+      "recall_std": 0.0,
+      "precision_min": 1.0,
+      "seconds": 12.01
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "method": "64h, P>=0.8",
+      "n_true": 3,
+      "recall_mean": 1.0,
+      "recall_min": 1.0,
+      "recall_std": 0.0,
+      "precision_min": 1.0,
+      "seconds": 9.453333333333333
+    },
+    {
+      "subset": "random",
+      "threshold": 0.3,
+      "method": "MLlib 10 tables",
+      "n_true": 3,
+      "recall_mean": 0.6666666666666666,
+      "recall_min": 0.6666666666666666,
+      "recall_std": 0.0,
+      "precision_min": 1.0,
+      "seconds": 15.533333333333331
+    }
+  ],
+  "seeds": [
+    42,
+    7,
+    2024
+  ],
+  "thresholds": [
+    0.3,
+    0.2
+  ],
   "scaling": [
     {
       "n_sets": 250,
-      "naive_s": 0.55,
-      "lsh_s": 4.8
+      "naive_s": 0.49,
+      "lsh_s": 4.11
     },
     {
       "n_sets": 500,
-      "naive_s": 2.31,
-      "lsh_s": 4.78
+      "naive_s": 2.06,
+      "lsh_s": 3.79
     },
     {
       "n_sets": 1000,
-      "naive_s": 10.29,
-      "lsh_s": 5.33
+      "naive_s": 9.12,
+      "lsh_s": 4.11
     },
     {
       "n_sets": 2000,
-      "naive_s": 45.25,
-      "lsh_s": 6.16
+      "naive_s": 40.12,
+      "lsh_s": 4.46
     },
     {
       "n_sets": 3000,
-      "naive_s": 102.47,
-      "lsh_s": 6.69
+      "naive_s": 91.79,
+      "lsh_s": 5.8
     }
   ],
-  "naive_exponent": 2.1140022304704527,
+  "naive_exponent": 2.114435848662519,
   "lsh_all": {
     "pairs": 1578,
-    "seconds": 244.0095046590004,
+    "seconds": 202.29259912699945,
     "bands": 64,
     "rows": 2,
-    "naive_extrapolated_hours": 89.9292149831395
+    "naive_extrapolated_hours": 80.55628616475433
   }
 }
