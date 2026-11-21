@@ -43,7 +43,7 @@ make mapreduce                      # Hadoop Streaming qua Unix pipe
 
 ## Quy trình GitHub (xem `docs/GITHUB_WORKFLOW.md`)
 Milestone M1-M10 → issue (template Task) → nhánh `feat/...` → PR (`Closes #n`) → review comment → squash-merge → tag `v0.N.0` khi đóng milestone.
-Commit theo Conventional Commits. Không backdate lịch sử. Khi tạo commit/PR bằng Claude, giữ các dòng attribution mà môi trường yêu cầu.
+Commit theo Conventional Commits. Không backdate lịch sử. **Commit không có dòng `Co-Authored-By`** (quyết định của người dùng 22/11/2026); lịch sử cũ không viết lại.
 
 ## Skills trong `.claude/skills/`
 | Skill | Dùng khi |

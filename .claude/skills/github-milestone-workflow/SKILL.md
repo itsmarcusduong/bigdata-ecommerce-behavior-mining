@@ -20,5 +20,5 @@ Full policy: `docs/GITHUB_WORKFLOW.md`. Milestones M1-M10 map to tags `v0.1.0`..
 ## Rules
 * `main` stays green (CI = ruff + pytest + notebooks in sync). No direct pushes after M1.
 * Do not backdate commits or claim real-data results that were not run; mark such work as `kaggle-run` issues instead.
-* Never commit data, tokens, `kaggle.json`. End Claude-authored commits/PRs with the attribution lines required by the environment.
+* Never commit data, tokens, `kaggle.json`. Commits carry no `Co-Authored-By` trailer (owner's decision, 22/11/2026); never rewrite existing history to remove old ones.
 * Use `gh api repos/<owner>/<repo>/...` (REST) when GraphQL is unavailable.
