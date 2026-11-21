@@ -1,6 +1,6 @@
 {
   "experiment": "07_segmentation_funnel",
-  "created_utc": "2026-11-18T00:45:56.281740+00:00",
+  "created_utc": "2026-11-21T11:05:25.198983+00:00",
   "fraction": 1.0,
   "funnel_top": [
     {
@@ -132,12 +132,13 @@
   ],
   "rfm": {
     "n_buyers": 697470,
+    "selected_algo": "kmeans",
     "best_k": 4,
     "silhouette": {
-      "3": 0.3882235182593771,
-      "4": 0.45084350908339704,
-      "5": 0.4240779596687756,
-      "6": 0.4016340505708642
+      "3": 0.4547537837750411,
+      "4": 0.45721985168576823,
+      "5": 0.4251781814916428,
+      "6": 0.41979607633194654
     },
     "profile": [
       {
@@ -169,7 +170,517 @@
         "avg_monetary": 103.07394778499162
       }
     ],
-    "seconds": 166.99707774799992
+    "seconds": 2945.97216538,
+    "seeds": [
+      42,
+      7,
+      2024
+    ],
+    "comparison": [
+      {
+        "algo": "bisecting",
+        "k": 3,
+        "sil_mean": 0.36545303187181283,
+        "sil_std": 0.009549868581412956,
+        "sil_min": 0.359919065619518,
+        "degenerate_fits": 0,
+        "min_clusters_used": 3,
+        "fit_s": 48.300000000000004,
+        "ari_between_seeds": 0.6726959715542554
+      },
+      {
+        "algo": "bisecting",
+        "k": 4,
+        "sil_mean": 0.38381205890267817,
+        "sil_std": 0.015040863222444764,
+        "sil_min": 0.37128922147733334,
+        "degenerate_fits": 0,
+        "min_clusters_used": 4,
+        "fit_s": 48.76666666666667,
+        "ari_between_seeds": 0.6206320410989984
+      },
+      {
+        "algo": "bisecting",
+        "k": 5,
+        "sil_mean": 0.27169632781868086,
+        "sil_std": 0.04136986183164462,
+        "sil_min": 0.2448048208294316,
+        "degenerate_fits": 0,
+        "min_clusters_used": 5,
+        "fit_s": 65.43333333333334,
+        "ari_between_seeds": 0.6004530911411173
+      },
+      {
+        "algo": "bisecting",
+        "k": 6,
+        "sil_mean": 0.31936343932226124,
+        "sil_std": 0.014053716696585684,
+        "sil_min": 0.3110146779591831,
+        "degenerate_fits": 0,
+        "min_clusters_used": 6,
+        "fit_s": 67.96666666666665,
+        "ari_between_seeds": 0.582717697415506
+      },
+      {
+        "algo": "gmm",
+        "k": 3,
+        "sil_mean": 0.23483685723375766,
+        "sil_std": 0.0,
+        "sil_min": 0.23483685723375763,
+        "degenerate_fits": 0,
+        "min_clusters_used": 3,
+        "fit_s": 47.76666666666667,
+        "ari_between_seeds": 1.0
+      },
+      {
+        "algo": "gmm",
+        "k": 4,
+        "sil_mean": 0.1993578543234149,
+        "sil_std": 0.03222911797767139,
+        "sil_min": 0.16214287445102593,
+        "degenerate_fits": 0,
+        "min_clusters_used": 4,
+        "fit_s": 126.03333333333335,
+        "ari_between_seeds": 0.9758002399601491
+      },
+      {
+        "algo": "gmm",
+        "k": 5,
+        "sil_mean": 0.21193252810644514,
+        "sil_std": 0.004493938351618192,
+        "sil_min": 0.20729329659338597,
+        "degenerate_fits": 0,
+        "min_clusters_used": 5,
+        "fit_s": 196.36666666666667,
+        "ari_between_seeds": 0.9960461791130321
+      },
+      {
+        "algo": "gmm",
+        "k": 6,
+        "sil_mean": 0.1785427736803115,
+        "sil_std": 0.032882974433484556,
+        "sil_min": 0.1595570016116973,
+        "degenerate_fits": 0,
+        "min_clusters_used": 6,
+        "fit_s": 213.03333333333333,
+        "ari_between_seeds": 0.9738886494305005
+      },
+      {
+        "algo": "kmeans",
+        "k": 3,
+        "sil_mean": 0.4547537837750411,
+        "sil_std": 0.0869346624347457,
+        "sil_min": 0.3882235182593771,
+        "degenerate_fits": 0,
+        "min_clusters_used": 3,
+        "fit_s": 39.800000000000004,
+        "ari_between_seeds": 0.3627754037400592
+      },
+      {
+        "algo": "kmeans",
+        "k": 4,
+        "sil_mean": 0.45721985168576823,
+        "sil_std": 0.0055535485151667514,
+        "sil_min": 0.45084350908339704,
+        "degenerate_fits": 0,
+        "min_clusters_used": 4,
+        "fit_s": 33.36666666666667,
+        "ari_between_seeds": 0.8875266983926845
+      },
+      {
+        "algo": "kmeans",
+        "k": 5,
+        "sil_mean": 0.4251781814916428,
+        "sil_std": 0.0009652702496212969,
+        "sil_min": 0.4240779596687756,
+        "degenerate_fits": 0,
+        "min_clusters_used": 5,
+        "fit_s": 34.03333333333333,
+        "ari_between_seeds": 0.5221198311886077
+      },
+      {
+        "algo": "kmeans",
+        "k": 6,
+        "sil_mean": 0.41979607633194654,
+        "sil_std": 0.0195726844707401,
+        "sil_min": 0.4016340505708642,
+        "degenerate_fits": 0,
+        "min_clusters_used": 6,
+        "fit_s": 34.5,
+        "ari_between_seeds": 0.3999988617555346
+      }
+    ],
+    "comparison_by_seed": [
+      {
+        "algo": "kmeans",
+        "k": 3,
+        "seed": 42,
+        "silhouette": 0.3882235182593771,
+        "clusters_used": 3,
+        "degenerate": false,
+        "seconds": 50.2
+      },
+      {
+        "algo": "kmeans",
+        "k": 3,
+        "seed": 7,
+        "silhouette": 0.4229195435677314,
+        "clusters_used": 3,
+        "degenerate": false,
+        "seconds": 36.0
+      },
+      {
+        "algo": "kmeans",
+        "k": 3,
+        "seed": 2024,
+        "silhouette": 0.5531182894980148,
+        "clusters_used": 3,
+        "degenerate": false,
+        "seconds": 33.2
+      },
+      {
+        "algo": "kmeans",
+        "k": 4,
+        "seed": 42,
+        "silhouette": 0.45084350908339704,
+        "clusters_used": 4,
+        "degenerate": false,
+        "seconds": 34.2
+      },
+      {
+        "algo": "kmeans",
+        "k": 4,
+        "seed": 7,
+        "silhouette": 0.460998440104931,
+        "clusters_used": 4,
+        "degenerate": false,
+        "seconds": 32.3
+      },
+      {
+        "algo": "kmeans",
+        "k": 4,
+        "seed": 2024,
+        "silhouette": 0.45981760586897663,
+        "clusters_used": 4,
+        "degenerate": false,
+        "seconds": 33.6
+      },
+      {
+        "algo": "kmeans",
+        "k": 5,
+        "seed": 42,
+        "silhouette": 0.4240779596687756,
+        "clusters_used": 5,
+        "degenerate": false,
+        "seconds": 34.3
+      },
+      {
+        "algo": "kmeans",
+        "k": 5,
+        "seed": 7,
+        "silhouette": 0.4258828259274944,
+        "clusters_used": 5,
+        "degenerate": false,
+        "seconds": 34.1
+      },
+      {
+        "algo": "kmeans",
+        "k": 5,
+        "seed": 2024,
+        "silhouette": 0.4255737588786584,
+        "clusters_used": 5,
+        "degenerate": false,
+        "seconds": 33.7
+      },
+      {
+        "algo": "kmeans",
+        "k": 6,
+        "seed": 42,
+        "silhouette": 0.4016340505708642,
+        "clusters_used": 6,
+        "degenerate": false,
+        "seconds": 34.6
+      },
+      {
+        "algo": "kmeans",
+        "k": 6,
+        "seed": 7,
+        "silhouette": 0.4405259343304162,
+        "clusters_used": 6,
+        "degenerate": false,
+        "seconds": 34.5
+      },
+      {
+        "algo": "kmeans",
+        "k": 6,
+        "seed": 2024,
+        "silhouette": 0.41722824409455905,
+        "clusters_used": 6,
+        "degenerate": false,
+        "seconds": 34.4
+      },
+      {
+        "algo": "bisecting",
+        "k": 3,
+        "seed": 42,
+        "silhouette": 0.3599597847916583,
+        "clusters_used": 3,
+        "degenerate": false,
+        "seconds": 50.5
+      },
+      {
+        "algo": "bisecting",
+        "k": 3,
+        "seed": 7,
+        "silhouette": 0.3764802452042623,
+        "clusters_used": 3,
+        "degenerate": false,
+        "seconds": 47.7
+      },
+      {
+        "algo": "bisecting",
+        "k": 3,
+        "seed": 2024,
+        "silhouette": 0.359919065619518,
+        "clusters_used": 3,
+        "degenerate": false,
+        "seconds": 46.7
+      },
+      {
+        "algo": "bisecting",
+        "k": 4,
+        "seed": 42,
+        "silhouette": 0.37128922147733334,
+        "clusters_used": 4,
+        "degenerate": false,
+        "seconds": 48.9
+      },
+      {
+        "algo": "bisecting",
+        "k": 4,
+        "seed": 7,
+        "silhouette": 0.40049516047322337,
+        "clusters_used": 4,
+        "degenerate": false,
+        "seconds": 48.7
+      },
+      {
+        "algo": "bisecting",
+        "k": 4,
+        "seed": 2024,
+        "silhouette": 0.3796517947574779,
+        "clusters_used": 4,
+        "degenerate": false,
+        "seconds": 48.7
+      },
+      {
+        "algo": "bisecting",
+        "k": 5,
+        "seed": 42,
+        "silhouette": 0.2448048208294316,
+        "clusters_used": 5,
+        "degenerate": false,
+        "seconds": 65.4
+      },
+      {
+        "algo": "bisecting",
+        "k": 5,
+        "seed": 7,
+        "silhouette": 0.3193341945392343,
+        "clusters_used": 5,
+        "degenerate": false,
+        "seconds": 65.5
+      },
+      {
+        "algo": "bisecting",
+        "k": 5,
+        "seed": 2024,
+        "silhouette": 0.2509499680873767,
+        "clusters_used": 5,
+        "degenerate": false,
+        "seconds": 65.4
+      },
+      {
+        "algo": "bisecting",
+        "k": 6,
+        "seed": 42,
+        "silhouette": 0.3114866544682734,
+        "clusters_used": 6,
+        "degenerate": false,
+        "seconds": 68.7
+      },
+      {
+        "algo": "bisecting",
+        "k": 6,
+        "seed": 7,
+        "silhouette": 0.3355889855393272,
+        "clusters_used": 6,
+        "degenerate": false,
+        "seconds": 67.6
+      },
+      {
+        "algo": "bisecting",
+        "k": 6,
+        "seed": 2024,
+        "silhouette": 0.3110146779591831,
+        "clusters_used": 6,
+        "degenerate": false,
+        "seconds": 67.6
+      },
+      {
+        "algo": "gmm",
+        "k": 3,
+        "seed": 42,
+        "silhouette": 0.23483685723375763,
+        "clusters_used": 3,
+        "degenerate": false,
+        "seconds": 51.7
+      },
+      {
+        "algo": "gmm",
+        "k": 3,
+        "seed": 7,
+        "silhouette": 0.23483685723375763,
+        "clusters_used": 3,
+        "degenerate": false,
+        "seconds": 53.1
+      },
+      {
+        "algo": "gmm",
+        "k": 3,
+        "seed": 2024,
+        "silhouette": 0.23483685723375763,
+        "clusters_used": 3,
+        "degenerate": false,
+        "seconds": 38.5
+      },
+      {
+        "algo": "gmm",
+        "k": 4,
+        "seed": 42,
+        "silhouette": 0.16214287445102593,
+        "clusters_used": 4,
+        "degenerate": false,
+        "seconds": 66.5
+      },
+      {
+        "algo": "gmm",
+        "k": 4,
+        "seed": 7,
+        "silhouette": 0.21796467948523665,
+        "clusters_used": 4,
+        "degenerate": false,
+        "seconds": 133.5
+      },
+      {
+        "algo": "gmm",
+        "k": 4,
+        "seed": 2024,
+        "silhouette": 0.2179660090339821,
+        "clusters_used": 4,
+        "degenerate": false,
+        "seconds": 178.1
+      },
+      {
+        "algo": "gmm",
+        "k": 5,
+        "seed": 42,
+        "silhouette": 0.21223878097111348,
+        "clusters_used": 5,
+        "degenerate": false,
+        "seconds": 198.2
+      },
+      {
+        "algo": "gmm",
+        "k": 5,
+        "seed": 7,
+        "silhouette": 0.20729329659338597,
+        "clusters_used": 5,
+        "degenerate": false,
+        "seconds": 196.8
+      },
+      {
+        "algo": "gmm",
+        "k": 5,
+        "seed": 2024,
+        "silhouette": 0.21626550675483597,
+        "clusters_used": 5,
+        "degenerate": false,
+        "seconds": 194.1
+      },
+      {
+        "algo": "gmm",
+        "k": 6,
+        "seed": 42,
+        "silhouette": 0.15955855747769546,
+        "clusters_used": 6,
+        "degenerate": false,
+        "seconds": 212.5
+      },
+      {
+        "algo": "gmm",
+        "k": 6,
+        "seed": 7,
+        "silhouette": 0.21651276195154168,
+        "clusters_used": 6,
+        "degenerate": false,
+        "seconds": 212.3
+      },
+      {
+        "algo": "gmm",
+        "k": 6,
+        "seed": 2024,
+        "silhouette": 0.1595570016116973,
+        "clusters_used": 6,
+        "degenerate": false,
+        "seconds": 214.3
+      }
+    ],
+    "vs_runner_up": {
+      "runner_up": "kmeans k=3",
+      "diff_by_seed": {
+        "42": 0.0626,
+        "7": 0.0381,
+        "2024": -0.0933
+      },
+      "verdict": "tie"
+    },
+    "best_by_algo": [
+      {
+        "algo": "kmeans",
+        "k": 4,
+        "sil_mean": 0.45721985168576823,
+        "sil_std": 0.0055535485151667514,
+        "sil_min": 0.45084350908339704,
+        "degenerate_fits": 0,
+        "min_clusters_used": 4,
+        "fit_s": 33.36666666666667,
+        "ari_between_seeds": 0.8875266983926845
+      },
+      {
+        "algo": "bisecting",
+        "k": 4,
+        "sil_mean": 0.38381205890267817,
+        "sil_std": 0.015040863222444764,
+        "sil_min": 0.37128922147733334,
+        "degenerate_fits": 0,
+        "min_clusters_used": 4,
+        "fit_s": 48.76666666666667,
+        "ari_between_seeds": 0.6206320410989984
+      },
+      {
+        "algo": "gmm",
+        "k": 3,
+        "sil_mean": 0.23483685723375766,
+        "sil_std": 0.0,
+        "sil_min": 0.23483685723375763,
+        "degenerate_fits": 0,
+        "min_clusters_used": 3,
+        "fit_s": 47.76666666666667,
+        "ari_between_seeds": 1.0
+      }
+    ],
+    "selection_rule": "highest mean silhouette over seeds among settings with no degenerate fit; better than runner-up only if higher for every seed"
   },
   "instacart": {
     "reorder_rate": 0.5896974667922161,

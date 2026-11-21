@@ -138,14 +138,31 @@ FRACTION = **1**, chạy lúc `2026-11-18T06:57:19.056932+00:00`
 
 ## Phụ - Phân khúc và phễu - `results/07_segmentation_funnel.json`
 
-FRACTION = **1**, chạy lúc `2026-11-18T00:45:56.281740+00:00`
+FRACTION = **1**, chạy lúc `2026-11-21T11:05:25.198983+00:00`
 
 | Chỉ số | Giá trị | Nguồn |
 |---|---|---|
 | Người mua | 697,470 | `rfm.n_buyers` |
-| Thuật toán được chọn | chưa chạy | `rfm.selected_algo` |
+| Thuật toán được chọn | kmeans | `rfm.selected_algo` |
 | k tốt nhất | 4 | `rfm.best_k` |
 | Tỷ lệ mua lại Instacart | 0.5897 | `instacart.reorder_rate` |
+
+**Phân cụm: thuật toán x k (qua các seed)** (`rfm.comparison`)
+
+| algo | k | sil_mean | sil_std | degenerate_fits | ari_between_seeds |
+|---|---|---|---|---|---|
+| bisecting | 3 | 0.3655 | 0.00955 | 0 | 0.6727 |
+| bisecting | 4 | 0.3838 | 0.01504 | 0 | 0.6206 |
+| bisecting | 5 | 0.2717 | 0.04137 | 0 | 0.6005 |
+| bisecting | 6 | 0.3194 | 0.01405 | 0 | 0.5827 |
+| gmm | 3 | 0.2348 | 0 | 0 | 1 |
+| gmm | 4 | 0.1994 | 0.03223 | 0 | 0.9758 |
+| gmm | 5 | 0.2119 | 0.004494 | 0 | 0.996 |
+| gmm | 6 | 0.1785 | 0.03288 | 0 | 0.9739 |
+| kmeans | 3 | 0.4548 | 0.08693 | 0 | 0.3628 |
+| kmeans | 4 | 0.4572 | 0.005554 | 0 | 0.8875 |
+| kmeans | 5 | 0.4252 | 0.0009653 | 0 | 0.5221 |
+| kmeans | 6 | 0.4198 | 0.01957 | 0 | 0.4 |
 
 ## RQ6 - Khả năng mở rộng - `results/08_scalability_benchmark.json`
 
