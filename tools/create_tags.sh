@@ -18,6 +18,7 @@ declare -A SHA=(
   [v0.7.0]=1e13707c69a773dec5256a742440e50f85571678
   [v0.8.0]=b2e660a7363a3f69c87df2d7bb32ca80ccb73ae1
   [v0.9.0]=cdb15a0fd71ec28b8853fa1fbd27ddaab32382d0
+  [v1.0.0]=3b75ab32b2d2681ac2cf0c040e81e7cc27822df5
 )
 
 git fetch -q origin main --tags
