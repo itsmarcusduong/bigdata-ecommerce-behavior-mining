@@ -64,8 +64,8 @@ else:
     vs_runner_up = {}
 best_by_algo = ok.groupby("algo").head(1).set_index("algo")
 print(f"{n_buyers:,} buyers; selected {best_algo} k={k}; vs runner-up: {vs_runner_up}")
-model = segmentation.fit_clusterer(best_algo, k, SEEDS[0], x)
-seg = model.transform(x).withColumnRenamed("prediction", "segment").cache()
+model, x_in = segmentation.fit_clusterer(best_algo, k, SEEDS[0], x)
+seg = model.transform(x_in).withColumnRenamed("prediction", "segment").cache()
 profile = segmentation.segment_profile(seg).toPandas(); t_seg = time.perf_counter() - t0
 scores = {int(r.k): float(r.sil_mean) for r in agg[agg["algo"] == best_algo].itertuples()}
 agg.sort_values("sil_mean", ascending=False)
