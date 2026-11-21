@@ -154,6 +154,9 @@ def output(nb: str) -> int:
     for js in out_dir.glob("*.json"):
         (ROOT / "results").mkdir(exist_ok=True)
         shutil.copy(js, ROOT / "results" / js.name)
+    for log in (out_dir / "hadoop").glob("real_*.log"):
+        (ROOT / "results" / "hadoop").mkdir(parents=True, exist_ok=True)
+        shutil.copy(log, ROOT / "results" / "hadoop" / log.name)
     for png in (out_dir / "figures").glob("*.png"):
         (ROOT / "results" / "figures").mkdir(parents=True, exist_ok=True)
         shutil.copy(png, ROOT / "results" / "figures" / png.name)

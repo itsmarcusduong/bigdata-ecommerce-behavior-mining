@@ -83,7 +83,8 @@ def run_job(name, mapper, reducer, inputs, combiner=None, reduces=4):
             for key in ("Map input records", "Map output records", "Combine input records", "Combine output records",
                         "Reduce input records", "Reduce output records", "Spilled Records", "Bytes Read", "Bytes Written"):
                 if line.startswith(key + "="):
-                    counters[key] = counters.get(key, 0) + int(line.split("=")[1])
+                    # Hadoop prints the final counter block twice in local mode: keep the value, do not add
+                    counters[key] = int(line.split("=")[1])
     else:  # pipe emulation so the notebook can be smoke-tested without Hadoop
         (OUT / name).mkdir(parents=True)
         src = " ".join(str(Path(p)) for p in inputs.split(",")) if "," in inputs or Path(inputs).is_file() \
