@@ -40,7 +40,7 @@ def fmt(v) -> str:
     if isinstance(v, bool):
         return "có" if v else "không"
     if isinstance(v, int):
-        return f"{v:,}"
+        return f"{v:,}" if abs(v) >= 10_000 else str(v)
     if isinstance(v, float):
         if abs(v) >= 1000:
             return f"{v:,.0f}"
@@ -108,9 +108,6 @@ ROWS = [
             ("Cặp đúng (Jaccard >= ngưỡng)", "n_true_pairs_eval"),
             ("Ngưỡng", "threshold"),
             ("LSH 128 hash: recall / precision", None),
-            ("Phân tầng theo danh mục: số tập / cặp đúng", None),
-            ("Phân tầng: LSH 128 hash recall [CI95]", None),
-            ("Phân tầng: MLlib recall [CI95]", None),
             ("MLlib MinHashLSH: recall", "lsh_vs_naive.-1.recall"),
             ("Mũ thực nghiệm naive", "naive_exponent"),
             ("LSH toàn bộ: số cặp", "lsh_all.pairs"),
@@ -137,14 +134,8 @@ ROWS = [
         [
             ("Cutoff / validation cutoff", None),
             ("User đánh giá / user chung", None),
-            ("NDCG@10 popularity", "models.popularity.ndcg@10"),
-            ("NDCG@10 item-kNN", "models.item_knn.ndcg@10"),
-            ("NDCG@10 ALS", "models.als_best.ndcg@10"),
-            ("Recall@10 ALS", "models.als_best.recall@10"),
-            ("ALS chọn (rank, alpha)", None),
-            ("ALS - popularity: diff [CI95]", None),
-            ("ALS - item-kNN: diff [CI95]", None),
-            ("item-kNN - popularity: diff [CI95]", None),
+            ("Mô hình được chọn (luật đặt trước, theo validation)", "selected"),
+            ("Seed", "seeds"),
         ],
     ),
     (
@@ -152,6 +143,7 @@ ROWS = [
         "07_segmentation_funnel",
         [
             ("Người mua", "rfm.n_buyers"),
+            ("Thuật toán được chọn", "rfm.selected_algo"),
             ("k tốt nhất", "rfm.best_k"),
             ("Tỷ lệ mua lại Instacart", "instacart.reorder_rate"),
         ],
@@ -173,6 +165,88 @@ ROWS = [
 ]
 
 
+ROWS.append(
+    (
+        "Hadoop MapReduce trên dữ liệu thật",
+        "09_hadoop_real",
+        [
+            ("Engine", "engine"),
+            ("Dữ liệu vào", "inputs"),
+            ("Kết quả Hadoop = Spark", "identical"),
+            ("Đếm sự kiện: số khóa / khóa lệch", None),
+            ("Đếm cặp: số khóa / khóa lệch", None),
+            ("Thời gian Hadoop: đếm / giỏ+cặp (s)", None),
+            ("Thời gian Spark: đếm / cặp (s)", None),
+        ],
+    )
+)
+
+# extra tables rendered from lists of records: (file, json path, title, columns)
+TABLES = [
+    (
+        "02_streaming_sketches",
+        "cms_seeds",
+        "Count-Min theo seed",
+        ["seed", "never_under", "within_bound", "mean_abs_err"],
+    ),
+    (
+        "02_streaming_sketches",
+        "hll_salted",
+        "HyperLogLog: phân bố sai số qua các salt",
+        ["rsd", "mean_rel_err", "sd_rel_err", "mean_abs_rel_err", "within_2rsd"],
+    ),
+    (
+        "04_lsh_similarity",
+        "lsh_eval_summary",
+        "LSH: recall theo tập đánh giá, ngưỡng, phương pháp (qua các seed)",
+        ["subset", "threshold", "method", "n_true", "recall_mean", "recall_min", "precision_min"],
+    ),
+    (
+        "06_recommender",
+        "validation_grid",
+        "Validation: mọi cấu hình (NDCG@10, popularity bù user thiếu)",
+        ["family", "params", "val_ndcg@10", "val_recall@10", "fit_s"],
+    ),
+    (
+        "06_recommender",
+        "test_by_model_seed",
+        "Test (một lần) trên user chung, theo mô hình và seed",
+        ["model", "seed", "ndcg@10", "recall@10", "precision@10", "map@10", "n_users"],
+    ),
+    (
+        "06_recommender",
+        "significance_selected_vs_others",
+        "Mô hình được chọn so với từng mô hình khác (bootstrap ghép cặp)",
+        ["selected", "other", "seed", "diff", "ci95", "verdict"],
+    ),
+    (
+        "07_segmentation_funnel",
+        "rfm.comparison",
+        "Phân cụm: thuật toán x k (qua các seed)",
+        ["algo", "k", "sil_mean", "sil_std", "degenerate_fits", "ari_between_seeds"],
+    ),
+]
+
+
+def render_table(d, path, cols) -> list[str]:
+    recs = get(d, path)
+    if not isinstance(recs, list) or not recs:
+        return []
+    out = ["| " + " | ".join(cols) + " |", "|" + "---|" * len(cols)]
+    for r in recs:
+        out.append(
+            "| "
+            + " | ".join(
+                fmt(r.get(c))
+                if not isinstance(r.get(c), dict)
+                else ", ".join(f"{k}={fmt(v)}" for k, v in r.get(c).items())
+                for c in cols
+            )
+            + " |"
+        )
+    return out
+
+
 def composite(name: str, label: str, d: dict) -> tuple[str, str]:
     """Values that combine several keys; returns (value, source keys)."""
 
@@ -183,6 +257,31 @@ def composite(name: str, label: str, d: dict) -> tuple[str, str]:
         return f"{s['diff']:+.4f} [{s['ci95'][0]:+.4f}, {s['ci95'][1]:+.4f}], p={s['p_le_0']:.3g}"
 
     table = {
+        "Đếm sự kiện: số khóa / khóa lệch": (
+            lambda: (
+                f"{fmt(get(d, 'compare_event_counts.keys_hadoop'))} / "
+                f"{fmt(get(d, 'compare_event_counts.mismatched_keys'))}"
+            ),
+            "compare_event_counts",
+        ),
+        "Đếm cặp: số khóa / khóa lệch": (
+            lambda: (
+                f"{fmt(get(d, 'compare_pair_counts.keys_hadoop'))} / "
+                f"{fmt(get(d, 'compare_pair_counts.mismatched_keys'))}"
+            ),
+            "compare_pair_counts",
+        ),
+        "Thời gian Hadoop: đếm / giỏ+cặp (s)": (
+            lambda: (
+                f"{fmt(get(d, 'jobs.counts.seconds'))} / "
+                f"{fmt((get(d, 'jobs.baskets_to_pairs.seconds') or 0) + (get(d, 'jobs.pair_counts.seconds') or 0))}"
+            ),
+            "jobs.*.seconds",
+        ),
+        "Thời gian Spark: đếm / cặp (s)": (
+            lambda: f"{fmt(get(d, 'spark.counts_seconds'))} / {fmt(get(d, 'spark.pairs_seconds'))}",
+            "spark",
+        ),
         "view / cart / purchase": (
             lambda: " / ".join(fmt(get(d, f"overview.event_types.{t}")) for t in ("view", "cart", "purchase")),
             "overview.event_types",
@@ -291,8 +390,13 @@ def main() -> int:
                 val, src = fmt(get(d, path)), path
             lines.append(f"| {label} | {val} | `{src}` |")
         lines.append("")
+        for tname, tpath, title, cols in TABLES:
+            if tname == name:
+                tab = render_table(d, tpath, cols)
+                if tab:
+                    lines += [f"**{title}** (`{tpath}`)", ""] + tab + [""]
     hv = RES / "hadoop" / "hadoop_vs_pipe.json"
-    lines.append("## Hadoop 3.3.6 thật - `results/hadoop/hadoop_vs_pipe.json`")
+    lines.append("## Hadoop 3.3.6 thật trên dữ liệu synthetic - `results/hadoop/hadoop_vs_pipe.json`")
     if hv.exists():
         h = json.loads(hv.read_text())
         lines += [

@@ -77,3 +77,37 @@ def test_paired_bootstrap_detects_difference_and_no_difference():
     assert abs(r["diff"] - 0.1) < 1e-9 and r["ci95"][0] > 0 and r["p_le_0"] == 0.0
     same = R.paired_bootstrap(a, dict(a))
     assert same["diff"] == 0.0 and same["ci95"] == [0.0, 0.0]
+
+
+def test_history_recs_prefers_recent_and_heavier_events(spark):
+    rows = [(1, 10, "view", "2019-11-01"), (1, 11, "view", "2019-11-09"), (1, 12, "cart", "2019-11-08"),
+            (2, 10, "view", "2019-11-09")]
+    ev = spark.createDataFrame(rows, "user_id long, product_id long, event_type string, event_date string") \
+        .withColumn("event_date", F.col("event_date").cast("date"))
+    users = ev.select("user_id").distinct()
+    got = {r.user_id: list(r.recs) for r in R.history_recs(ev, users, "2019-11-10", half_life_days=3).collect()}
+    # cart (weight 3, 2 days old) > view yesterday (1, 1 day) > view 9 days ago
+    assert got[1] == [12, 11, 10] and got[2] == [10]
+
+
+def test_recent_popularity_uses_only_the_window(spark):
+    rows = [(1, 10, "purchase", "2019-10-01"), (2, 10, "purchase", "2019-10-01"), (3, 20, "purchase", "2019-11-08")]
+    ev = spark.createDataFrame(rows, "user_id long, product_id long, event_type string, event_date string") \
+        .withColumn("event_date", F.col("event_date").cast("date"))
+    users = spark.createDataFrame([(9,)], "user_id long")
+    got = R.recent_popularity_recs(ev, users, "2019-11-10", days=7, n=5).first().recs
+    assert list(got) == [20]
+
+
+def test_blend_keeps_order_and_dedupes(spark):
+    a = spark.createDataFrame([(1, [5, 6])], "user_id long, recs array<long>")
+    b = spark.createDataFrame([(1, [6, 7, 8]), (2, [9])], "user_id long, recs array<long>")
+    got = {r.user_id: list(r.recs) for r in R.blend_recs(a, b, n=3).collect()}
+    assert got == {1: [5, 6, 7], 2: [9]}
+
+
+def test_selection_rule_and_verdict():
+    assert R.select_best({"a": {"ndcg@10": 0.1}, "b": {"ndcg@10": 0.2}}) == "b"
+    assert R.verdict({"ci95": [0.01, 0.02]}) == "better"
+    assert R.verdict({"ci95": [-0.01, 0.02]}) == "tie"
+    assert R.verdict({"ci95": [-0.03, -0.01]}) == "worse"
