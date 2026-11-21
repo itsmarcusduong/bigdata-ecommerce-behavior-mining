@@ -1,0 +1,120 @@
+{
+  "experiment": "09_hadoop_real",
+  "created_utc": "2026-11-21T08:37:04.697049+00:00",
+  "fraction": 1.0,
+  "inputs": [
+    "2019-Oct.csv",
+    "2019-Nov.csv"
+  ],
+  "input_bytes": 14675375250,
+  "hadoop_version": "3.3.6",
+  "slots": 4,
+  "engine": "hadoop",
+  "jobs": {
+    "counts": {
+      "seconds": 488.2,
+      "counters": {
+        "Map input records": 219901490,
+        "Map output records": 219901486,
+        "Combine input records": 219901486,
+        "Combine output records": 34666152,
+        "Spilled Records": 69332304,
+        "Bytes Read": 45181936816,
+        "Reduce input records": 34666152,
+        "Reduce output records": 712508,
+        "Bytes Written": 13199238
+      }
+    },
+    "baskets_to_pairs": {
+      "seconds": 160.4,
+      "counters": {
+        "Map input records": 219901490,
+        "Map output records": 11230444,
+        "Combine input records": 0,
+        "Spilled Records": 22460888,
+        "Bytes Read": 45403565414,
+        "Combine output records": 0,
+        "Reduce input records": 11230444,
+        "Reduce output records": 1229880,
+        "Bytes Written": 25103748
+      }
+    },
+    "pair_counts": {
+      "seconds": 9.5,
+      "counters": {
+        "Map input records": 1229880,
+        "Map output records": 1229880,
+        "Combine input records": 1229880,
+        "Combine output records": 844478,
+        "Spilled Records": 1688956,
+        "Bytes Read": 44627254,
+        "Reduce input records": 844478,
+        "Reduce output records": 711722,
+        "Bytes Written": 33552660
+      }
+    }
+  },
+  "spark": {
+    "counts_seconds": 195.4,
+    "pairs_seconds": 375.9
+  },
+  "compare_event_counts": {
+    "keys_hadoop": 356254,
+    "keys_spark": 356254,
+    "total_hadoop": 109950743,
+    "total_spark": 109950743,
+    "mismatched_keys": 0,
+    "identical": true
+  },
+  "compare_pair_counts": {
+    "keys_hadoop": 355861,
+    "keys_spark": 355861,
+    "total_hadoop": 614940,
+    "total_spark": 614940,
+    "mismatched_keys": 0,
+    "identical": true
+  },
+  "identical": true,
+  "top_pairs": [
+    {
+      "key": "1004833,1004856",
+      "count": 2163
+    },
+    {
+      "key": "1004767,1004856",
+      "count": 1883
+    },
+    {
+      "key": "1004767,1004870",
+      "count": 1726
+    },
+    {
+      "key": "1004249,1005115",
+      "count": 1406
+    },
+    {
+      "key": "1004856,1005100",
+      "count": 1359
+    },
+    {
+      "key": "1004767,1004833",
+      "count": 1250
+    },
+    {
+      "key": "4804055,4804056",
+      "count": 1154
+    },
+    {
+      "key": "1005105,1005115",
+      "count": 1028
+    },
+    {
+      "key": "1004856,1004858",
+      "count": 1024
+    },
+    {
+      "key": "1004767,1004836",
+      "count": 915
+    }
+  ]
+}
