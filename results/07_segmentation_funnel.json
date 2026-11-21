@@ -1,6 +1,6 @@
 {
   "experiment": "07_segmentation_funnel",
-  "created_utc": "2026-11-18T00:45:56.281740+00:00",
+  "created_utc": "2026-11-21T09:22:47.897607+00:00",
   "fraction": 1.0,
   "funnel_top": [
     {
@@ -132,12 +132,13 @@
   ],
   "rfm": {
     "n_buyers": 697470,
+    "selected_algo": "kmeans",
     "best_k": 4,
     "silhouette": {
-      "3": 0.3882235182593771,
-      "4": 0.45084350908339704,
-      "5": 0.4240779596687756,
-      "6": 0.4016340505708642
+      "3": 0.4547537837750411,
+      "4": 0.45721985168576823,
+      "5": 0.4251781814916428,
+      "6": 0.41979607633194654
     },
     "profile": [
       {
@@ -169,7 +170,506 @@
         "avg_monetary": 103.07394778499162
       }
     ],
-    "seconds": 166.99707774799992
+    "seconds": 3689.6229783139997,
+    "seeds": [
+      42,
+      7,
+      2024
+    ],
+    "comparison": [
+      {
+        "algo": "bisecting",
+        "k": 3,
+        "sil_mean": NaN,
+        "sil_std": NaN,
+        "sil_min": NaN,
+        "degenerate_fits": 3,
+        "min_clusters_used": 1,
+        "fit_s": 61.56666666666666,
+        "ari_between_seeds": 1.0
+      },
+      {
+        "algo": "bisecting",
+        "k": 4,
+        "sil_mean": NaN,
+        "sil_std": NaN,
+        "sil_min": NaN,
+        "degenerate_fits": 3,
+        "min_clusters_used": 1,
+        "fit_s": 87.16666666666667,
+        "ari_between_seeds": 1.0
+      },
+      {
+        "algo": "bisecting",
+        "k": 5,
+        "sil_mean": NaN,
+        "sil_std": NaN,
+        "sil_min": NaN,
+        "degenerate_fits": 3,
+        "min_clusters_used": 1,
+        "fit_s": 115.66666666666667,
+        "ari_between_seeds": 1.0
+      },
+      {
+        "algo": "bisecting",
+        "k": 6,
+        "sil_mean": NaN,
+        "sil_std": NaN,
+        "sil_min": NaN,
+        "degenerate_fits": 3,
+        "min_clusters_used": 1,
+        "fit_s": 148.16666666666666,
+        "ari_between_seeds": 1.0
+      },
+      {
+        "algo": "gmm",
+        "k": 3,
+        "sil_mean": 0.23483685723375766,
+        "sil_std": 0.0,
+        "sil_min": 0.23483685723375763,
+        "degenerate_fits": 0,
+        "min_clusters_used": 3,
+        "fit_s": 52.1,
+        "ari_between_seeds": 1.0
+      },
+      {
+        "algo": "gmm",
+        "k": 4,
+        "sil_mean": 0.1993578543234149,
+        "sil_std": 0.03222911797767139,
+        "sil_min": 0.16214287445102593,
+        "degenerate_fits": 0,
+        "min_clusters_used": 4,
+        "fit_s": 133.4,
+        "ari_between_seeds": 0.9758002399601491
+      },
+      {
+        "algo": "gmm",
+        "k": 5,
+        "sil_mean": 0.21193252810644514,
+        "sil_std": 0.004493938351618192,
+        "sil_min": 0.20729329659338597,
+        "degenerate_fits": 0,
+        "min_clusters_used": 5,
+        "fit_s": 215.36666666666667,
+        "ari_between_seeds": 0.9960461791130321
+      },
+      {
+        "algo": "gmm",
+        "k": 6,
+        "sil_mean": 0.1785427736803115,
+        "sil_std": 0.032882974433484556,
+        "sil_min": 0.1595570016116973,
+        "degenerate_fits": 0,
+        "min_clusters_used": 6,
+        "fit_s": 230.36666666666667,
+        "ari_between_seeds": 0.9738886494305005
+      },
+      {
+        "algo": "kmeans",
+        "k": 3,
+        "sil_mean": 0.4547537837750411,
+        "sil_std": 0.0869346624347457,
+        "sil_min": 0.3882235182593771,
+        "degenerate_fits": 0,
+        "min_clusters_used": 3,
+        "fit_s": 44.9,
+        "ari_between_seeds": 0.3627754037400592
+      },
+      {
+        "algo": "kmeans",
+        "k": 4,
+        "sil_mean": 0.45721985168576823,
+        "sil_std": 0.0055535485151667514,
+        "sil_min": 0.45084350908339704,
+        "degenerate_fits": 0,
+        "min_clusters_used": 4,
+        "fit_s": 37.63333333333333,
+        "ari_between_seeds": 0.8875266983926845
+      },
+      {
+        "algo": "kmeans",
+        "k": 5,
+        "sil_mean": 0.4251781814916428,
+        "sil_std": 0.0009652702496212969,
+        "sil_min": 0.4240779596687756,
+        "degenerate_fits": 0,
+        "min_clusters_used": 5,
+        "fit_s": 37.43333333333333,
+        "ari_between_seeds": 0.5221198311886077
+      },
+      {
+        "algo": "kmeans",
+        "k": 6,
+        "sil_mean": 0.41979607633194654,
+        "sil_std": 0.0195726844707401,
+        "sil_min": 0.4016340505708642,
+        "degenerate_fits": 0,
+        "min_clusters_used": 6,
+        "fit_s": 37.666666666666664,
+        "ari_between_seeds": 0.3999988617555346
+      }
+    ],
+    "comparison_by_seed": [
+      {
+        "algo": "kmeans",
+        "k": 3,
+        "seed": 42,
+        "silhouette": 0.3882235182593771,
+        "clusters_used": 3,
+        "degenerate": false,
+        "seconds": 55.7
+      },
+      {
+        "algo": "kmeans",
+        "k": 3,
+        "seed": 7,
+        "silhouette": 0.4229195435677314,
+        "clusters_used": 3,
+        "degenerate": false,
+        "seconds": 40.4
+      },
+      {
+        "algo": "kmeans",
+        "k": 3,
+        "seed": 2024,
+        "silhouette": 0.5531182894980148,
+        "clusters_used": 3,
+        "degenerate": false,
+        "seconds": 38.6
+      },
+      {
+        "algo": "kmeans",
+        "k": 4,
+        "seed": 42,
+        "silhouette": 0.45084350908339704,
+        "clusters_used": 4,
+        "degenerate": false,
+        "seconds": 38.7
+      },
+      {
+        "algo": "kmeans",
+        "k": 4,
+        "seed": 7,
+        "silhouette": 0.460998440104931,
+        "clusters_used": 4,
+        "degenerate": false,
+        "seconds": 36.3
+      },
+      {
+        "algo": "kmeans",
+        "k": 4,
+        "seed": 2024,
+        "silhouette": 0.45981760586897663,
+        "clusters_used": 4,
+        "degenerate": false,
+        "seconds": 37.9
+      },
+      {
+        "algo": "kmeans",
+        "k": 5,
+        "seed": 42,
+        "silhouette": 0.4240779596687756,
+        "clusters_used": 5,
+        "degenerate": false,
+        "seconds": 37.9
+      },
+      {
+        "algo": "kmeans",
+        "k": 5,
+        "seed": 7,
+        "silhouette": 0.4258828259274944,
+        "clusters_used": 5,
+        "degenerate": false,
+        "seconds": 37.3
+      },
+      {
+        "algo": "kmeans",
+        "k": 5,
+        "seed": 2024,
+        "silhouette": 0.4255737588786584,
+        "clusters_used": 5,
+        "degenerate": false,
+        "seconds": 37.1
+      },
+      {
+        "algo": "kmeans",
+        "k": 6,
+        "seed": 42,
+        "silhouette": 0.4016340505708642,
+        "clusters_used": 6,
+        "degenerate": false,
+        "seconds": 38.1
+      },
+      {
+        "algo": "kmeans",
+        "k": 6,
+        "seed": 7,
+        "silhouette": 0.4405259343304162,
+        "clusters_used": 6,
+        "degenerate": false,
+        "seconds": 37.4
+      },
+      {
+        "algo": "kmeans",
+        "k": 6,
+        "seed": 2024,
+        "silhouette": 0.41722824409455905,
+        "clusters_used": 6,
+        "degenerate": false,
+        "seconds": 37.5
+      },
+      {
+        "algo": "bisecting",
+        "k": 3,
+        "seed": 42,
+        "silhouette": NaN,
+        "clusters_used": 1,
+        "degenerate": true,
+        "seconds": 62.0
+      },
+      {
+        "algo": "bisecting",
+        "k": 3,
+        "seed": 7,
+        "silhouette": NaN,
+        "clusters_used": 1,
+        "degenerate": true,
+        "seconds": 61.8
+      },
+      {
+        "algo": "bisecting",
+        "k": 3,
+        "seed": 2024,
+        "silhouette": NaN,
+        "clusters_used": 1,
+        "degenerate": true,
+        "seconds": 60.9
+      },
+      {
+        "algo": "bisecting",
+        "k": 4,
+        "seed": 42,
+        "silhouette": NaN,
+        "clusters_used": 1,
+        "degenerate": true,
+        "seconds": 87.9
+      },
+      {
+        "algo": "bisecting",
+        "k": 4,
+        "seed": 7,
+        "silhouette": NaN,
+        "clusters_used": 1,
+        "degenerate": true,
+        "seconds": 86.9
+      },
+      {
+        "algo": "bisecting",
+        "k": 4,
+        "seed": 2024,
+        "silhouette": NaN,
+        "clusters_used": 1,
+        "degenerate": true,
+        "seconds": 86.7
+      },
+      {
+        "algo": "bisecting",
+        "k": 5,
+        "seed": 42,
+        "silhouette": NaN,
+        "clusters_used": 1,
+        "degenerate": true,
+        "seconds": 116.2
+      },
+      {
+        "algo": "bisecting",
+        "k": 5,
+        "seed": 7,
+        "silhouette": NaN,
+        "clusters_used": 1,
+        "degenerate": true,
+        "seconds": 115.3
+      },
+      {
+        "algo": "bisecting",
+        "k": 5,
+        "seed": 2024,
+        "silhouette": NaN,
+        "clusters_used": 1,
+        "degenerate": true,
+        "seconds": 115.5
+      },
+      {
+        "algo": "bisecting",
+        "k": 6,
+        "seed": 42,
+        "silhouette": NaN,
+        "clusters_used": 1,
+        "degenerate": true,
+        "seconds": 143.9
+      },
+      {
+        "algo": "bisecting",
+        "k": 6,
+        "seed": 7,
+        "silhouette": NaN,
+        "clusters_used": 1,
+        "degenerate": true,
+        "seconds": 144.4
+      },
+      {
+        "algo": "bisecting",
+        "k": 6,
+        "seed": 2024,
+        "silhouette": NaN,
+        "clusters_used": 1,
+        "degenerate": true,
+        "seconds": 156.2
+      },
+      {
+        "algo": "gmm",
+        "k": 3,
+        "seed": 42,
+        "silhouette": 0.23483685723375763,
+        "clusters_used": 3,
+        "degenerate": false,
+        "seconds": 56.9
+      },
+      {
+        "algo": "gmm",
+        "k": 3,
+        "seed": 7,
+        "silhouette": 0.23483685723375763,
+        "clusters_used": 3,
+        "degenerate": false,
+        "seconds": 57.9
+      },
+      {
+        "algo": "gmm",
+        "k": 3,
+        "seed": 2024,
+        "silhouette": 0.23483685723375763,
+        "clusters_used": 3,
+        "degenerate": false,
+        "seconds": 41.5
+      },
+      {
+        "algo": "gmm",
+        "k": 4,
+        "seed": 42,
+        "silhouette": 0.16214287445102593,
+        "clusters_used": 4,
+        "degenerate": false,
+        "seconds": 71.2
+      },
+      {
+        "algo": "gmm",
+        "k": 4,
+        "seed": 7,
+        "silhouette": 0.21796467948523665,
+        "clusters_used": 4,
+        "degenerate": false,
+        "seconds": 140.2
+      },
+      {
+        "algo": "gmm",
+        "k": 4,
+        "seed": 2024,
+        "silhouette": 0.2179660090339821,
+        "clusters_used": 4,
+        "degenerate": false,
+        "seconds": 188.8
+      },
+      {
+        "algo": "gmm",
+        "k": 5,
+        "seed": 42,
+        "silhouette": 0.21223878097111348,
+        "clusters_used": 5,
+        "degenerate": false,
+        "seconds": 209.8
+      },
+      {
+        "algo": "gmm",
+        "k": 5,
+        "seed": 7,
+        "silhouette": 0.20729329659338597,
+        "clusters_used": 5,
+        "degenerate": false,
+        "seconds": 211.0
+      },
+      {
+        "algo": "gmm",
+        "k": 5,
+        "seed": 2024,
+        "silhouette": 0.21626550675483597,
+        "clusters_used": 5,
+        "degenerate": false,
+        "seconds": 225.3
+      },
+      {
+        "algo": "gmm",
+        "k": 6,
+        "seed": 42,
+        "silhouette": 0.15955855747769546,
+        "clusters_used": 6,
+        "degenerate": false,
+        "seconds": 229.5
+      },
+      {
+        "algo": "gmm",
+        "k": 6,
+        "seed": 7,
+        "silhouette": 0.21651276195154168,
+        "clusters_used": 6,
+        "degenerate": false,
+        "seconds": 231.3
+      },
+      {
+        "algo": "gmm",
+        "k": 6,
+        "seed": 2024,
+        "silhouette": 0.1595570016116973,
+        "clusters_used": 6,
+        "degenerate": false,
+        "seconds": 230.3
+      }
+    ],
+    "vs_runner_up": {
+      "runner_up": "kmeans k=3",
+      "diff_by_seed": {
+        "42": 0.0626,
+        "7": 0.0381,
+        "2024": -0.0933
+      },
+      "verdict": "tie"
+    },
+    "best_by_algo": [
+      {
+        "algo": "kmeans",
+        "k": 4,
+        "sil_mean": 0.45721985168576823,
+        "sil_std": 0.0055535485151667514,
+        "sil_min": 0.45084350908339704,
+        "degenerate_fits": 0,
+        "min_clusters_used": 4,
+        "fit_s": 37.63333333333333,
+        "ari_between_seeds": 0.8875266983926845
+      },
+      {
+        "algo": "gmm",
+        "k": 3,
+        "sil_mean": 0.23483685723375766,
+        "sil_std": 0.0,
+        "sil_min": 0.23483685723375763,
+        "degenerate_fits": 0,
+        "min_clusters_used": 3,
+        "fit_s": 52.1,
+        "ari_between_seeds": 1.0
+      }
+    ],
+    "selection_rule": "highest mean silhouette over seeds among settings with no degenerate fit; better than runner-up only if higher for every seed"
   },
   "instacart": {
     "reorder_rate": 0.5896974667922161,
