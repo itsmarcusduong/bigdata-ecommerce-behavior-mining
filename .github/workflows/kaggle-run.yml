@@ -18,9 +18,9 @@ on:
         description: "Spark driver memory trên Kaggle"
         default: "20g"
       mode:
-        description: "run = push + chờ + tải kết quả; output = chỉ tải kết quả của lần chạy gần nhất"
+        description: "run = push + chờ + tải kết quả; output = chỉ tải kết quả lần gần nhất; status = chỉ xem trạng thái; meta = lưu metadata/license của dataset"
         type: choice
-        options: [run, output]
+        options: [run, output, status, meta]
         default: run
 
 permissions:
@@ -52,6 +52,13 @@ jobs:
         run: |
           rc=0
           for nb in $NBS; do
+            if [ "${{ inputs.mode }}" = status ]; then
+              python tools/kaggle_run.py status $nb || rc=1; continue
+            fi
+            if [ "${{ inputs.mode }}" = meta ]; then
+              python tools/kaggle_run.py meta $nb || rc=1; continue
+            fi
+            python tools/kaggle_run.py status $nb || true
             if [ "${{ inputs.mode }}" = run ]; then
               python tools/kaggle_run.py push $nb --fraction "${{ inputs.fraction }}" --mem "${{ inputs.mem }}" || { rc=1; continue; }
               sleep 60
@@ -68,6 +75,7 @@ jobs:
           python tools/make_results_md.py
           git add -f results/*.json results/figures docs/RESULTS.md 2>/dev/null || true
           git add -f results/hadoop/real_*.log 2>/dev/null || true
+          git add -f results/licenses 2>/dev/null || true
           if git diff --cached --quiet; then echo "no results downloaded"; exit 0; fi
           br="results/kaggle-$(echo $NBS | tr ' ' '-')-${{ inputs.fraction }}-${{ github.run_id }}"
           git switch -c "$br"

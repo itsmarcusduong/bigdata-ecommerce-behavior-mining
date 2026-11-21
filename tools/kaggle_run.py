@@ -166,9 +166,33 @@ def output(nb: str) -> int:
     return rc
 
 
+def meta(nb: str) -> int:
+    """Save the Kaggle API metadata (incl. license) of every dataset the notebook reads, with the access date.
+
+    Evidence for the license claim in docs/DATASETS.md comes from the source itself, not from a secondary page.
+    """
+    from datetime import datetime, timezone
+
+    rc = 0
+    for ref in NOTEBOOKS[nb][2]:
+        dest = ROOT / "results" / "licenses" / ref.replace("/", "__")
+        dest.mkdir(parents=True, exist_ok=True)
+        rc |= kaggle("datasets", "metadata", "-p", str(dest), ref)
+        (dest / "accessed_utc.txt").write_text(datetime.now(timezone.utc).isoformat() + "\n")
+        for f in dest.glob("*.json"):
+            try:
+                body = json.loads(f.read_text())
+                info = body.get("info", body) if isinstance(body, dict) else {}
+                lic = info.get("licenses") or info.get("licenseName")
+                print(f"{ref}: licenses = {lic}")
+            except (ValueError, AttributeError):
+                print(f"{ref}: could not parse {f.name}")
+    return rc
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("action", choices=["push", "status", "wait", "output"])
+    ap.add_argument("action", choices=["push", "status", "wait", "output", "meta"])
     ap.add_argument("notebooks", nargs="+", choices=sorted(NOTEBOOKS))
     ap.add_argument("--fraction", type=float, default=0.05, help="share of USERS to keep (1.0 = full data)")
     ap.add_argument("--mem", default="20g", help="Spark driver memory")
@@ -184,6 +208,8 @@ def main() -> int:
             rc |= wait(nb, a.timeout_min)
         elif a.action == "status":
             rc |= kaggle("kernels", "status", f"{USER}/{slug(nb)}")
+        elif a.action == "meta":
+            rc |= meta(nb)
         else:
             rc |= output(nb)
     return rc

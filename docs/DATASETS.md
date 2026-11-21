@@ -19,8 +19,11 @@
 | `user_session` | id phiên (null ở một số dòng) → dùng làm *giỏ* và *đường duyệt* |
 
 Lưu ý chất lượng: `category_code`/`brand` thiếu nhiều; `purchase` chiếm tỷ lệ nhỏ; sự kiện trùng lặp có thể xuất hiện; một
-tập `price` bằng 0/âm có thể có → notebook 01 đo các tỷ lệ này. Giấy phép: xem mục *License* ở trang Kaggle (dùng cho học tập,
-trích dẫn nguồn, không phân phối lại dữ liệu trong repo - repo **không chứa dữ liệu**).
+tập `price` bằng 0/âm có thể có → notebook 01 đo các tỷ lệ này. Giấy phép [DOCUMENT]: metadata API Kaggle (truy cập 21/11/2026, lưu tại
+`results/licenses/mkechinov__ecommerce-behavior-data-from-multi-category-store/`) ghi `copyright-authors` (bản quyền
+thuộc tác giả, không phải giấy phép mở); mô tả dataset cho phép dùng miễn phí, kể cả trong tài liệu giáo dục, với điều
+kiện **ghi nguồn: link trang Kaggle và link REES46 Marketing Platform (https://rees46.com)**. Báo cáo và slide phải có
+hai link này. Không phân phối lại dữ liệu - repo **không chứa dữ liệu**.
 
 ## 2. Instacart Market Basket Analysis (giỏ hàng thật)
 
@@ -30,7 +33,11 @@ trích dẫn nguồn, không phân phối lại dữ liệu trong repo - repo **
 * Bảng: `orders.csv` (3,421,083 dòng), `order_products__prior.csv` (**32,434,489** dòng), `order_products__train.csv` (1,384,617),
   `products.csv` (49,688), `aisles.csv` (134), `departments.csv` (21).
 * Vai trò: khai phá **tập phổ biến / luật kết hợp** trên giỏ hàng thật (A-Priori, PCY, FP-Growth) và phân tích mua lại.
-* Giấy phép: dữ liệu do Instacart công bố (2017) cho mục đích nghiên cứu/phi thương mại; trích dẫn nguồn.
+* Giấy phép [DOCUMENT]: bản tải lên `psparks/instacart-market-basket-analysis` khai `CC0-1.0` trong metadata API Kaggle
+  (truy cập 21/11/2026, `results/licenses/psparks__instacart-market-basket-analysis/`), mô tả trống. Đây là bản tải lại
+  dữ liệu Instacart công bố năm 2017; ghi chú trước đây của repo nói bản gốc chỉ cho nghiên cứu phi thương mại
+  (NEEDS_REVIEW: chưa đọc điều khoản gốc của Instacart). [DECISION] Áp cách đọc chặt hơn: chỉ dùng phi thương mại cho
+  học tập, ghi nguồn Instacart (2017) và link Kaggle.
 
 ## 3. Vì sao đủ "dữ liệu lớn"?
 
