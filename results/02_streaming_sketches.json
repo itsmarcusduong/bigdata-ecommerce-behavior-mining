@@ -1,6 +1,6 @@
 {
   "experiment": "02_streaming_sketches",
-  "created_utc": "2026-11-17T22:53:07.547005+00:00",
+  "created_utc": "2026-11-21T08:51:51.874193+00:00",
   "fraction": 1.0,
   "n_days": 61,
   "cms": {
@@ -12,9 +12,9 @@
     "n_stream": 104335509,
     "n_distinct_products": 206876,
     "within_bound_fraction": 1.0,
-    "seconds": 483.60413011699995,
+    "seconds": 466.49820562799994,
     "distributed_equals_sequential": true,
-    "distributed_seconds": 186.44540854000002
+    "distributed_seconds": 191.032056817
   },
   "bloom": {
     "n_bits": 56810891,
@@ -35,20 +35,75 @@
       "rsd": 0.2,
       "estimate": 5452809,
       "rel_err": 0.025610116447408886,
-      "seconds": 4.215319959999988
+      "seconds": 4.011916037999981
     },
     {
       "rsd": 0.05,
       "estimate": 5927026,
       "rel_err": 0.1148048328938021,
-      "seconds": 4.618834184000207
+      "seconds": 4.583816089000038
     },
     {
       "rsd": 0.01,
       "estimate": 5395292,
       "rel_err": 0.014791835985411112,
-      "seconds": 14.777857551000125
+      "seconds": 14.2446267549999
     }
   ],
-  "exact_distinct_users": 5316649
+  "exact_distinct_users": 5316649,
+  "cms_seeds": [
+    {
+      "seed": 42,
+      "never_under": true,
+      "within_bound": 1.0,
+      "mean_abs_err": 10.59637981899095,
+      "max_abs_err": 1729.0,
+      "bound": 2086.71018
+    },
+    {
+      "seed": 7,
+      "never_under": true,
+      "within_bound": 1.0,
+      "mean_abs_err": 8.565278263913196,
+      "max_abs_err": 1267.0,
+      "bound": 2086.71018
+    },
+    {
+      "seed": 2024,
+      "never_under": true,
+      "within_bound": 1.0,
+      "mean_abs_err": 10.019100955047753,
+      "max_abs_err": 968.0,
+      "bound": 2086.71018
+    }
+  ],
+  "hll_salted": [
+    {
+      "rsd": 0.01,
+      "mean_rel_err": -0.004796743211748603,
+      "sd_rel_err": 0.010477502748984164,
+      "mean_abs_rel_err": 0.007288876884669271,
+      "within_2rsd": 0.9
+    },
+    {
+      "rsd": 0.05,
+      "mean_rel_err": 0.013571988671811886,
+      "sd_rel_err": 0.03298981980097608,
+      "mean_abs_rel_err": 0.02832158000274233,
+      "within_2rsd": 1.0
+    },
+    {
+      "rsd": 0.2,
+      "mean_rel_err": 0.05791616110072341,
+      "sd_rel_err": 0.1622129473629998,
+      "mean_abs_rel_err": 0.14221869828156797,
+      "within_2rsd": 1.0
+    }
+  ],
+  "hll_salts": 10,
+  "seeds": [
+    42,
+    7,
+    2024
+  ]
 }
