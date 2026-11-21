@@ -20,3 +20,35 @@ def test_rfm_kmeans_and_funnel(events):
     assert k in (2, 3) and seg.select("segment").distinct().count() == k
     f = segmentation.funnel_by_category(events)
     assert f.count() > 0 and f.filter(F.col("view_to_cart") > 1.5).count() == 0
+
+
+def test_adjusted_rand_index_matches_known_values():
+    ari = segmentation.adjusted_rand_index
+    assert ari([0, 0, 1, 1], [1, 1, 0, 0]) == 1.0           # same partition, renamed labels
+    assert abs(ari([0, 0, 0, 1, 1, 1], [0, 0, 1, 1, 2, 2]) - 0.2424) < 1e-3   # sklearn: 0.24242424
+    try:
+        import random
+
+        from sklearn.metrics import adjusted_rand_score
+        rnd = random.Random(1)
+        a = [rnd.randrange(4) for _ in range(300)]
+        b = [rnd.randrange(3) for _ in range(300)]
+        assert abs(ari(a, b) - adjusted_rand_score(a, b)) < 1e-9
+    except ImportError:
+        pass
+
+
+def test_compare_clusterers_runs_all_algorithms(events):
+    x = segmentation.rfm_matrix(segmentation.rfm_features(events)).cache()
+    rows, stab = segmentation.compare_clusterers(x, ks=(2, 3), seeds=(1, 2), sample_size=200)
+    assert {r["algo"] for r in rows} == {"kmeans", "bisecting", "gmm"} and len(rows) == 12
+    assert all(-1 <= r["silhouette"] <= 1 or r["degenerate"] for r in rows)
+    assert all(-1 <= v <= 1 for v in stab.values())
+
+
+def test_degenerate_fits_are_flagged(events):
+    x = segmentation.rfm_matrix(segmentation.rfm_features(events)).repartition(8).cache()
+    rows, _ = segmentation.compare_clusterers(x, algos=("kmeans", "bisecting"), ks=(3,), seeds=(42,), sample_size=100)
+    for r in rows:
+        assert r["degenerate"] == (r["clusters_used"] < r["k"])
+    assert not [r for r in rows if r["algo"] == "kmeans"][0]["degenerate"]

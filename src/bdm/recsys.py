@@ -171,3 +171,57 @@ def truth_and_seen(train: DataFrame, test: DataFrame, event_type: str = "purchas
     seen = (train.filter(F.col("event_type") == event_type).groupBy("user_id")
             .agg(F.collect_set("product_id").alias("seen")))
     return truth, seen
+
+
+# ---------------------------------------------------------------- more candidates (model comparison)
+def recent_popularity_recs(train: DataFrame, users: DataFrame, ref_date: str, days: int = 7,
+                           n: int = 100) -> DataFrame:
+    """Top-selling products in the last ``days`` before ``ref_date`` (train data only)."""
+    recent = train.filter((F.col("event_type") == "purchase")
+                          & (F.col("event_date") >= F.date_sub(F.lit(ref_date).cast("date"), days)))
+    return popularity_recs(recent, users, n)
+
+
+def history_recs(train: DataFrame, users: DataFrame, ref_date: str, half_life_days: float = 3.0,
+                 n: int = 100) -> DataFrame:
+    """Re-recommend the user's own viewed/carted products, scored by event weight x exponential recency decay.
+
+    score(u, i) = sum over events of weight(type) * 2^(-age_days / half_life). A strong baseline in e-commerce,
+    where many purchases follow earlier views. Already-bought items are removed later by ``evaluate``.
+    """
+    from pyspark.sql.window import Window
+
+    from bdm.sessions import with_weight
+
+    age = F.datediff(F.lit(ref_date).cast("date"), F.col("event_date"))
+    sc = (with_weight(train.join(users.select("user_id").distinct(), "user_id"))
+          .filter(F.col("weight") > 0)
+          .withColumn("s", F.col("weight") * F.pow(F.lit(2.0), -age / F.lit(float(half_life_days))))
+          .groupBy("user_id", "product_id").agg(F.sum("s").alias("score")))
+    w = Window.partitionBy("user_id").orderBy(F.desc("score"), "product_id")
+    top = sc.withColumn("rk", F.row_number().over(w)).filter(F.col("rk") <= n)
+    return (top.groupBy("user_id").agg(F.sort_array(F.collect_list(F.struct("rk", "product_id"))).alias("s"))
+            .select("user_id", F.expr("transform(s, x -> x.product_id)").alias("recs")))
+
+
+def blend_recs(first: DataFrame, second: DataFrame, n: int = 100) -> DataFrame:
+    """Concatenate two ranked lists per user (``first`` before ``second``), drop duplicates, keep ``n``."""
+    a = first.withColumnRenamed("recs", "ra")
+    b = second.withColumnRenamed("recs", "rb")
+    empty = F.array().cast("array<long>")
+    return (a.join(b, "user_id", "full")
+            .select("user_id", F.slice(F.array_distinct(F.concat(F.coalesce("ra", empty), F.coalesce("rb", empty))),
+                                       1, n).alias("recs")))
+
+
+def select_best(val_scores: dict, metric: str = "ndcg@10") -> str:
+    """Pre-registered selection rule: the candidate with the highest validation metric (ties -> name order)."""
+    return sorted(val_scores, key=lambda k: (-val_scores[k][metric], k))[0]
+
+
+def verdict(boot: dict) -> str:
+    """'better' / 'worse' only when the paired-bootstrap 95% CI excludes 0, else 'tie'."""
+    if not boot or "ci95" not in boot:
+        return "n/a"
+    lo, hi = boot["ci95"]
+    return "better" if lo > 0 else "worse" if hi < 0 else "tie"

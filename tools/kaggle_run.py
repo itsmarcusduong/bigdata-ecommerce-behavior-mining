@@ -38,6 +38,7 @@ NOTEBOOKS = {
     "06": ("06_recommender", "BDM 06 Recommender", []),
     "07": ("07_segmentation_funnel", "BDM 07 Segmentation Funnel", [INSTACART]),
     "08": ("08_scalability_benchmark", "BDM 08 Scalability Benchmark", []),
+    "09": ("09_hadoop_real", "BDM 09 Hadoop Real", [REES46]),
 }
 
 
@@ -59,7 +60,7 @@ def metadata(nb: str, code_file: str) -> dict:
         "enable_internet": True,  # the header cell clones this repo
         "dataset_sources": datasets,
         "competition_sources": [],
-        "kernel_sources": [] if nb == "01" else [f"{USER}/{slug('01')}"],
+        "kernel_sources": [] if nb in ("01", "09") else [f"{USER}/{slug('01')}"],  # 09 reads the raw CSV
     }
 
 

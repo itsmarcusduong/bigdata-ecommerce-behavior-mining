@@ -87,6 +87,26 @@ t_dist = time.perf_counter() - t0
 print("distributed == sequential:", bool((merged.table == cms.table).all()), f"| {t_dist:.1f}s")
 
 # %% [markdown]
+# **Several hash seeds.** One seed can be lucky. Rebuild the sketch (distributed) with 3 seeds and check the
+# guarantee on the same long-tail sample each time.
+
+# %%
+SEEDS = [int(x) for x in os.environ.get("BDM_SEEDS", "42,7,2024").split(",")]
+cms_seed_rows = []
+for sd in SEEDS:
+    def build_seeded(rows, sd=sd):
+        sk = CountMinSketch.from_error(EPS, DELTA, seed=sd)
+        sk.update_many(np.fromiter((r[0] for r in rows), dtype=np.int64))
+        yield sk
+    sk = views_rdd.mapPartitions(build_seeded).reduce(lambda a, b: a.merge(b))
+    est = sk.estimate_many(sample["product_id"].values)
+    err = est - sample["count"].values
+    cms_seed_rows.append({"seed": sd, "never_under": bool((err >= 0).all()),
+                          "within_bound": float((err <= EPS * sk.n).mean()), "mean_abs_err": float(np.abs(err).mean()),
+                          "max_abs_err": float(err.max()), "bound": float(EPS * sk.n)})
+cms_seeds = pd.DataFrame(cms_seed_rows); cms_seeds
+
+# %% [markdown]
 # ## C. Bloom filter - "is this a returning user?"
 # For each day we test every user against the filter of all *previous* days (new/returning split).
 
@@ -142,6 +162,28 @@ for rsd in (0.2, 0.05, 0.01):
 hll = pd.DataFrame(rows, columns=["rsd", "estimate", "rel_err", "seconds"])
 print(f"exact distinct users = {exact_u:,} ({t_ex:.1f}s)"); hll
 
+# %% [markdown]
+# **Is one run representative?** Spark's HyperLogLog++ uses a fixed hash, so the same data always gives the same
+# estimate. To see the error *distribution*, hash salted copies of the ids (`user_id || '#' || salt`, same
+# distinct count) with 10 salts per rsd and compare the spread with the target relative standard deviation.
+
+# %%
+N_SALTS = int(os.environ.get("BDM_HLL_SALTS", "10"))
+users_only = events.select("user_id").distinct().cache(); users_only.count()
+salt_rows = []
+for rsd in (0.2, 0.05, 0.01):
+    for salt in range(N_SALTS):
+        est = users_only.select(F.approx_count_distinct(F.concat_ws("#", F.col("user_id").cast("string"), F.lit(str(salt))),
+                                                        rsd)).first()[0]
+        salt_rows.append({"rsd": rsd, "salt": salt, "estimate": est, "rel_err": (est - exact_u) / exact_u})
+hll_salts = pd.DataFrame(salt_rows)
+hll_spread = (hll_salts.groupby("rsd")["rel_err"]
+              .agg(mean_rel_err="mean", sd_rel_err="std", mean_abs_rel_err=lambda v: v.abs().mean(),
+                   within_2rsd=lambda v: None).reset_index())
+hll_spread["within_2rsd"] = [float((hll_salts[hll_salts["rsd"] == r]["rel_err"].abs() <= 2 * r).mean())
+                             for r in hll_spread["rsd"]]
+hll_spread
+
 # %%
 results_out.update({
     "cms": {"eps": EPS, "delta": DELTA, "top_k_overlap": overlap, "top_k_mean_rel_err": float(rel_err),
@@ -151,5 +193,7 @@ results_out.update({
     "bloom": {"n_bits": m, "k": k, "empirical_fpr": fpr, "target_fpr": 0.01, "memory_mb": m / 8e6},
     "dgim": {"window": WINDOW, "n_stream": int(len(bits)), "n_buckets": len(dg.buckets),
              "max_rel_err": float(e["rel_err"].max()), "mean_rel_err": float(e["rel_err"].mean())},
-    "hll": hll.to_dict("records"), "exact_distinct_users": int(exact_u)})
+    "hll": hll.to_dict("records"), "exact_distinct_users": int(exact_u),
+    "cms_seeds": cms_seeds.to_dict("records"), "hll_salted": hll_spread.to_dict("records"), "hll_salts": N_SALTS,
+    "seeds": SEEDS})
 print("saved", save_result("02_streaming_sketches", results_out))
