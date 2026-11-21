@@ -63,10 +63,29 @@ def make_clusterer(algo: str, k: int, seed: int):
     raise ValueError(algo)
 
 
+BISECTING_OFFSET = 10.0
+
+
+def clusterer_input(algo: str, x: DataFrame) -> DataFrame:
+    """Rows the clusterer is fitted and evaluated on.
+
+    Spark's Bisecting K-Means splits a cluster by perturbing its centre in proportion to the centre's norm. On
+    standardised (zero-mean) features the root centre is ~0, both children start identical and nothing is ever
+    split (every point lands in one cluster). Translating all points by a constant leaves Euclidean distances, and
+    therefore K-Means objectives and the silhouette, unchanged, and gives the root a non-zero centre."""
+    if algo != "bisecting":
+        return x
+    from pyspark.ml.functions import array_to_vector, vector_to_array
+
+    return x.withColumn("features", array_to_vector(
+        F.transform(vector_to_array("features"), lambda v: v + F.lit(BISECTING_OFFSET))))
+
+
 def fit_clusterer(algo: str, k: int, seed: int, x: DataFrame):
-    """Fit one clusterer. Callers must check how many clusters the fit actually uses: Spark 3.5's Bisecting K-Means
-    can return fewer non-empty clusters than ``k`` (we saw [n, 0, 0] on RFM data), which inflates the silhouette."""
-    return make_clusterer(algo, k, seed).fit(x)
+    """Fit one clusterer on ``clusterer_input(algo, x)``; returns (model, input rows). Callers still check how many
+    clusters the fit uses: a fit with fewer non-empty clusters than ``k`` is degenerate."""
+    data = clusterer_input(algo, x)
+    return make_clusterer(algo, k, seed).fit(data), data
 
 
 def adjusted_rand_index(a, b) -> float:
@@ -108,15 +127,16 @@ def compare_clusterers(x: DataFrame, algos=("kmeans", "bisecting", "gmm"), ks=(3
         for k in ks:
             for sd in seeds:
                 t0 = time.perf_counter()
-                model = fit_clusterer(algo, k, sd, x)
-                pred = model.transform(x)
+                model, data = fit_clusterer(algo, k, sd, x)
+                pred = model.transform(data)
                 n_used = pred.select("prediction").distinct().count()
                 # a degenerate fit (fewer non-empty clusters than k) is flagged; its silhouette is not comparable
                 sil = ClusteringEvaluator().evaluate(pred) if n_used > 1 else float("nan")
                 rows.append({"algo": algo, "k": k, "seed": sd, "silhouette": float(sil),
                              "clusters_used": n_used, "degenerate": n_used < k,
                              "seconds": round(time.perf_counter() - t0, 1)})
-                labels[(algo, k, sd)] = [r[0] for r in model.transform(sample).orderBy(F.hash("user_id"))
+                labels[(algo, k, sd)] = [r[0] for r in model.transform(clusterer_input(algo, sample))
+                                         .orderBy(F.hash("user_id"))
                                          .select("prediction").collect()]
     stability = {}
     for algo in algos:

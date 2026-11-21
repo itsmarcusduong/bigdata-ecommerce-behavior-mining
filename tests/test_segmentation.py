@@ -52,3 +52,20 @@ def test_degenerate_fits_are_flagged(events):
     for r in rows:
         assert r["degenerate"] == (r["clusters_used"] < r["k"])
     assert not [r for r in rows if r["algo"] == "kmeans"][0]["degenerate"]
+
+
+def test_bisecting_splits_standardised_features(events):
+    # zero-mean features used to leave Bisecting K-Means with a single cluster ([n, 0, 0])
+    x = segmentation.rfm_matrix(segmentation.rfm_features(events)).cache()
+    model, data = segmentation.fit_clusterer("bisecting", 3, 42, x)
+    assert model.transform(data).select("prediction").distinct().count() == 3
+
+
+def test_translation_keeps_silhouette(events):
+    from pyspark.ml.clustering import KMeans
+    from pyspark.ml.evaluation import ClusteringEvaluator
+    x = segmentation.rfm_matrix(segmentation.rfm_features(events)).cache()
+    shifted = segmentation.clusterer_input("bisecting", x)
+    a = ClusteringEvaluator().evaluate(KMeans(k=3, seed=1).fit(x).transform(x))
+    b = ClusteringEvaluator().evaluate(KMeans(k=3, seed=1).fit(shifted).transform(shifted))
+    assert abs(a - b) < 1e-6
