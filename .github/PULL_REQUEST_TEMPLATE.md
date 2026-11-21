@@ -22,3 +22,5 @@ Closes #<issue>
 - [ ] Không rò rỉ / không tune trên test; các mô hình được chấm trên cùng tập đánh giá
 - [ ] ≥ 3 ứng viên, luật chọn đặt trước; kết luận "tốt hơn" có CI 95% và ≥ 3 seed (hoặc ghi là hòa)
 - [ ] Đã thử phá kết luận (n nhỏ, seed may mắn, mặc định thư viện); điểm còn mở ghi ở đây
+- [ ] Luật dùng trong PR nằm ở một ADR đã merge **trước** run; phân tích theo tiêu chí khác ghi là *thăm dò*
+- [ ] PR có ADR/luật mới: đã có lượt review đối lập (3 cách kết luận có thể sai, đã kiểm từng cách)

@@ -19,8 +19,9 @@
 | `user_session` | id phiên (null ở một số dòng) → dùng làm *giỏ* và *đường duyệt* |
 
 Lưu ý chất lượng: `category_code`/`brand` thiếu nhiều; `purchase` chiếm tỷ lệ nhỏ; sự kiện trùng lặp có thể xuất hiện; một
-tập `price` bằng 0/âm có thể có → notebook 01 đo các tỷ lệ này. Giấy phép: xem mục *License* ở trang Kaggle (dùng cho học tập,
-trích dẫn nguồn, không phân phối lại dữ liệu trong repo - repo **không chứa dữ liệu**).
+tập `price` bằng 0/âm có thể có → notebook 01 đo các tỷ lệ này. Giấy phép: **NEEDS_REVIEW** - chưa đọc từ nguồn gốc. Bằng chứng sẽ là metadata API Kaggle
+lưu trong `results/licenses/` (workflow `kaggle-run`, `mode=meta`, xem ADR-0001). Trong lúc chờ: chỉ dùng cho học tập,
+trích dẫn nguồn, không phân phối lại dữ liệu trong repo - repo **không chứa dữ liệu**.
 
 ## 2. Instacart Market Basket Analysis (giỏ hàng thật)
 
@@ -30,7 +31,8 @@ trích dẫn nguồn, không phân phối lại dữ liệu trong repo - repo **
 * Bảng: `orders.csv` (3,421,083 dòng), `order_products__prior.csv` (**32,434,489** dòng), `order_products__train.csv` (1,384,617),
   `products.csv` (49,688), `aisles.csv` (134), `departments.csv` (21).
 * Vai trò: khai phá **tập phổ biến / luật kết hợp** trên giỏ hàng thật (A-Priori, PCY, FP-Growth) và phân tích mua lại.
-* Giấy phép: dữ liệu do Instacart công bố (2017) cho mục đích nghiên cứu/phi thương mại; trích dẫn nguồn.
+* Giấy phép: **NEEDS_REVIEW** (cùng cách kiểm như REES46, ADR-0001). Ghi chú hiện có, chưa kiểm từ nguồn gốc: dữ liệu do
+  Instacart công bố (2017) cho mục đích nghiên cứu/phi thương mại; trích dẫn nguồn.
 
 ## 3. Vì sao đủ "dữ liệu lớn"?
 

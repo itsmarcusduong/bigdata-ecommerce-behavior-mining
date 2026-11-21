@@ -34,6 +34,20 @@ def save_result(name: str, payload: dict) -> str:
     return str(out)
 
 
+def mark_stage(name: str, stage: str, status: str = "OK", **info) -> str:
+    """Append one stage record to ``results/<name>_stages.json`` (written at once, so it survives a later crash).
+
+    Each record has the stage, its status (OK/FAILED), a UTC time and small summary values. A notebook that is
+    killed by a time limit still leaves the last completed stage and its key numbers behind.
+    """
+    config.RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    out = config.RESULTS_DIR / f"{name}_stages.json"
+    rows = json.loads(out.read_text()) if out.exists() else []
+    rows.append({"stage": stage, "status": status, "utc": datetime.now(timezone.utc).isoformat(), **info})
+    out.write_text(json.dumps(rows, indent=2, default=str))
+    return str(out)
+
+
 def save_fig(fig, name: str) -> str:
     """Save a matplotlib figure to ``results/figures/<name>.png`` (also displayed in notebooks)."""
     out_dir = config.RESULTS_DIR / "figures"

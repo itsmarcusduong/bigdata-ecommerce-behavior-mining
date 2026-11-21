@@ -33,7 +33,7 @@ from pyspark.sql import functions as F
 
 from bdm import config, io, recsys
 from bdm.graph import cooccurrence_edges
-from bdm.results import save_fig, save_result
+from bdm.results import mark_stage, save_fig, save_result
 from bdm.sessions import session_baskets, time_split, user_item_matrix
 
 SEEDS = [int(s) for s in os.environ.get("BDM_SEEDS", "42,7,2024").split(",")]
@@ -54,6 +54,7 @@ truth_v.cache(); seen_v.cache()
 users_v = truth_v.select("user_id")
 n_val = truth_v.count()
 print(f"validation: fit < {VAL_CUTOFF} <= val < {CUTOFF}; validation users: {n_val:,}")
+mark_stage("06_recommender", "split", n_eval_users=n_eval, n_val_users=n_val)
 out = {"fraction": FRACTION, "cutoff": CUTOFF, "val_cutoff": VAL_CUTOFF, "n_eval_users": n_eval,
        "n_val_users": n_val, "seeds": SEEDS,
        "selection_rule": "highest validation NDCG@10 (all validation users, popularity fallback); "
@@ -121,6 +122,7 @@ selected = recsys.select_best(family_val)
 print("best configuration per family:", best_cfg)
 print("validation NDCG@10 per family:", {k: round(v["ndcg@10"], 4) for k, v in family_val.items()})
 print("SELECTED (pre-registered rule):", selected)
+mark_stage("06_recommender", "validation", selected=selected, validation_family_ndcg10=family_val, best_config=best_cfg)
 val_df.sort_values("val_ndcg@10", ascending=False)
 
 # %% [markdown]
@@ -147,6 +149,7 @@ common = (als_by_seed[SEEDS[0]].select("user_id").join(knn.select("user_id"), "u
           .join(hist_r.select("user_id"), "user_id").join(users, "user_id").cache())
 n_common = common.count()
 print(f"users every family can serve: {n_common:,} of {n_eval:,}; refits in {time.perf_counter() - t0:.0f}s")
+mark_stage("06_recommender", "refit", n_common_users=n_common, seconds=round(time.perf_counter() - t0))
 
 deterministic = {"popularity": pop, "recent_popularity": recent, "history": hist_r, "item_knn": knn}
 test_rows, per_user, coverage = [], {}, {}
@@ -183,6 +186,7 @@ sig_df = pd.DataFrame(sig)
 overall = {o: ("better" if (g["verdict"] == "better").all() else "worse" if (g["verdict"] == "worse").all() else "tie")
            for o, g in sig_df.groupby("other")}
 print(f"selected = {selected}; verdict vs each other family over {len(SEEDS)} seeds:", overall)
+mark_stage("06_recommender", "test", verdict_selected_vs_others=overall)
 sig_df
 
 # %%
@@ -203,6 +207,7 @@ for name, types in {"views only": ["view"], "cart+purchase only": ["cart", "purc
     mdl = recsys.train_als(mat, rank=best_cfg["als"]["rank"], alpha=best_cfg["als"]["alpha"], max_iter=8, seed=SEEDS[0])
     abl[name] = recsys.evaluate(recsys.with_fallback(recsys.als_recs(mdl, users, 100), pop), truth, seen, users=common)
     del mdl; gc.collect()
+mark_stage("06_recommender", "ablation")
 abl_df = pd.DataFrame(abl).T[["precision@10", "recall@10", "map@10", "ndcg@10", "ndcg@20", "n_users"]]
 abl_df
 
@@ -234,3 +239,4 @@ out.update({"selected": selected, "best_config": best_cfg, "validation_family_nd
             "ablation_events": abl_df.to_dict("index"),
             "error_by_history": by_hist.astype({"history_bucket": str}).to_dict("records")})
 print("saved", save_result("06_recommender", out))
+mark_stage("06_recommender", "saved")
