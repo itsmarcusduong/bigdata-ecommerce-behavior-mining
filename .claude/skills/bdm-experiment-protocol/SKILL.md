@@ -29,9 +29,18 @@ Every experiment answers one research question (RQ1-RQ6 in `PROJECT.md`) with ev
 | Recsys | Precision/Recall/HitRate/MAP/NDCG @10,@20, n_users evaluated, coverage if computed |
 | Scalability | runtime vs size (log-log exponent), speed-up vs cores, throughput rows/s |
 
+## Model selection (never assume the best model)
+1. List >= 3 candidates per question, including a simple strong baseline and the library default.
+2. Pre-register the rule in the issue/notebook header: validation metric, validation split (never the test period),
+   tie rule (A > B only if the paired-bootstrap 95% CI excludes 0 and the sign holds over >= 3 seeds).
+3. Give each candidate its own small grid on validation; refit the chosen setting on all training data; score once on test.
+4. Report every candidate on the same users/items with intervals, the selected model and the runner-up gap.
+   A tie or a baseline win is reported as such.
+
 ## After running
 1. **Ablation**: change one factor at a time (ALS rank/alpha, behaviour signals, (b, r), PCY buckets, damping).
 2. **Error analysis**: where does it fail (cold users, long-tail products, near-threshold pairs, tail of the CMS error)? Put one table/plot in the notebook.
 3. **Uncertainty**: repeat with >=3 seeds or `FRACTION` samples for any claim of "A beats B"; report mean +/- std or a bootstrap CI over users.
 4. **Report honestly**: negative or mixed results are fine - explain them. Never tune on the test period; never present synthetic numbers as results.
-5. Save `results/<nn>_<name>.json` + `results/figures/*.png`; update `docs/RESULTS.md`; every number in the report must cite a JSON key.
+5. Run the `critical-review` skill (recheck, try to break, compare, re-review) before merging.
+6. Save `results/<nn>_<name>.json` + `results/figures/*.png`; update `docs/RESULTS.md`; every number in the report must cite a JSON key.
