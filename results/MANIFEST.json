@@ -1,0 +1,199 @@
+{
+  "generated_utc": "2026-11-21T18:03:31.171404+00:00",
+  "source_commit": "ab06ab1fdc80f475d9801ee456c65d5a348f4f7d",
+  "files": [
+    {
+      "path": "results/.gitkeep",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "results/01_ingest_eda.json",
+      "bytes": 953,
+      "sha256": "ef9ffb67e09f5b2197aba0deea8a3f897822052aab96bff3730c1b8e1e4e843a",
+      "created_utc": "2026-11-17T22:04:23.868790+00:00",
+      "fraction": 1.0
+    },
+    {
+      "path": "results/02_streaming_sketches.json",
+      "bytes": 2475,
+      "sha256": "d03146e1ec92fc5f624e5b83fd4627eaf3d8ea0c14d87a323c4fa58f9d6e359c",
+      "created_utc": "2026-11-21T08:51:51.874193+00:00",
+      "fraction": 1.0
+    },
+    {
+      "path": "results/03_frequent_itemsets.json",
+      "bytes": 2163,
+      "sha256": "e94ad6d412bcfb367c71a5a4e740dfd20d5846eb7ac355d10708919a3ccd8d39",
+      "created_utc": "2026-11-18T01:24:09.239914+00:00",
+      "fraction": 1.0
+    },
+    {
+      "path": "results/04_lsh_similarity.json",
+      "bytes": 30087,
+      "sha256": "9f11ffb738bc93d368f72c36d9d065a62e66d146995e708ff29348a72d670274",
+      "created_utc": "2026-11-21T09:31:32.015306+00:00",
+      "fraction": 1.0
+    },
+    {
+      "path": "results/05_link_analysis.json",
+      "bytes": 1447,
+      "sha256": "6e1c9084035edc1d028295bddf0a32df00266a292bd94be066c52ec2b00896cc",
+      "created_utc": "2026-11-17T23:20:17.965464+00:00",
+      "fraction": 1.0
+    },
+    {
+      "path": "results/06_recommender.json",
+      "bytes": 25268,
+      "sha256": "4db29b56f20e306283f113238a1626eb80623929badb1ea5f43c82d0c7e321bc",
+      "created_utc": "2026-11-21T17:45:30.012000+00:00",
+      "fraction": 1.0
+    },
+    {
+      "path": "results/07_segmentation_funnel.json",
+      "bytes": 18624,
+      "sha256": "3645ea08e40a275e5bb1fac850a08ed3c263e913f6bee392e4366bd25ab83190",
+      "created_utc": "2026-11-21T11:05:25.198983+00:00",
+      "fraction": 1.0
+    },
+    {
+      "path": "results/08_scalability_benchmark.json",
+      "bytes": 3140,
+      "sha256": "d73e8475257b3229419abeba6b468ca9c11bdb7fdf2c944a103d112d9dbaa852",
+      "created_utc": "2026-11-18T02:53:21.444756+00:00",
+      "base_fraction": 1.0
+    },
+    {
+      "path": "results/09_hadoop_real.json",
+      "bytes": 2699,
+      "sha256": "70f232acf35c22b350c8008e3e81018a0ad895b1579be5f517d15397eb217243",
+      "created_utc": "2026-11-21T10:35:19.376490+00:00",
+      "fraction": 1.0
+    },
+    {
+      "path": "results/figures/01_daily_events.png",
+      "bytes": 61464,
+      "sha256": "89e276be1406d4534e4b0f19e2587b7895d0635f4034261028382a824865b682"
+    },
+    {
+      "path": "results/figures/01_top_categories_brands.png",
+      "bytes": 89786,
+      "sha256": "26969e838ececde24cb32f3323986bbcb9e27e29401eedf1f7021dfe88483312"
+    },
+    {
+      "path": "results/figures/02_cms_accuracy.png",
+      "bytes": 66169,
+      "sha256": "b8341a40dcda2d3f79f579cbaca0926b3e14bc96fd3974c34f14e3ae209dedf3"
+    },
+    {
+      "path": "results/figures/03_apriori_pcy_fpgrowth.png",
+      "bytes": 78491,
+      "sha256": "c42b20ef04f14288c35a9ed063f4c1ef3328b1774a3e444e53c27ae0be0967ad"
+    },
+    {
+      "path": "results/figures/04_s_curve.png",
+      "bytes": 40614,
+      "sha256": "5c19fbdbe58cc950ffeb215c51682b8035374a1a0173130e1542361a25e3bb03"
+    },
+    {
+      "path": "results/figures/05_pr_convergence.png",
+      "bytes": 26160,
+      "sha256": "e2e9d96dc74cf4a4faec373877af49ee4a6d67960af31e6706af57d83d6f0a24"
+    },
+    {
+      "path": "results/figures/05_pr_vs_views.png",
+      "bytes": 110698,
+      "sha256": "85bdf7f58cbf21922f3e29ba2fc96c1b022b58a9ce48f7c98ee314396f5284a1"
+    },
+    {
+      "path": "results/figures/06_model_comparison.png",
+      "bytes": 40569,
+      "sha256": "2ad4a36f27972c6bc19f8474c3e83c61f61d9dea3bfef4cfb88b514b0c5a8e47"
+    },
+    {
+      "path": "results/figures/07_demand_heatmap.png",
+      "bytes": 30789,
+      "sha256": "30f976f9ae2b66e7a46dadbf68b4eb9dc83c2bf080ae68016c7841ae38afe140"
+    },
+    {
+      "path": "results/figures/07_funnel.png",
+      "bytes": 53828,
+      "sha256": "d244831d2346c3fe936003dd4f6bdd320393f95f8ebb5a6d64d6df9f643cfe5e"
+    },
+    {
+      "path": "results/figures/07_instacart_reorder.png",
+      "bytes": 37793,
+      "sha256": "241527fa424809d72f86c8edee5a5bf952229a1e6c6ea65ecdbed3b108fd21fe"
+    },
+    {
+      "path": "results/figures/07_rfm_segments.png",
+      "bytes": 256050,
+      "sha256": "dc55905958fd6f650d6db05837c8193cc4c64bf3532c40a83a7895cfe740b0ce"
+    },
+    {
+      "path": "results/figures/08_core_scaling.png",
+      "bytes": 55649,
+      "sha256": "51b6eda02d5739deadd971610ae10d2e0e364733b0a49f5b9e4823da06d9521c"
+    },
+    {
+      "path": "results/figures/08_size_scaling.png",
+      "bytes": 57036,
+      "sha256": "c847803d538d87c5f80e9ac7c02d301cb009ba2bc96d7e9c6ecec055667809a9"
+    },
+    {
+      "path": "results/figures/09_hadoop_vs_spark.png",
+      "bytes": 30363,
+      "sha256": "50ce0f3966dc6fe42d42af2cb1e13efa9274fa0a6f31cea4b5be3bdaaca5bae1"
+    },
+    {
+      "path": "results/hadoop/hadoop_run.log",
+      "bytes": 119492,
+      "sha256": "a554e4419825663e0849e1ec88e43de8b90962a20b5b3e8537928ace1fb1a80b"
+    },
+    {
+      "path": "results/hadoop/hadoop_summary.txt",
+      "bytes": 1205,
+      "sha256": "c705ad4befa7d652df74f137df0cdb32a4e9f747d4536298da8647944ca68e65"
+    },
+    {
+      "path": "results/hadoop/hadoop_vs_pipe.json",
+      "bytes": 530,
+      "sha256": "c0b24fa1e3568864e72a7d9828a847a9f00622b0fa4e1f0343b2befc8285e05b"
+    },
+    {
+      "path": "results/hadoop/real_baskets.log",
+      "bytes": 200000,
+      "sha256": "2f3018d7522b4a05cdc10246b6ac4c4db6a594f880782cf43992655c50a679b8"
+    },
+    {
+      "path": "results/hadoop/real_counts.log",
+      "bytes": 200000,
+      "sha256": "fd6dda99e9ed2f36f2181d1e915ba13017c8521e88eb537d44fe84e759a378c5"
+    },
+    {
+      "path": "results/hadoop/real_pairs.log",
+      "bytes": 59397,
+      "sha256": "ba4323fcc6985e0bff2277ecd885606b6bee982e118ab9a0b70a3893d50cfb28"
+    },
+    {
+      "path": "results/licenses/mkechinov__ecommerce-behavior-data-from-multi-category-store/accessed_utc.txt",
+      "bytes": 33,
+      "sha256": "eb5cfdcff71d6e8c8d633ee65f3a8145631f71acec62ac2138b7f99a5447e33c"
+    },
+    {
+      "path": "results/licenses/mkechinov__ecommerce-behavior-data-from-multi-category-store/dataset-metadata.json",
+      "bytes": 4186,
+      "sha256": "1293a4b4feb969b8d837ed25ca5658e188ce97f0cf9f4d1b07b0dc9ec0371fbc"
+    },
+    {
+      "path": "results/licenses/psparks__instacart-market-basket-analysis/accessed_utc.txt",
+      "bytes": 33,
+      "sha256": "ccf51d9b3e17a5ff1f937a8782265d2cdbc87f73f805d42c2fdce9ee1e284bd8"
+    },
+    {
+      "path": "results/licenses/psparks__instacart-market-basket-analysis/dataset-metadata.json",
+      "bytes": 407,
+      "sha256": "024f5e6ad61b738eecfb55d1bdb747e32622893d60fd5ad1ff84e3a819cdaca8"
+    }
+  ]
+}

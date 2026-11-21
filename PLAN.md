@@ -15,7 +15,7 @@ cáo, slide và release.
 | M4 | Itemsets (03) | A-Priori = PCY = FP-Growth cùng tập cặp; số ứng viên PCY < A-Priori | xong |
 | M5 | LSH (04) | Recall có khoảng Wilson trên tập có ≥ 50 cặp thật, 2 ngưỡng, 3 seed; so MLlib cùng tập | xong (#71) |
 | M6 | Link analysis (05) | PageRank tổng ≈ 1, khớp networkx trong test; topic PR và HITS | xong |
-| M7 | Recommender (06) | Giao thức ADR-0002 trên dữ liệu thật: lưới validation, ≥ 3 seed, bootstrap ghép cặp, verdict | **chờ run 06** (ADR-0005) |
-| M8 | Phân khúc + Hadoop (07, 09) | 07: 3 thuật toán × k × 3 seed, 0 fit suy biến; 09: Hadoop thật = Spark, 0 khóa lệch | xong (#72), 07 ở #73 |
-| M9 | Thí nghiệm + benchmark (08) | Benchmark theo kích thước và số lõi; issue #22 đóng khi 02/04/06/07 có kết quả nhiều seed | chờ 06 |
+| M7 | Recommender (06) | Giao thức ADR-0002 trên dữ liệu thật: lưới validation, ≥ 3 seed, bootstrap ghép cặp, verdict | xong (#76; không cần ADR-0005) |
+| M8 | Phân khúc + Hadoop (07, 09) | 07: 3 thuật toán × k × 3 seed, 0 fit suy biến; 09: Hadoop thật = Spark, 0 khóa lệch | xong (#72, #73) |
+| M9 | Thí nghiệm + benchmark (08) | Benchmark theo kích thước và số lõi; issue #22 đóng khi 02/04/06/07 có kết quả nhiều seed | xong (#22 đóng ở #76) |
 | M10 | Báo cáo, slide, release | (1) báo cáo có tóm tắt tiếng Anh, tên phân khúc, mục 6.1-6.6, 7, 8, 9 cập nhật; (2) **mọi số** trong báo cáo và slide khớp một khóa JSON (kiểm bằng review độc lập); (3) slide; (4) `results/MANIFEST.json` (SHA-256 mọi JSON) ở commit release; (5) tag v1.0.0 + Release; đóng #22-#25 | đang làm |
