@@ -127,14 +127,70 @@ FRACTION = **1**, chạy lúc `2026-11-17T23:20:17.965464+00:00`
 
 ## RQ5 - Hệ gợi ý - `results/06_recommender.json`
 
-FRACTION = **1**, chạy lúc `2026-11-18T06:57:19.056932+00:00`
+FRACTION = **1**, chạy lúc `2026-11-21T17:45:30.012000+00:00`
 
 | Chỉ số | Giá trị | Nguồn |
 |---|---|---|
 | Cutoff / validation cutoff | 2019-11-15 / 2019-11-08 | `cutoff, val_cutoff` |
-| User đánh giá / user chung | 206,186 / 94,201 | `n_eval_users, n_common_users` |
-| Mô hình được chọn (luật đặt trước, theo validation) | chưa chạy | `selected` |
-| Seed | chưa chạy | `seeds` |
+| User đánh giá / user chung | 206,186 / 172,676 | `n_eval_users, n_common_users` |
+| Mô hình được chọn (luật đặt trước, theo validation) | history_als | `selected` |
+| Seed | [42, 7, 2024] | `seeds` |
+
+**Validation: mọi cấu hình (NDCG@10, popularity bù user thiếu)** (`validation_grid`)
+
+| family | params | val_ndcg@10 | val_recall@10 | fit_s |
+|---|---|---|---|---|
+| popularity |  | 0.06933 | 0.1187 | 0 |
+| recent_popularity | days=3 | 0.06915 | 0.1191 | 1.2 |
+| recent_popularity | days=7 | 0.06955 | 0.1192 | 1.5 |
+| recent_popularity | days=14 | 0.06955 | 0.1192 | 2 |
+| history | half_life_days=1 | 0.1207 | 0.1606 | 0.5 |
+| history | half_life_days=3 | 0.1227 | 0.1624 | 0.2 |
+| history | half_life_days=7 | 0.1237 | 0.1639 | 0.2 |
+| item_knn | history=cart+purchase | 0.07636 | 0.1274 | 1,002 |
+| item_knn | history=view+cart+purchase | 0.08128 | 0.1432 | 1,020 |
+| als | rank=16, alpha=10 | 0.09112 | 0.1469 | 364.6 |
+| als | rank=16, alpha=40 | 0.08629 | 0.1432 | 354.2 |
+| als | rank=32, alpha=10 | 0.09548 | 0.1545 | 691.6 |
+| als | rank=32, alpha=40 | 0.09091 | 0.1507 | 694.6 |
+| als | rank=64, alpha=10 | 0.09902 | 0.1603 | 1,564 |
+| als | rank=64, alpha=40 | 0.09442 | 0.1572 | 1,574 |
+| history_als | half_life_days=7, rank=64, alpha=10 | 0.1336 | 0.1891 | 0.4 |
+
+**Test (một lần) trên user chung, theo mô hình và seed** (`test_by_model_seed`)
+
+| model | seed | ndcg@10 | recall@10 | precision@10 | map@10 | n_users |
+|---|---|---|---|---|---|---|
+| popularity | nan | 0.05913 | 0.1016 | 0.01594 | 0.03958 | 50,000 |
+| recent_popularity | nan | 0.05997 | 0.1042 | 0.01635 | 0.03986 | 50,000 |
+| history | nan | 0.1038 | 0.1452 | 0.0203 | 0.08272 | 50,000 |
+| item_knn | nan | 0.06817 | 0.1179 | 0.01743 | 0.04658 | 50,000 |
+| als | 42 | 0.08791 | 0.1378 | 0.02016 | 0.06489 | 50,000 |
+| history_als | 42 | 0.1122 | 0.1665 | 0.02357 | 0.08661 | 50,000 |
+| als | 7 | 0.08864 | 0.1387 | 0.02029 | 0.06557 | 50,000 |
+| history_als | 7 | 0.1122 | 0.1665 | 0.02357 | 0.08664 | 50,000 |
+| als | 2,024 | 0.0882 | 0.1389 | 0.02032 | 0.06486 | 50,000 |
+| history_als | 2,024 | 0.1122 | 0.1667 | 0.0236 | 0.08661 | 50,000 |
+
+**Mô hình được chọn so với từng mô hình khác (bootstrap ghép cặp)** (`significance_selected_vs_others`)
+
+| selected | other | seed | diff | ci95 | verdict |
+|---|---|---|---|---|---|
+| history_als | popularity | 42 | 0.05302 | [0.05058, 0.0556] | better |
+| history_als | popularity | 7 | 0.05304 | [0.05048, 0.05546] | better |
+| history_als | popularity | 2024 | 0.05307 | [0.05053, 0.05559] | better |
+| history_als | recent_popularity | 42 | 0.05218 | [0.04972, 0.05473] | better |
+| history_als | recent_popularity | 7 | 0.0522 | [0.04964, 0.05459] | better |
+| history_als | recent_popularity | 2024 | 0.05223 | [0.04964, 0.05476] | better |
+| history_als | history | 42 | 0.008399 | [0.00794, 0.008847] | better |
+| history_als | history | 7 | 0.008418 | [0.007976, 0.008869] | better |
+| history_als | history | 2024 | 0.008451 | [0.007992, 0.008877] | better |
+| history_als | item_knn | 42 | 0.04398 | [0.04172, 0.04632] | better |
+| history_als | item_knn | 7 | 0.044 | [0.04171, 0.04613] | better |
+| history_als | item_knn | 2024 | 0.04403 | [0.04195, 0.04632] | better |
+| history_als | als | 42 | 0.02424 | [0.02224, 0.0262] | better |
+| history_als | als | 7 | 0.02353 | [0.02157, 0.02536] | better |
+| history_als | als | 2024 | 0.024 | [0.02206, 0.02596] | better |
 
 ## Phụ - Phân khúc và phễu - `results/07_segmentation_funnel.json`
 
