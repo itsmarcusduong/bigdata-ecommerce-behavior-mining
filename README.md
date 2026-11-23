@@ -15,7 +15,7 @@ Bài tập lớn môn **Khai phá dữ liệu lớn** (CS246 / Mining Massive Da
 
 | Hạng mục | Trạng thái |
 |---|---|
-| Thư viện `src/bdm` + 75 test (đối chiếu `networkx`, brute force, MapReduce vs Spark, khóa JSON của kết quả thật) | ✅ CI xanh |
+| Thư viện `src/bdm` + test pytest (đối chiếu `networkx`, brute force, MapReduce vs Spark, khóa JSON của kết quả thật) | ✅ CI xanh |
 | Notebook 01–09 trên **toàn bộ dữ liệu** (FRACTION = 1,0), kết quả trong `results/`, bảng tự sinh [docs/RESULTS.md](docs/RESULTS.md) | ✅ |
 | Hadoop 3.3.6 trên CSV thật (notebook 09), trùng Spark từng khóa | ✅ |
 | Báo cáo, slide, release [v1.0.0](https://github.com/itsmarcusduong/bigdata-ecommerce-behavior-mining/releases/tag/v1.0.0) | ✅ |
@@ -92,7 +92,7 @@ src/bdm/                thư viện: io, sessions, sketches, lsh, fpm, graph, re
 notebooks/src/*.py      nguồn notebook (jupytext "# %%"); notebooks/*.ipynb sinh bằng tools/build_notebooks.py
 hadoop/                 mapper/reducer Hadoop Streaming + script chạy
 tests/                  unit/integration test (pytest, Spark local)
-tools/                  kaggle_run.py, make_results_md.py, build_manifest.py, build_notebooks.py, make_synthetic.py
+tools/                  kaggle_run.py, make_results_md.py, build_manifest.py, build_notebooks.py, make_synthetic.py, compare_mapreduce.py, create_tags.sh
 results/                JSON + hình + log Hadoop + metadata license từ các lần chạy Kaggle; MANIFEST.json (SHA-256)
 .claude/skills/         kaggle-spark-job, bdm-experiment-protocol, cs246-algorithms, github-milestone-workflow, report-writing, critical-review
 .github/                CI, kaggle-run, hadoop-streaming, release-tags; issue/PR template

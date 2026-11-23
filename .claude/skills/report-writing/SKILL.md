@@ -19,3 +19,6 @@ Structure: `docs/REPORT_OUTLINE.md`. Grading rubric: `docs/RUBRIC_MAPPING.md` (T
 * Dataset sizes quoted match `01_ingest_eda.json`.
 * Claims of "better" have baselines and, where possible, spread over seeds/samples.
 * Reproducibility paragraph: repo URL, tag, Kaggle notebook versions, commands (`make test`, `make smoke`), software versions.
+
+## README
+The README is the public face of the results: whenever the report's conclusions or numbers change, update `README.md` ("Kết quả chính", status table) in the same PR, with the same JSON-sourced numbers as the report and release notes.

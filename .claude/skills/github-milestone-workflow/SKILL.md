@@ -14,8 +14,9 @@ Full policy: `docs/GITHUB_WORKFLOW.md`. Milestones M1-M10 map to tags `v0.1.0`..
 4. **Commits**: Conventional Commits (`feat(lsh): ...`). Include a body when the reason is not obvious.
 5. **PR** from the template: summary, `Closes #n`, verification checklist (`make lint test smoke`), screenshots/metrics if any.
 6. **Review**: comment on specific lines (correctness, complexity, leakage, seeds, baselines); author replies/fixes; resolve threads; then **squash-merge** and delete the branch.
-7. **Tag at code-complete**: when the implementation issues of the milestone are merged and CI is green -> `git tag -a v0.N.0 -m "<deliverables>"`, `git push origin v0.N.0`, create a pre-release (notes: what shipped, how verified, known gaps).
-8. **Close the milestone** only when its `kaggle-run` issue is closed too (real-data run done, `results/` committed).
+7. **README before every merge and release**: a PR that adds/renames a notebook, brings real results or a changed conclusion, a new release/tag, new commands, folders, skills or data/licence facts updates `README.md` in the same PR (status table, notebook table, "Kết quả chính" with numbers from `results/*.json`); otherwise it says "README: không đổi". Before tagging, re-read README against the release notes.
+8. **Tag at code-complete**: when the implementation issues of the milestone are merged and CI is green -> `git tag -a v0.N.0 -m "<deliverables>"`, `git push origin v0.N.0`, create a pre-release (notes: what shipped, how verified, known gaps).
+9. **Close the milestone** only when its `kaggle-run` issue is closed too (real-data run done, `results/` committed).
 
 ## Rules
 * `main` stays green (CI = ruff + pytest + notebooks in sync). No direct pushes after M1.
