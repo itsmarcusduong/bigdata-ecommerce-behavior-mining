@@ -19,3 +19,4 @@ cáo, slide và release.
 | M8 | Phân khúc + Hadoop (07, 09) | 07: 3 thuật toán × k × 3 seed, 0 fit suy biến; 09: Hadoop thật = Spark, 0 khóa lệch | xong (#72, #73) |
 | M9 | Thí nghiệm + benchmark (08) | Benchmark theo kích thước và số lõi; issue #22 đóng khi 02/04/06/07 có kết quả nhiều seed | xong (#22 đóng ở #76) |
 | M10 | Báo cáo, slide, release | (1) báo cáo có tóm tắt tiếng Anh, tên phân khúc, mục 6.1-6.6, 7, 8, 9 cập nhật; (2) **mọi số** trong báo cáo và slide khớp một khóa JSON (kiểm bằng review độc lập); (3) slide; (4) `results/MANIFEST.json` (SHA-256 mọi JSON) ở commit release; (5) tag v1.0.0 + Release; đóng #22-#25 | xong (v1.0.0 tại 3b75ab3) |
+| M11 (sau v1.0.0) | Mở rộng lưới gợi ý (10, ADR-0006) | cổng tái tạo qua; lưới history {7,14,30} × ALS {64,128}×{3,10} trên validation; test 3 seed; verdict cho history_als vs ALS, history_als vs history, history vs ALS; báo cáo/slide/release notes sửa nếu kết luận đổi (v1.1.0) | đặt 24/11/2026, chưa chạy |

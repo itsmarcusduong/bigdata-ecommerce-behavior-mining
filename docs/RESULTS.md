@@ -249,6 +249,10 @@ FRACTION = **1**, chạy lúc `2026-11-21T10:35:19.376490+00:00`
 | Thời gian Hadoop: đếm / giỏ+cặp (s) | 327.1 / 102.3 | `jobs.*.seconds` |
 | Thời gian Spark: đếm / cặp (s) | 100.7 / 168.6 | `spark` |
 
+## Gợi ý: mở rộng lưới history và ALS (ADR-0006) - `results/10_recsys_grid_extension.json`
+
+_chưa chạy_
+
 ## Hadoop 3.3.6 thật trên dữ liệu synthetic - `results/hadoop/hadoop_vs_pipe.json`
 
 Dữ liệu: **synthetic** (3000 user) - kiểm chứng cách chạy, không phải số liệu dữ liệu thật.
