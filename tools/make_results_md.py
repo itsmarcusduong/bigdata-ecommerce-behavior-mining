@@ -181,6 +181,22 @@ ROWS.append(
     )
 )
 
+ROWS.append(
+    (
+        "Gợi ý: mở rộng lưới history và ALS (ADR-0006)",
+        "10_recsys_grid_extension",
+        [
+            ("Cổng tái tạo qua", "gate.passed"),
+            ("Mô hình được chọn (luật đặt trước, theo validation)", "selected"),
+            ("Cấu hình ALS tốt nhất", "best_config.als"),
+            ("Half-life history tốt nhất (ngày)", "best_config.history.half_life_days"),
+            ("Vẫn ở biên lưới", "at_grid_edge"),
+            ("User chung (history và ALS)", "n_common_users"),
+            ("Verdict: history_als / history / ALS", "verdicts.key_pairs"),
+        ],
+    )
+)
+
 # extra tables rendered from lists of records: (file, json path, title, columns)
 TABLES = [
     (
@@ -218,6 +234,24 @@ TABLES = [
         "significance_selected_vs_others",
         "Mô hình được chọn so với từng mô hình khác (bootstrap ghép cặp)",
         ["selected", "other", "seed", "diff", "ci95", "verdict"],
+    ),
+    (
+        "10_recsys_grid_extension",
+        "gate.rows",
+        "Cổng tái tạo: cấu hình thắng cũ trên cùng validation",
+        ["family", "params", "now", "run06", "diff", "ok"],
+    ),
+    (
+        "10_recsys_grid_extension",
+        "validation_grid",
+        "Validation: lưới mở rộng",
+        ["family", "params", "val_ndcg@10", "val_recall@10", "fit_s"],
+    ),
+    (
+        "10_recsys_grid_extension",
+        "significance_key_pairs",
+        "Câu hỏi chính: bản trộn còn thắng ALS và history đã chỉnh kỹ hơn không",
+        ["a", "b", "seed", "diff", "ci95", "verdict"],
     ),
     (
         "07_segmentation_funnel",

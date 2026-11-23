@@ -39,6 +39,7 @@ NOTEBOOKS = {
     "07": ("07_segmentation_funnel", "BDM 07 Segmentation Funnel", [INSTACART]),
     "08": ("08_scalability_benchmark", "BDM 08 Scalability Benchmark", []),
     "09": ("09_hadoop_real", "BDM 09 Hadoop Real", [REES46]),
+    "10": ("10_recsys_grid_extension", "BDM 10 Recsys Grid Extension", []),
 }
 
 

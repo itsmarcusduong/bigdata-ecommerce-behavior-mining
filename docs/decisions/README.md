@@ -15,3 +15,4 @@ commit/PR nơi quyết định thực sự có hiệu lực, để thời điể
 | [0003](ADR-0003-hadoop-local-mode.md) | Hadoop 3.3.6 local mode để đối chiếu độ đúng với Spark | Accepted | #67, #68 |
 | [0004](ADR-0004-kaggle-via-actions.md) | Chạy Kaggle qua GitHub Actions, mỗi run một nhánh results/ + PR | Accepted | #39, #48 |
 | [0005](ADR-0005-recsys-time-limit-fallback.md) | Phương án nếu notebook 06 vượt giới hạn 12 h của Kaggle | Accepted | PR này, trước khi có kết quả 06 mới |
+| [0006](ADR-0006-recsys-grid-extension.md) | Mở rộng lưới history và ALS (notebook 10), cổng tái tạo trước | Accepted | PR này, trước run 10 |
