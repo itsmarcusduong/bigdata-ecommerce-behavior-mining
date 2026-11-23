@@ -9,7 +9,7 @@ pip install -r requirements.txt     # cần Java 11/17/21
 make lint                           # ruff check src tests tools
 make test                           # pytest (khởi tạo Spark local, ~2-3 phút)
 python tools/build_notebooks.py     # notebooks/src/*.py -> notebooks/*.ipynb  (phải commit cả hai)
-make smoke                          # chạy cả 8 notebook trên dữ liệu synthetic
+make smoke                          # chạy mọi notebook trên dữ liệu synthetic
 make mapreduce                      # Hadoop Streaming qua Unix pipe
 ```
 
@@ -25,6 +25,7 @@ make mapreduce                      # Hadoop Streaming qua Unix pipe
 9. **Review và phản biện trước khi báo xong** (skill `critical-review`): kiểm tra lại số, tìm cách phá kết luận (rò rỉ, so sánh không công bằng, n quá nhỏ, một seed), sửa hoặc ghi rõ giới hạn, rồi review lại. Mỗi PR kết quả có một comment review ghi những gì đã kiểm tra.
 10. **Luật đặt trước có dấu thời gian.** Luật chọn, ngưỡng, lưới ứng viên ghi trong ADR (`docs/decisions/`) và merge vào `main` **trước** lần chạy dùng nó. Đã thấy kết quả thì không sửa luật: viết ADR mới cho lần chạy sau, phân tích hiện tại ghi là *thăm dò*.
 11. **Mỗi thay đổi phạm vi, dữ liệu, luật hoặc kiến trúc có một ADR**; mốc và tiêu chí xong nằm ở `PLAN.md` và không sửa sau khi xem kết quả.
+12. **README.md trên GitHub luôn khớp với repo.** PR nào đổi một trong những thứ sau thì sửa `README.md` trong **cùng PR**: thêm/bỏ/đổi tên notebook, kết quả thật mới hoặc kết luận đổi (mục "Kết quả chính", số lấy từ `results/*.json`), trạng thái dự án (bảng "Trạng thái"), release/tag mới, lệnh chạy, cấu trúc thư mục, skill, dữ liệu/giấy phép. Không cần sửa thì ghi "README: không đổi" trong mô tả PR. `tests/test_readme.py` kiểm README liệt kê đủ notebook, skill, tool và release mới nhất.
 
 ## Vai trò và cách trả lời (làm một mình, không có người duyệt chéo)
 * Claude là Senior Data Engineer + ML Engineer chịu trách nhiệm kỹ thuật cuối cùng, **kiêm người phản biện độc lập**: tìm lỗi trong cách làm của người dùng và của chính Claude, nói thẳng khi sai. Ý kiến của người dùng được kiểm bằng dữ liệu/code và trả lời đúng / đúng một phần / sai kèm bằng chứng.
@@ -56,4 +57,4 @@ Commit theo Conventional Commits. Không backdate lịch sử. **Commit không c
 | `critical-review` | trước khi báo xong, merge PR kết quả hay viết kết luận: kiểm tra lại, phản biện, so sánh nhiều mô hình, review lại |
 
 ## Cấu trúc nhanh
-`src/bdm/{config,io,sessions,eda,sketches,lsh,fpm,graph,recsys,segmentation,results}.py` · `notebooks/src/01..08` · `hadoop/streaming/*` · `tests/*`.
+`src/bdm/{config,io,sessions,eda,sketches,lsh,fpm,graph,recsys,segmentation,results}.py` · `notebooks/src/01..10` · `hadoop/streaming/*` · `tests/*`.

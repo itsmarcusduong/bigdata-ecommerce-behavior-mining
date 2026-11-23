@@ -14,7 +14,8 @@ Closes #<issue>
 
 ## Checklist
 - [ ] Baseline / reference implementation compared (see `bdm-experiment-protocol`)
-- [ ] Docs updated (`docs/`, README tables)
+- [ ] `README.md` cập nhật trong PR này (notebook, kết quả chính, trạng thái, release, lệnh, cấu trúc) - hoặc ghi "README: không đổi" và lý do
+- [ ] Docs khác cập nhật (`docs/`, `PLAN.md`, ADR)
 - [ ] No data files, tokens or Kaggle credentials committed
 
 ## Critical review (bắt buộc với PR kết quả hoặc thuật toán)
