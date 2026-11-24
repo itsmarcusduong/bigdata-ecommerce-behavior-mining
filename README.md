@@ -19,7 +19,7 @@ Bài tập lớn môn **Khai phá dữ liệu lớn** (CS246 / Mining Massive Da
 | Notebook 01–09 trên **toàn bộ dữ liệu** (FRACTION = 1,0), kết quả trong `results/`, bảng tự sinh [docs/RESULTS.md](docs/RESULTS.md) | ✅ |
 | Hadoop 3.3.6 trên CSV thật (notebook 09), trùng Spark từng khóa | ✅ |
 | Báo cáo, slide, release [v1.0.0](https://github.com/itsmarcusduong/bigdata-ecommerce-behavior-mining/releases/tag/v1.0.0) | ✅ |
-| Notebook 10: mở rộng lưới gợi ý để kiểm kết luận của 06 ([ADR-0006](docs/decisions/ADR-0006-recsys-grid-extension.md)) | ⏳ đang chạy trên Kaggle |
+| Notebook 10: mở rộng lưới gợi ý để kiểm kết luận của 06 ([ADR-0006](docs/decisions/ADR-0006-recsys-grid-extension.md)) | 🟡 validation xong (cổng tái tạo qua, vẫn chọn history + ALS); phần test bị Kaggle dừng ở mốc 12 giờ |
 
 ## Ý tưởng một dòng cho mỗi kỹ thuật
 
@@ -45,7 +45,8 @@ Số lấy từ `results/*.json`; bảng đầy đủ kèm khóa nguồn ở [do
 - **LSH:** 1.578 cặp tương tự trong 202 s (so mọi cặp ~81 giờ); ở Jaccard 0,2 recall 0,975 so với 0,870 của MinHashLSH mặc định.
 - **PageRank:** Spearman 0,79 với lượt xem, 0,60 với lượt mua.
 - **Gợi ý:** history + ALS được chọn trên validation, tốt hơn mọi họ ở cả 3 seed (NDCG@10 test 0,1122; history 0,1038; ALS 0,0883;
-  popularity 0,0591). Cấu hình thắng nằm ở biên lưới, nên notebook 10 đang kiểm lại.
+  popularity 0,0591). Notebook 10 mở rộng lưới (validation): history half-life 7 ngày vẫn tốt nhất (14, 30 kém hơn),
+  ALS rank 128 chỉ hơn rank 64 0,0019 NDCG@10 và vẫn kém history khoảng 0,023; họ được chọn không đổi. Phần test của 10 chưa xong.
 - **Phân khúc:** K-Means k = 4, hòa với k = 3; nhóm trung thành 10,8% người mua chiếm 50,8% chi tiêu.
 - **Hadoop:** 356.254 khóa đếm và 355.861 cặp sản phẩm trùng Spark, 0 khóa lệch.
 - **Mở rộng:** ~6,9 triệu sự kiện/s; 4 lõi nhanh 1,8–2,1× so với 1 lõi.

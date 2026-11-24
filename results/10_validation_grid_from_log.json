@@ -1,0 +1,175 @@
+{
+  "experiment": "10_recsys_grid_extension_validation_from_log",
+  "source": "kernel log of minhquangdng/bdm-10-recsys-grid-extension (version pushed by Actions run 45233457273), as printed by score_val(); extracted from the log tail of Actions run 45339834080 (mode=output). The kernel was cancelled by the Kaggle 12 h limit after stage refit_seed_42, before save_result, so this is the only copy of the per-configuration validation rows.",
+  "fraction": 1.0,
+  "cutoff": "2019-11-15",
+  "val_cutoff": "2019-11-08",
+  "validation_grid": [
+    {
+      "family": "popularity",
+      "params": {},
+      "fit_s": 0.0,
+      "val_precision@10": 0.01614,
+      "val_precision@20": 0.0109,
+      "val_recall@10": 0.1187,
+      "val_recall@20": 0.16023,
+      "val_hit_rate@10": 0.14774,
+      "val_hit_rate@20": 0.1939,
+      "val_map@10": 0.04921,
+      "val_map@20": 0.05242,
+      "val_ndcg@10": 0.06933,
+      "val_ndcg@20": 0.08064,
+      "val_n_users": 50000
+    },
+    {
+      "family": "history",
+      "params": {
+        "half_life_days": 7.0
+      },
+      "fit_s": 0.6,
+      "val_precision@10": 0.02015,
+      "val_precision@20": 0.01101,
+      "val_recall@10": 0.16388,
+      "val_recall@20": 0.17684,
+      "val_hit_rate@10": 0.19144,
+      "val_hit_rate@20": 0.20698,
+      "val_map@10": 0.10545,
+      "val_map@20": 0.10644,
+      "val_ndcg@10": 0.12371,
+      "val_ndcg@20": 0.12728,
+      "val_n_users": 50000
+    },
+    {
+      "family": "history",
+      "params": {
+        "half_life_days": 14.0
+      },
+      "fit_s": 0.3,
+      "val_precision@10": 0.02016,
+      "val_precision@20": 0.01103,
+      "val_recall@10": 0.16403,
+      "val_recall@20": 0.17701,
+      "val_hit_rate@10": 0.19148,
+      "val_hit_rate@20": 0.20722,
+      "val_map@10": 0.10507,
+      "val_map@20": 0.10606,
+      "val_ndcg@10": 0.12343,
+      "val_ndcg@20": 0.12701,
+      "val_n_users": 50000
+    },
+    {
+      "family": "history",
+      "params": {
+        "half_life_days": 30.0
+      },
+      "fit_s": 0.3,
+      "val_precision@10": 0.01997,
+      "val_precision@20": 0.011,
+      "val_recall@10": 0.16269,
+      "val_recall@20": 0.17662,
+      "val_hit_rate@10": 0.18978,
+      "val_hit_rate@20": 0.2066,
+      "val_map@10": 0.10327,
+      "val_map@20": 0.10434,
+      "val_ndcg@10": 0.12164,
+      "val_ndcg@20": 0.12549,
+      "val_n_users": 50000
+    },
+    {
+      "family": "als",
+      "params": {
+        "rank": 64,
+        "alpha": 10.0
+      },
+      "fit_s": 1653.9,
+      "val_precision@10": 0.02074,
+      "val_precision@20": 0.01367,
+      "val_recall@10": 0.16032,
+      "val_recall@20": 0.20824,
+      "val_hit_rate@10": 0.19234,
+      "val_hit_rate@20": 0.24654,
+      "val_map@10": 0.07444,
+      "val_map@20": 0.07804,
+      "val_ndcg@10": 0.09902,
+      "val_ndcg@20": 0.11199,
+      "val_n_users": 50000
+    },
+    {
+      "family": "als",
+      "params": {
+        "rank": 64,
+        "alpha": 3.0
+      },
+      "fit_s": 1693.0,
+      "val_precision@10": 0.01992,
+      "val_precision@20": 0.01298,
+      "val_recall@10": 0.1533,
+      "val_recall@20": 0.19714,
+      "val_hit_rate@10": 0.18456,
+      "val_hit_rate@20": 0.23432,
+      "val_map@10": 0.0735,
+      "val_map@20": 0.07681,
+      "val_ndcg@10": 0.09667,
+      "val_ndcg@20": 0.10855,
+      "val_n_users": 50000
+    },
+    {
+      "family": "als",
+      "params": {
+        "rank": 128,
+        "alpha": 10.0
+      },
+      "fit_s": 10411.4,
+      "val_precision@10": 0.02083,
+      "val_precision@20": 0.01355,
+      "val_recall@10": 0.16197,
+      "val_recall@20": 0.20858,
+      "val_hit_rate@10": 0.19364,
+      "val_hit_rate@20": 0.24624,
+      "val_map@10": 0.07646,
+      "val_map@20": 0.07993,
+      "val_ndcg@10": 0.10093,
+      "val_ndcg@20": 0.11348,
+      "val_n_users": 50000
+    },
+    {
+      "family": "als",
+      "params": {
+        "rank": 128,
+        "alpha": 3.0
+      },
+      "fit_s": 10632.7,
+      "val_precision@10": 0.02009,
+      "val_precision@20": 0.01293,
+      "val_recall@10": 0.15627,
+      "val_recall@20": 0.19887,
+      "val_hit_rate@10": 0.18718,
+      "val_hit_rate@20": 0.23534,
+      "val_map@10": 0.07485,
+      "val_map@20": 0.07808,
+      "val_ndcg@10": 0.09838,
+      "val_ndcg@20": 0.10992,
+      "val_n_users": 50000
+    },
+    {
+      "family": "history_als",
+      "params": {
+        "half_life_days": 7.0,
+        "rank": 128,
+        "alpha": 10.0
+      },
+      "fit_s": 0.6,
+      "val_precision@10": 0.02298,
+      "val_precision@20": 0.01406,
+      "val_recall@10": 0.1845,
+      "val_recall@20": 0.22133,
+      "val_hit_rate@10": 0.21626,
+      "val_hit_rate@20": 0.25898,
+      "val_map@10": 0.10942,
+      "val_map@20": 0.11216,
+      "val_ndcg@10": 0.13183,
+      "val_ndcg@20": 0.14181,
+      "val_n_users": 50000
+    }
+  ]
+}

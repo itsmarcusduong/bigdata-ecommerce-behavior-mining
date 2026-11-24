@@ -1,0 +1,116 @@
+[
+  {
+    "stage": "split",
+    "status": "OK",
+    "utc": "2026-11-23T18:04:53.475792+00:00",
+    "n_eval_users": 206186,
+    "n_val_users": 68399
+  },
+  {
+    "stage": "first_als",
+    "status": "OK",
+    "utc": "2026-11-23T18:42:12.028436+00:00",
+    "seconds": 1654
+  },
+  {
+    "stage": "gate",
+    "status": "OK",
+    "utc": "2026-11-24T01:23:43.127022+00:00",
+    "gate": {
+      "applicable": true,
+      "passed": true,
+      "rows": [
+        {
+          "family": "popularity",
+          "params": {},
+          "now": 0.06933,
+          "run06": 0.06933,
+          "diff": 0.0,
+          "tol": 0.0001,
+          "ok": true
+        },
+        {
+          "family": "history",
+          "params": {
+            "half_life_days": 7.0
+          },
+          "now": 0.12371,
+          "run06": 0.12371,
+          "diff": 0.0,
+          "tol": 0.0001,
+          "ok": true
+        },
+        {
+          "family": "als",
+          "params": {
+            "rank": 64,
+            "alpha": 10.0
+          },
+          "now": 0.09902,
+          "run06": 0.09902,
+          "diff": 0.0,
+          "tol": 0.002,
+          "ok": true
+        }
+      ]
+    }
+  },
+  {
+    "stage": "validation",
+    "status": "OK",
+    "utc": "2026-11-24T01:31:25.336370+00:00",
+    "selected": "history_als",
+    "validation_family_ndcg10": {
+      "als": {
+        "ndcg@10": 0.10093,
+        "source": "this run"
+      },
+      "history": {
+        "ndcg@10": 0.12371,
+        "source": "this run"
+      },
+      "history_als": {
+        "ndcg@10": 0.13183,
+        "source": "this run"
+      },
+      "popularity": {
+        "ndcg@10": 0.06933,
+        "source": "this run"
+      },
+      "item_knn": {
+        "ndcg@10": 0.08128,
+        "source": "run 06 (not rerun, ADR-0006)"
+      },
+      "recent_popularity": {
+        "ndcg@10": 0.06955,
+        "source": "run 06 (not rerun, ADR-0006)"
+      }
+    },
+    "best_config": {
+      "als": {
+        "rank": 128,
+        "alpha": 10.0
+      },
+      "history": {
+        "half_life_days": 7.0
+      },
+      "popularity": {},
+      "history_als": {
+        "half_life_days": 7.0,
+        "rank": 128,
+        "alpha": 10.0
+      }
+    },
+    "at_edge": {
+      "history_half_life": false,
+      "als_rank": true,
+      "als_alpha_low": false
+    }
+  },
+  {
+    "stage": "refit_seed_42",
+    "status": "OK",
+    "utc": "2026-11-24T05:34:20.066745+00:00",
+    "seconds": 14532.2
+  }
+]
