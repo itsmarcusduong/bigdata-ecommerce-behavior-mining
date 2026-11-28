@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-11-21T18:03:31.171404+00:00",
-  "source_commit": "ab06ab1fdc80f475d9801ee456c65d5a348f4f7d",
+  "generated_utc": "2026-11-28T12:47:18.628914+00:00",
+  "source_commit": "582d6d994a27d3376d34c17dde583cad7b8af747",
   "files": [
     {
       "path": "results/.gitkeep",
@@ -69,6 +69,60 @@
       "sha256": "70f232acf35c22b350c8008e3e81018a0ad895b1579be5f517d15397eb217243",
       "created_utc": "2026-11-21T10:35:19.376490+00:00",
       "fraction": 1.0
+    },
+    {
+      "path": "results/10_recsys_grid_extension_stages.json",
+      "bytes": 2423,
+      "sha256": "98f35345c5ab217037df9607ab9e986ce1bddfb1aaf7a789b4ce2b9db7898161"
+    },
+    {
+      "path": "results/10_validation_grid_from_log.json",
+      "bytes": 4774,
+      "sha256": "30da0a2afdd41383cdde7a7dcc38fddd28894fd90104869add497756f05612a9",
+      "fraction": 1.0
+    },
+    {
+      "path": "results/11_recsys_test.json",
+      "bytes": 5029,
+      "sha256": "6692f565a1acb77b6af90d72e12939a360ce8a69cac1ab3bfad45cb62891421d",
+      "created_utc": "2026-11-28T10:49:39.810602+00:00",
+      "fraction": 1.0
+    },
+    {
+      "path": "results/11_recsys_test_seed2024.json",
+      "bytes": 5096,
+      "sha256": "1da8401330056669984bf4e0d8685442a7e164d0ba1c0a3da8cda83813329873",
+      "created_utc": "2026-11-28T10:38:26.955120+00:00",
+      "fraction": 1.0
+    },
+    {
+      "path": "results/11_recsys_test_seed2024_stages.json",
+      "bytes": 616,
+      "sha256": "77fe765342cbbf29c63770c9949c13d827a9d3cb279de7dc9c2e36d2c82696d6"
+    },
+    {
+      "path": "results/11_recsys_test_seed42.json",
+      "bytes": 5078,
+      "sha256": "811c9a0c77f791cb428efcee006ebcb69f78b27b49c2fa9078ac5ba6ce8bfa6d",
+      "created_utc": "2026-11-28T10:49:39.810602+00:00",
+      "fraction": 1.0
+    },
+    {
+      "path": "results/11_recsys_test_seed42_stages.json",
+      "bytes": 618,
+      "sha256": "ae07d77a71a599c146de2bd9924abd08ee67e5b5c880c78c10cf37f12c61b218"
+    },
+    {
+      "path": "results/11_recsys_test_seed7.json",
+      "bytes": 5043,
+      "sha256": "04756bf17dfcab0fe3989ba7687044f9bd18386e45923e068c51e770005aa6fe",
+      "created_utc": "2026-11-28T10:41:17.704096+00:00",
+      "fraction": 1.0
+    },
+    {
+      "path": "results/11_recsys_test_seed7_stages.json",
+      "bytes": 617,
+      "sha256": "a9d5ee66df0063a2c3fa4b7e207a58a7fc97614669352131a5fcbb838e3de53e"
     },
     {
       "path": "results/figures/01_daily_events.png",

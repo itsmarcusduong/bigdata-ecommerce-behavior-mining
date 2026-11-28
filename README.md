@@ -18,7 +18,7 @@ Bài tập lớn môn **Khai phá dữ liệu lớn** (CS246 / Mining Massive Da
 | Thư viện `src/bdm` + test pytest (đối chiếu `networkx`, brute force, MapReduce vs Spark, khóa JSON của kết quả thật) | ✅ CI xanh |
 | Notebook 01–09 trên **toàn bộ dữ liệu** (FRACTION = 1,0), kết quả trong `results/`, bảng tự sinh [docs/RESULTS.md](docs/RESULTS.md) | ✅ |
 | Hadoop 3.3.6 trên CSV thật (notebook 09), trùng Spark từng khóa | ✅ |
-| Báo cáo, slide, release [v1.0.0](https://github.com/itsmarcusduong/bigdata-ecommerce-behavior-mining/releases/tag/v1.0.0) | ✅ |
+| Báo cáo, slide, release [v1.0.0](https://github.com/itsmarcusduong/bigdata-ecommerce-behavior-mining/releases/tag/v1.0.0); [v1.1.0](https://github.com/itsmarcusduong/bigdata-ecommerce-behavior-mining/releases/tag/v1.1.0) thêm kiểm độ vững của hệ gợi ý (notebook 10–11) | ✅ |
 | Notebook 10: mở rộng lưới gợi ý để kiểm kết luận của 06 ([ADR-0006](docs/decisions/ADR-0006-recsys-grid-extension.md)) | ✅ validation (cổng tái tạo qua, vẫn chọn history + ALS); test chạy ở notebook 11 |
 | Notebook 11: test của cấu hình mở rộng, 3 kernel song song, mỗi kernel một seed ([ADR-0007](docs/decisions/ADR-0007-recsys-test-per-seed.md)) | ✅ 3 seed, kết luận của 06 giữ nguyên |
 
@@ -38,7 +38,7 @@ Bài tập lớn môn **Khai phá dữ liệu lớn** (CS246 / Mining Massive Da
 | [10](notebooks/10_recsys_grid_extension.ipynb) | Kết luận của 06 có còn đúng khi ALS và history được chỉnh rộng hơn? | cổng tái tạo + lưới mở rộng (ADR-0006) |
 | [11](notebooks/11_recsys_test_seed.ipynb) | Trên test, bản trộn còn thắng ALS rank 128 và history ở cả 3 seed? | test một seed mỗi kernel, gộp bằng `combine_seed_runs.py` (ADR-0007) |
 
-## Kết quả chính (v1.0.0, toàn bộ dữ liệu)
+## Kết quả chính (v1.1.0, toàn bộ dữ liệu)
 
 Số lấy từ `results/*.json`; bảng đầy đủ kèm khóa nguồn ở [docs/RESULTS.md](docs/RESULTS.md).
 
