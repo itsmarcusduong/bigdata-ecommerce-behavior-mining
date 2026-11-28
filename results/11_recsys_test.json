@@ -1,0 +1,231 @@
+{
+  "experiment": "11_recsys_test",
+  "seeds": [
+    42,
+    7,
+    2024
+  ],
+  "config": {
+    "history": {
+      "half_life_days": 7.0
+    },
+    "als": {
+      "rank": 128,
+      "alpha": 10.0,
+      "reg": 0.05,
+      "max_iter": 8
+    }
+  },
+  "cutoff": "2019-11-15",
+  "fraction": 1.0,
+  "n_common_users": 172676,
+  "created_utc": "2026-11-28T10:49:39.810602+00:00",
+  "source_files": [
+    "results/11_recsys_test_seed42.json",
+    "results/11_recsys_test_seed7.json",
+    "results/11_recsys_test_seed2024.json"
+  ],
+  "test_summary": {
+    "als": {
+      "ndcg@10_mean": 0.08940320959450791,
+      "ndcg@10_sd": 0.00014895329463621536,
+      "ndcg@10_by_seed": {
+        "42": 0.08955198744949644,
+        "7": 0.08940355985607626,
+        "2024": 0.089254081477951
+      }
+    },
+    "history": {
+      "ndcg@10_mean": 0.10375078530869758,
+      "ndcg@10_sd": 0.0,
+      "ndcg@10_by_seed": {
+        "42": 0.10375078530869758,
+        "7": 0.10375078530869758,
+        "2024": 0.10375078530869758
+      }
+    },
+    "history_als": {
+      "ndcg@10_mean": 0.11049113788216734,
+      "ndcg@10_sd": 3.4270861365129494e-05,
+      "ndcg@10_by_seed": {
+        "42": 0.11053010318632489,
+        "7": 0.1104776360947953,
+        "2024": 0.11046567436538184
+      }
+    },
+    "popularity": {
+      "ndcg@10_mean": 0.05913256803134489,
+      "ndcg@10_sd": 0.0,
+      "ndcg@10_by_seed": {
+        "42": 0.05913256803134489,
+        "7": 0.05913256803134489,
+        "2024": 0.05913256803134489
+      }
+    }
+  },
+  "significance": [
+    {
+      "a": "history_als",
+      "b": "history",
+      "seed": 42,
+      "n_users": 50000,
+      "diff": 0.006779317877627301,
+      "ci95": [
+        0.006370831471120536,
+        0.007178066398422535
+      ],
+      "p_le_0": 0.0,
+      "verdict": "better"
+    },
+    {
+      "a": "history_als",
+      "b": "history",
+      "seed": 7,
+      "n_users": 50000,
+      "diff": 0.006726850786097717,
+      "ci95": [
+        0.006329189014293034,
+        0.0071335145629346335
+      ],
+      "p_le_0": 0.0,
+      "verdict": "better"
+    },
+    {
+      "a": "history_als",
+      "b": "history",
+      "seed": 2024,
+      "n_users": 50000,
+      "diff": 0.006714889056684244,
+      "ci95": [
+        0.006314039941119763,
+        0.0071030516751970935
+      ],
+      "p_le_0": 0.0,
+      "verdict": "better"
+    },
+    {
+      "a": "history_als",
+      "b": "als",
+      "seed": 42,
+      "n_users": 50000,
+      "diff": 0.020978115736828444,
+      "ci95": [
+        0.019095373926780658,
+        0.022778861182492997
+      ],
+      "p_le_0": 0.0,
+      "verdict": "better"
+    },
+    {
+      "a": "history_als",
+      "b": "als",
+      "seed": 7,
+      "n_users": 50000,
+      "diff": 0.02107407623871905,
+      "ci95": [
+        0.01925259981195334,
+        0.022800032158737348
+      ],
+      "p_le_0": 0.0,
+      "verdict": "better"
+    },
+    {
+      "a": "history_als",
+      "b": "als",
+      "seed": 2024,
+      "n_users": 50000,
+      "diff": 0.021211592887430814,
+      "ci95": [
+        0.019458445295754627,
+        0.022944877957286215
+      ],
+      "p_le_0": 0.0,
+      "verdict": "better"
+    },
+    {
+      "a": "history_als",
+      "b": "popularity",
+      "seed": 42,
+      "n_users": 50000,
+      "diff": 0.051397535154979995,
+      "ci95": [
+        0.04886894015672468,
+        0.05404537318145271
+      ],
+      "p_le_0": 0.0,
+      "verdict": "better"
+    },
+    {
+      "a": "history_als",
+      "b": "popularity",
+      "seed": 7,
+      "n_users": 50000,
+      "diff": 0.05134506806345042,
+      "ci95": [
+        0.048781452866215574,
+        0.05376708901686737
+      ],
+      "p_le_0": 0.0,
+      "verdict": "better"
+    },
+    {
+      "a": "history_als",
+      "b": "popularity",
+      "seed": 2024,
+      "n_users": 50000,
+      "diff": 0.051333106334036926,
+      "ci95": [
+        0.04879888943956156,
+        0.05379735791773092
+      ],
+      "p_le_0": 0.0,
+      "verdict": "better"
+    },
+    {
+      "a": "history",
+      "b": "als",
+      "seed": 42,
+      "n_users": 50000,
+      "diff": 0.014198797859201143,
+      "ci95": [
+        0.012194941085304742,
+        0.016085114877798085
+      ],
+      "p_le_0": 0.0,
+      "verdict": "better"
+    },
+    {
+      "a": "history",
+      "b": "als",
+      "seed": 7,
+      "n_users": 50000,
+      "diff": 0.014347225452621327,
+      "ci95": [
+        0.012420224294167694,
+        0.016206633918959327
+      ],
+      "p_le_0": 0.0,
+      "verdict": "better"
+    },
+    {
+      "a": "history",
+      "b": "als",
+      "seed": 2024,
+      "n_users": 50000,
+      "diff": 0.014496703830746574,
+      "ci95": [
+        0.012633867131782122,
+        0.01635515748441947
+      ],
+      "p_le_0": 0.0,
+      "verdict": "better"
+    }
+  ],
+  "verdicts": {
+    "history_als vs history": "better",
+    "history_als vs als": "better",
+    "history_als vs popularity": "better",
+    "history vs als": "better"
+  },
+  "rule": "better only if the paired-bootstrap 95% CI excludes 0 (positive) for every seed (ADR-0002/0007)"
+}

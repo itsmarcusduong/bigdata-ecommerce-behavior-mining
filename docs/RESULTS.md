@@ -255,7 +255,35 @@ _chưa chạy_
 
 ## Gợi ý: test của cấu hình mở rộng, 3 seed (ADR-0007) - `results/11_recsys_test.json`
 
-_chưa chạy_
+FRACTION = **1**, chạy lúc `2026-11-28T10:49:39.810602+00:00`
+
+| Chỉ số | Giá trị | Nguồn |
+|---|---|---|
+| Seed | [42, 7, 2024] | `seeds` |
+| Cấu hình | {'history': {'half_life_days': 7.0}, 'als': {'rank': 128, 'alpha': 10.0, 'reg': 0.05, 'max_iter': 8}} | `config` |
+| User chung (history và ALS) | 172,676 | `n_common_users` |
+| NDCG@10 history_als (TB) | 0.1105 | `test_summary.history_als.ndcg@10_mean` |
+| NDCG@10 history | 0.1038 | `test_summary.history.ndcg@10_mean` |
+| NDCG@10 ALS (TB) | 0.0894 | `test_summary.als.ndcg@10_mean` |
+| NDCG@10 popularity | 0.05913 | `test_summary.popularity.ndcg@10_mean` |
+| Verdict (mọi seed) | {'history_als vs history': 'better', 'history_als vs als': 'better', 'history_als vs popularity': 'better', 'history vs als': 'better'} | `verdicts` |
+
+**Bootstrap ghép cặp theo seed** (`significance`)
+
+| a | b | seed | diff | ci95 | verdict |
+|---|---|---|---|---|---|
+| history_als | history | 42 | 0.006779 | [0.006371, 0.007178] | better |
+| history_als | history | 7 | 0.006727 | [0.006329, 0.007134] | better |
+| history_als | history | 2024 | 0.006715 | [0.006314, 0.007103] | better |
+| history_als | als | 42 | 0.02098 | [0.0191, 0.02278] | better |
+| history_als | als | 7 | 0.02107 | [0.01925, 0.0228] | better |
+| history_als | als | 2024 | 0.02121 | [0.01946, 0.02294] | better |
+| history_als | popularity | 42 | 0.0514 | [0.04887, 0.05405] | better |
+| history_als | popularity | 7 | 0.05135 | [0.04878, 0.05377] | better |
+| history_als | popularity | 2024 | 0.05133 | [0.0488, 0.0538] | better |
+| history | als | 42 | 0.0142 | [0.01219, 0.01609] | better |
+| history | als | 7 | 0.01435 | [0.01242, 0.01621] | better |
+| history | als | 2024 | 0.0145 | [0.01263, 0.01636] | better |
 
 ## Hadoop 3.3.6 thật trên dữ liệu synthetic - `results/hadoop/hadoop_vs_pipe.json`
 
