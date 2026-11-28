@@ -16,3 +16,4 @@ commit/PR nơi quyết định thực sự có hiệu lực, để thời điể
 | [0004](ADR-0004-kaggle-via-actions.md) | Chạy Kaggle qua GitHub Actions, mỗi run một nhánh results/ + PR | Accepted | #39, #48 |
 | [0005](ADR-0005-recsys-time-limit-fallback.md) | Phương án nếu notebook 06 vượt giới hạn 12 h của Kaggle | Accepted | PR này, trước khi có kết quả 06 mới |
 | [0006](ADR-0006-recsys-grid-extension.md) | Mở rộng lưới history và ALS (notebook 10), cổng tái tạo trước | Accepted | PR này, trước run 10 |
+| [0007](ADR-0007-recsys-test-per-seed.md) | Test của cấu hình mở rộng: 3 kernel song song, mỗi kernel một seed (notebook 11) | Accepted | PR này, trước run 11 |

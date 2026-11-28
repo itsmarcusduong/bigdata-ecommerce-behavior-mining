@@ -20,6 +20,7 @@ Bài tập lớn môn **Khai phá dữ liệu lớn** (CS246 / Mining Massive Da
 | Hadoop 3.3.6 trên CSV thật (notebook 09), trùng Spark từng khóa | ✅ |
 | Báo cáo, slide, release [v1.0.0](https://github.com/itsmarcusduong/bigdata-ecommerce-behavior-mining/releases/tag/v1.0.0) | ✅ |
 | Notebook 10: mở rộng lưới gợi ý để kiểm kết luận của 06 ([ADR-0006](docs/decisions/ADR-0006-recsys-grid-extension.md)) | 🟡 validation xong (cổng tái tạo qua, vẫn chọn history + ALS); phần test bị Kaggle dừng ở mốc 12 giờ |
+| Notebook 11: test của cấu hình mở rộng, 3 kernel song song, mỗi kernel một seed ([ADR-0007](docs/decisions/ADR-0007-recsys-test-per-seed.md)) | ⏳ đang chạy trên Kaggle |
 
 ## Ý tưởng một dòng cho mỗi kỹ thuật
 
@@ -35,6 +36,7 @@ Bài tập lớn môn **Khai phá dữ liệu lớn** (CS246 / Mining Massive Da
 | [08](notebooks/08_scalability_benchmark.ipynb) | Hệ thống mở rộng thế nào? | benchmark theo dữ liệu và số lõi |
 | [09](notebooks/09_hadoop_real.ipynb) | MapReduce có cho cùng kết quả với Spark trên dữ liệu thật? | Hadoop 3.3.6 Streaming, so từng khóa |
 | [10](notebooks/10_recsys_grid_extension.ipynb) | Kết luận của 06 có còn đúng khi ALS và history được chỉnh rộng hơn? | cổng tái tạo + lưới mở rộng (ADR-0006) |
+| [11](notebooks/11_recsys_test_seed.ipynb) | Trên test, bản trộn còn thắng ALS rank 128 và history ở cả 3 seed? | test một seed mỗi kernel, gộp bằng `combine_seed_runs.py` (ADR-0007) |
 
 ## Kết quả chính (v1.0.0, toàn bộ dữ liệu)
 
@@ -46,7 +48,7 @@ Số lấy từ `results/*.json`; bảng đầy đủ kèm khóa nguồn ở [do
 - **PageRank:** Spearman 0,79 với lượt xem, 0,60 với lượt mua.
 - **Gợi ý:** history + ALS được chọn trên validation, tốt hơn mọi họ ở cả 3 seed (NDCG@10 test 0,1122; history 0,1038; ALS 0,0883;
   popularity 0,0591). Notebook 10 mở rộng lưới (validation): history half-life 7 ngày vẫn tốt nhất (14, 30 kém hơn),
-  ALS rank 128 chỉ hơn rank 64 0,0019 NDCG@10 và vẫn kém history khoảng 0,023; họ được chọn không đổi. Phần test của 10 chưa xong.
+  ALS rank 128 chỉ hơn rank 64 0,0019 NDCG@10 và vẫn kém history khoảng 0,023; họ được chọn không đổi. Phần test chạy ở notebook 11.
 - **Phân khúc:** K-Means k = 4, hòa với k = 3; nhóm trung thành 10,8% người mua chiếm 50,8% chi tiêu.
 - **Hadoop:** 356.254 khóa đếm và 355.861 cặp sản phẩm trùng Spark, 0 khóa lệch.
 - **Mở rộng:** ~6,9 triệu sự kiện/s; 4 lõi nhanh 1,8–2,1× so với 1 lõi.
@@ -88,12 +90,12 @@ PROJECT.md              đặc tả đề tài, RQ, dữ liệu, rubric, rủi r
 PLAN.md                 mốc M1-M11 và tiêu chí xong (đặt trước khi xem kết quả)
 CLAUDE.md               hướng dẫn cho trợ lý AI/cộng tác viên (lệnh, quy ước, bất biến)
 docs/                   INSTRUCTIONS, DATASETS, GITHUB_WORKFLOW, HADOOP, RUBRIC_MAPPING, REPORT_OUTLINE, RESULTS
-docs/decisions/         ADR: dữ liệu và split, luật chọn mô hình, Hadoop, Kaggle qua Actions, phương án dự phòng, mở rộng lưới
+docs/decisions/         ADR: dữ liệu và split, luật chọn mô hình, Hadoop, Kaggle qua Actions, phương án dự phòng, mở rộng lưới, test theo seed
 src/bdm/                thư viện: io, sessions, sketches, lsh, fpm, graph, recsys, segmentation, eda, results
 notebooks/src/*.py      nguồn notebook (jupytext "# %%"); notebooks/*.ipynb sinh bằng tools/build_notebooks.py
 hadoop/                 mapper/reducer Hadoop Streaming + script chạy
 tests/                  unit/integration test (pytest, Spark local)
-tools/                  kaggle_run.py, make_results_md.py, build_manifest.py, build_notebooks.py, make_synthetic.py, compare_mapreduce.py, create_tags.sh
+tools/                  kaggle_run.py, make_results_md.py, build_manifest.py, build_notebooks.py, make_synthetic.py, compare_mapreduce.py, combine_seed_runs.py, create_tags.sh
 results/                JSON + hình + log Hadoop + metadata license từ các lần chạy Kaggle; MANIFEST.json (SHA-256)
 .claude/skills/         kaggle-spark-job, bdm-experiment-protocol, cs246-algorithms, github-milestone-workflow, report-writing, critical-review
 .github/                CI, kaggle-run, hadoop-streaming, release-tags; issue/PR template

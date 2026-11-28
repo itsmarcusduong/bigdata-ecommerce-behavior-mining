@@ -57,4 +57,4 @@ Commit theo Conventional Commits. Không backdate lịch sử. **Commit không c
 | `critical-review` | trước khi báo xong, merge PR kết quả hay viết kết luận: kiểm tra lại, phản biện, so sánh nhiều mô hình, review lại |
 
 ## Cấu trúc nhanh
-`src/bdm/{config,io,sessions,eda,sketches,lsh,fpm,graph,recsys,segmentation,results}.py` · `notebooks/src/01..10` · `hadoop/streaming/*` · `tests/*`.
+`src/bdm/{config,io,sessions,eda,sketches,lsh,fpm,graph,recsys,segmentation,results}.py` · `notebooks/src/01..11` · `hadoop/streaming/*` · `tests/*`.
