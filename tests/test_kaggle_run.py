@@ -65,3 +65,20 @@ def test_output_ignores_the_cloned_repo(monkeypatch, tmp_path):
     kaggle_run.output("04")
     assert (root / "results" / "04_lsh_similarity.json").read_text() == "new"
     assert (root / "results" / "figures" / "04_s_curve.png").read_text() == "new"
+
+
+def test_seed_kernels_bake_their_seed(monkeypatch):
+    texts = {}
+
+    def fake(*args, **kw):
+        d = Path(args[3])
+        meta = json.loads((d / "kernel-metadata.json").read_text())
+        texts[meta["id"]] = json.loads(next(d.glob("*.ipynb")).read_text())
+        return 0
+
+    monkeypatch.setattr(kaggle_run, "kaggle", fake)
+    for nb, seed in (("11s42", "42"), ("11s7", "7"), ("11s2024", "2024")):
+        assert kaggle_run.push(nb, 1.0, "20g") == 0
+        cells = "".join("".join(c["source"]) for c in texts[f"minhquangdng/{kaggle_run.slug(nb)}"]["cells"])
+        assert f'"BDM_SEED", "{seed}"' in cells
+    assert len({kaggle_run.slug(nb) for nb in ("11s42", "11s7", "11s2024")}) == 3

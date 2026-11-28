@@ -197,6 +197,23 @@ ROWS.append(
     )
 )
 
+ROWS.append(
+    (
+        "Gợi ý: test của cấu hình mở rộng, 3 seed (ADR-0007)",
+        "11_recsys_test",
+        [
+            ("Seed", "seeds"),
+            ("Cấu hình", "config"),
+            ("User chung (history và ALS)", "n_common_users"),
+            ("NDCG@10 history_als (TB)", "test_summary.history_als.ndcg@10_mean"),
+            ("NDCG@10 history", "test_summary.history.ndcg@10_mean"),
+            ("NDCG@10 ALS (TB)", "test_summary.als.ndcg@10_mean"),
+            ("NDCG@10 popularity", "test_summary.popularity.ndcg@10_mean"),
+            ("Verdict (mọi seed)", "verdicts"),
+        ],
+    )
+)
+
 # extra tables rendered from lists of records: (file, json path, title, columns)
 TABLES = [
     (
@@ -251,6 +268,12 @@ TABLES = [
         "10_recsys_grid_extension",
         "significance_key_pairs",
         "Câu hỏi chính: bản trộn còn thắng ALS và history đã chỉnh kỹ hơn không",
+        ["a", "b", "seed", "diff", "ci95", "verdict"],
+    ),
+    (
+        "11_recsys_test",
+        "significance",
+        "Bootstrap ghép cặp theo seed",
         ["a", "b", "seed", "diff", "ci95", "verdict"],
     ),
     (

@@ -253,6 +253,10 @@ FRACTION = **1**, chạy lúc `2026-11-21T10:35:19.376490+00:00`
 
 _chưa chạy_
 
+## Gợi ý: test của cấu hình mở rộng, 3 seed (ADR-0007) - `results/11_recsys_test.json`
+
+_chưa chạy_
+
 ## Hadoop 3.3.6 thật trên dữ liệu synthetic - `results/hadoop/hadoop_vs_pipe.json`
 
 Dữ liệu: **synthetic** (3000 user) - kiểm chứng cách chạy, không phải số liệu dữ liệu thật.

@@ -40,7 +40,16 @@ NOTEBOOKS = {
     "08": ("08_scalability_benchmark", "BDM 08 Scalability Benchmark", []),
     "09": ("09_hadoop_real", "BDM 09 Hadoop Real", [REES46]),
     "10": ("10_recsys_grid_extension", "BDM 10 Recsys Grid Extension", []),
+    # ADR-0007: the same notebook as three kernels, one ALS seed each, run in parallel (one workflow dispatch each)
+    "11s42": ("11_recsys_test_seed", "BDM 11 Recsys Test Seed 42", [], {"BDM_SEED": "42"}),
+    "11s7": ("11_recsys_test_seed", "BDM 11 Recsys Test Seed 7", [], {"BDM_SEED": "7"}),
+    "11s2024": ("11_recsys_test_seed", "BDM 11 Recsys Test Seed 2024", [], {"BDM_SEED": "2024"}),
 }
+
+
+def extra_params(nb: str) -> dict:
+    """Per-kernel defaults baked into the uploaded copy (Kaggle cannot pass env vars), e.g. the seed of notebook 11."""
+    return NOTEBOOKS[nb][3] if len(NOTEBOOKS[nb]) > 3 else {}
 
 
 def slug(nb: str) -> str:
@@ -48,7 +57,7 @@ def slug(nb: str) -> str:
 
 
 def metadata(nb: str, code_file: str) -> dict:
-    stem, title, datasets = NOTEBOOKS[nb]
+    stem, title, datasets = NOTEBOOKS[nb][:3]
     return {
         "id": f"{USER}/{slug(nb)}",
         "title": title,
@@ -65,11 +74,20 @@ def metadata(nb: str, code_file: str) -> dict:
     }
 
 
-def set_params(code: str, fraction: float, mem: str) -> tuple[str, int]:
-    """Replace the defaults of BDM_FRACTION / BDM_SPARK_MEM in ``code``; returns (code, number of matches)."""
+def set_params(code: str, fraction: float, mem: str, extra: dict | None = None) -> tuple[str, int]:
+    """Replace the defaults of BDM_FRACTION / BDM_SPARK_MEM (and any ``extra`` BDM_* variable) in ``code``.
+
+    Returns (code, number of BDM_FRACTION / BDM_SPARK_MEM matches); an ``extra`` key that is not found raises.
+    """
     code, n1 = re.subn(r"""(BDM_FRACTION['"]\s*,\s*['"])[^'"]*(['"])""", rf"\g<1>{fraction}\g<2>", code)
     code, n2 = re.subn(r"""(BDM_SPARK_MEM['"]\s*,\s*['"])[^'"]*(['"])""", rf"\g<1>{mem}\g<2>", code)
+    for key, val in (extra or {}).items():
+        code, n = re.subn(rf"""({re.escape(key)}['"]\s*,\s*['"])[^'"]*(['"])""", rf"\g<1>{val}\g<2>", code)
+        set_params.extra_hits[key] = set_params.extra_hits.get(key, 0) + n
     return code, n1 + n2
+
+
+set_params.extra_hits = {}
 
 
 def kaggle(*args: str, retries: int = 6, wait_s: int = 60) -> int:
@@ -97,11 +115,17 @@ def push(nb: str, fraction: float, mem: str) -> int:
         nbk = json.loads(src.read_text(encoding="utf-8"))
         # Kaggle's API cannot pass env vars, so bake the run parameters into the copy that is uploaded.
         hits = 0
+        set_params.extra_hits = {}
         for cell in nbk["cells"]:
             body = cell["source"] if isinstance(cell["source"], str) else "".join(cell["source"])
-            new, n = set_params(body, fraction, mem)
+            new, n = set_params(body, fraction, mem, extra_params(nb))
+            if new != body and not n:
+                cell["source"] = new.splitlines(keepends=True)
             if n:
                 cell["source"], hits = new.splitlines(keepends=True), hits + n
+        missing = [k for k in extra_params(nb) if not set_params.extra_hits.get(k)]
+        if missing:
+            sys.exit(f"{missing} not found in {src}: the kernel would run with the wrong parameters")
         if hits < 1:
             seen = [ln for c in nbk["cells"] for ln in "".join(c["source"]).splitlines() if "BDM_" in ln]
             sys.exit(f"BDM_FRACTION line not found in {src} (run git pull). Lines with BDM_: {seen[:5]}")
